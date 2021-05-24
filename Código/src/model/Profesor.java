@@ -4,9 +4,9 @@ public class Profesor extends Usuario
 {
 	private String especialidad;
 
-	public Profesor(String especialidad)
+	public Profesor(String nombre, String email, String clave, String estado, String run, String tipoUsuario, String especialidad)
 	{
-		super();
+		super(nombre, email, clave, estado, run, tipoUsuario);
 		this.especialidad = especialidad;
 	}
 

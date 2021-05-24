@@ -2,13 +2,13 @@ package model;
 
 import java.util.ArrayList;
 
-public class Apoderado
+public class Apoderado extends Usuario
 {
 	private ArrayList<Alumno> alumnos;
 
-	public Apoderado()
+	public Apoderado(String nombre, String email, String clave, String estado, String run, String tipoUsuario)
 	{
-		super();
+		super(nombre, email, clave, estado, run, tipoUsuario);
 		this.alumnos = new ArrayList<Alumno>();
 	}
 
