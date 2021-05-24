@@ -26,7 +26,6 @@ public class LoginController
 		while(usuario==null);
 		
 		return usuario;
-		
 	}
 	
 }
