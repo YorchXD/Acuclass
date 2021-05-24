@@ -86,14 +86,12 @@ public class Usuario
 	
 	public void mostrarDatos()
 	{
-		System.out.println("\n#########################Datos de la persona#########################");
 		System.out.println("Nombre: " + this.nombre);
 		System.out.println("Email: " + this.email);
 		System.out.println("Clave: " + this.clave);
 		System.out.println("Estado: " + this.estado);
 		System.out.println("RUN: " + this.run);
 		System.out.println("tipoUsuario: " + this.tipoUsuario);
-		System.out.println("#########################Datos de la persona#########################\n");
 	}
 
 }
