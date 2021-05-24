@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Conexion 
 {
-	private static final String CONTROLADOR = "com.mysql.jdbc.Driver";
+	private static final String CONTROLADOR = "com.mysql.cj.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/acuclass";
 	private static final String USUARIO = "Yorch";
 	private static final String CLAVE = "M1y9B9a2sE0O1f0D4t0o8S";
@@ -30,7 +30,6 @@ public class Conexion
 		try
 		{
 			conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-			System.out.println("Conexion OK");
 		}
 		
 		catch(SQLException e)
