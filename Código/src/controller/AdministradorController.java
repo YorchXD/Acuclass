@@ -59,6 +59,18 @@ public class AdministradorController
 				case 12:
 					System.out.println("Ir a habilitar o deshabilitar unidad");
 					break;
+				case 13:
+					System.out.println("Ir a crear Alumno");
+					break;
+				case 14:
+					System.out.println("Ir a ver Alumno ");
+					break;
+				case 15:
+					System.out.println("Ir a modificar Alumno");
+					break;
+				case 16:
+					System.out.println("Ir a habilitar o deshabilitar Alumno");
+					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;

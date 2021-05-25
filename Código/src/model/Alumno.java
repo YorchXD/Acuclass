@@ -22,6 +22,15 @@ public class Alumno
 		this.curso = curso;
 		this.asistencias = new ArrayList<Asistencia>();
 	}
+	
+	public Alumno(String nombre, String run, String edad)
+	{
+		this.nombre = nombre;
+		this.run = run;
+		this.edad = edad;
+		this.asistencias = new ArrayList<Asistencia>();
+	}
+
 
 	public String getNombre()
 	{
