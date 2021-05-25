@@ -36,7 +36,8 @@ public class ViewLogin
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 			
-		}while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>3);
+		}
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>3);
 
 		return Integer.parseInt(opcion);
 	}

@@ -25,7 +25,6 @@ public class ConsultaUsuario
 			
 			while(rs.next())
 			{
-			
 				usuario = new Usuario(
 						rs.getString("nombre"),
 						rs.getString("email"),
