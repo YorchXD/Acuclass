@@ -2,5 +2,5 @@ package model;
 
 public enum TipoUsuario
 {
-	Administrador, Profesor, Apoderado;
+	ADMINISTRADOR, PROFESOR, APODERADO;
 }

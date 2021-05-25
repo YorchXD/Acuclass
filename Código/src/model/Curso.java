@@ -9,6 +9,14 @@ public class Curso
 	private String tipoDivisionAnual;
 	private String estado;
 	
+	public Curso(String tipoCurso, String tipoDivisionAnual)
+	{
+		this.tipoCurso = tipoCurso;
+		this.asignaturas = new ArrayList<Asignatura>();
+		this.tipoDivisionAnual = tipoDivisionAnual;
+		this.estado = "Habilitado";
+	}
+	
 	public Curso(String tipoCurso, String tipoDivisionAnual, String estado)
 	{
 		this.tipoCurso = tipoCurso;

@@ -1,3 +1,4 @@
+import controller.AdministradorController;
 import controller.LoginController;
 import model.Apoderado;
 import model.Profesor;
@@ -15,8 +16,7 @@ public class Main
 			switch (usuario.getTipoUsuario())
 			{
 				case "ADMINISTRADOR":
-					usuario.mostrarDatos();
-					System.out.println("Ir al controlador administrador");
+					AdministradorController.seleccionarOpcion(usuario);
 					break;
 				case "PROFESOR":
 					Profesor profesor = new Profesor(usuario);
