@@ -22,9 +22,14 @@ public class IndexAdministrador
 		System.out.println("11. Modificar unidad");
 		System.out.println("12. Habilitar o deshabiliatar unidad");
 		
+		System.out.println("13. Crear Alumno");
+		System.out.println("14. Ver Alumno");
+		System.out.println("15. Modificar Alumno");
+		System.out.println("16. Habilitar o deshabiliatar Alumno");
 		
 		
-		System.out.println("13. Cerrar sesion");
+		
+		System.out.println("17. Cerrar sesion");
 		
 		System.out.print("\nIngrese su opcion: ");
 	}
@@ -45,12 +50,12 @@ public class IndexAdministrador
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>13)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>17)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>13);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>17);
 		
 		return Integer.parseInt(opcion);
 	}
