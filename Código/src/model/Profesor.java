@@ -4,7 +4,7 @@ public class Profesor extends Usuario
 {
 	private String especialidad;
 
-	public Profesor(String nombre, String email, String clave, String estado, String run, String tipoUsuario, String especialidad)
+	public Profesor(String nombre, String email, String clave, Estado estado, String run, TipoUsuario tipoUsuario, String especialidad)
 	{
 		super(nombre, email, clave, estado, run, tipoUsuario);
 		this.especialidad = especialidad;

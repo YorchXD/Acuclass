@@ -5,12 +5,13 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import model.Estado;
 import model.TipoUsuario;
 import model.Usuario;
 
 public class ConsultaUsuario 
 {
-	public static Usuario IniciarSesion(int tipoUsuario, String email, String clave)
+	public static Usuario IniciarSesion(TipoUsuario tipoUsuario, String email, String clave)
 	{
 		Connection conexion = Conexion.conectar();
 		Usuario usuario = null;
@@ -19,7 +20,7 @@ public class ConsultaUsuario
 			CallableStatement cs = conexion.prepareCall("{call iniciarSesion(?,?,?)}");
 			cs.setString("in_email", email);
 			cs.setString("in_clave", clave);
-			cs.setString("in_tipoUsuario", TipoUsuario.values()[tipoUsuario-1].toString());
+			cs.setString("in_tipoUsuario", tipoUsuario.toString());
 			
 			ResultSet rs = cs.executeQuery();
 			
@@ -29,9 +30,9 @@ public class ConsultaUsuario
 						rs.getString("nombre"),
 						rs.getString("email"),
 						rs.getString("clave"),
-						rs.getString("estado"),
+						Estado.valueOf(Estado.class, rs.getString("estado")),
 						rs.getString("run"),
-						rs.getString("tipoUsuario")
+						TipoUsuario.valueOf(TipoUsuario.class, rs.getString("tipoUsuario"))
 						);
 			}
 			
