@@ -1,14 +1,166 @@
 package controller;
 
+import BD.ConsultaUsuario;
+import BD.ConsultaAlumno;
+import View.Administrador.CrearAlumno;
 import View.Administrador.IndexAdministrador;
+import View.Login.ViewLogin;
+import model.Alumno;
 import model.Usuario;
 
 public class AdministradorController
 {
 	public static void crearAlumno()
 	{
+		System.out.println("\n------------------------------------------- ");
+		System.out.println("	Opción para Crear alumno: ");
+		System.out.println("------------------------------------------- ");
+		Alumno alumno = null;
+		int edad;
+		String nombre, run, estado;
+
+		String mensaje = "";
+		
+
+		
+		do {
+			run = CrearAlumno.solicitarRun();
+			alumno = ConsultaAlumno.consultarAlumno_run(run);
+			if(alumno==null) {
+				nombre = CrearAlumno.solicitarNombre();
+				edad = CrearAlumno.solicitarEdad();
+				estado = null;
+				alumno = new Alumno(nombre,run,edad,estado);
+				mensaje = ConsultaAlumno.insertarAlumno(alumno);
+				
+				System.out.println("\n\n------------------------------------------- ");
+				System.out.println(mensaje);
+				alumno.mostrarDatos();
+				
+			}else {
+				System.out.println("\n\n----------------------------------------------------- ");
+				System.out.println("\n\n	El alumno ya se encuentra registrado ");
+				System.out.println("\n\n----------------------------------------------------- ");
+				mensaje="Alumno registrado";
+			}
+			
+		} while (mensaje=="Alumno registrado");
 		
 	}
+	
+	public static void VerAlumno() {
+		
+		System.out.println("\n------------------------------------------- ");
+		System.out.println("\n	Opción para Ver alumno: ");
+		System.out.println("\n------------------------------------------- ");
+		Alumno alumno = null;
+		int edad;
+		String nombre, run, estado;
+		String mensaje="";
+		
+		do {
+			run = CrearAlumno.solicitarRun();
+			alumno = ConsultaAlumno.consultarAlumno_run(run);
+			if(alumno!=null) {
+				alumno.mostrarDatos();
+				System.out.println("\n\n ");
+				
+				
+			}else {
+				System.out.println("\n\n------------------------------------------- ");
+				System.out.println("\n\n	El alumno no se encuentra registrado ");
+				System.out.println("\n\n------------------------------------------- ");
+				mensaje="Alumno no registrado";
+			}
+			
+		} while (mensaje=="Alumno no registrado");
+	}
+	
+	public static void CambioEstadoAlumno() {
+		
+		System.out.println("\n-------------------------------------------------------");
+		System.out.println("	Opción para Habilitar o Deshabilitar un alumno: ");
+		System.out.println("--------------------------------------------------------- ");
+		Alumno alumno = null;
+		int edad;
+		String nombre, run, estado;
+
+		String mensaje = "";
+		Boolean confirmacion=false;
+		
+		do {
+			run = CrearAlumno.solicitarRun();
+			alumno = ConsultaAlumno.consultarAlumno_run(run);
+			if(alumno!=null) {
+				alumno.mostrarDatos();
+				System.out.println("\n");
+				
+				confirmacion=CrearAlumno.solicitarRespuesta(); 
+				
+				if(confirmacion) {
+					
+					mensaje = ConsultaAlumno.UpdateAlumno_estado(alumno);
+					System.out.println("\n-------------------------------------------------------- ");
+					System.out.println(mensaje);
+					System.out.println("\n-------------------------------------------------------- ");
+				}
+				
+				
+			}else {
+				System.out.println("\n\n------------------------------------------- ");
+				System.out.println("\n\n	El alumno no se encuentra registrado ");
+				System.out.println("\n\n------------------------------------------- ");
+				mensaje="Alumno no registrado";
+			}
+			
+		} while (mensaje=="Alumno no registrado");
+		
+		
+		
+	}
+	
+	public static void ModificarAlumno() {
+		
+		System.out.println("\n-------------------------------------------------------");
+		System.out.println("	Opción para modificar un alumno: ");
+		System.out.println("--------------------------------------------------------- ");
+		Alumno alumno = null;
+		int edad;
+		String nombre, run, estado;
+		Boolean confirmacion=false;
+		String mensaje = "";
+		
+		
+		do {
+			run = CrearAlumno.solicitarRun();
+			alumno = ConsultaAlumno.consultarAlumno_run(run);
+			if(alumno!=null) {
+				alumno.mostrarDatos();
+				
+				confirmacion=CrearAlumno.solicitarRespuesta(); 
+				
+				if(confirmacion) {
+					
+					nombre = CrearAlumno.solicitarNombre();
+					edad = CrearAlumno.solicitarEdad();
+					
+					mensaje = ConsultaAlumno.UpdateAlumno(run,nombre,edad);
+					System.out.println("\n-------------------------------------------------------- ");
+					System.out.println(mensaje);
+					System.out.println("\n-------------------------------------------------------- ");
+				}
+				
+				
+			}else {
+				System.out.println("\n\n------------------------------------------- ");
+				System.out.println("\n\n	El alumno no se encuentra registrado ");
+				System.out.println("\n\n------------------------------------------- ");
+				mensaje="Alumno no registrado";
+			}
+			
+		} while (mensaje=="Alumno no registrado");
+	}
+	
 	
 	public static void seleccionarOpcion(Usuario usuario)
 	{
@@ -60,23 +212,23 @@ public class AdministradorController
 					System.out.println("Ir a habilitar o deshabilitar unidad");
 					break;
 				case 13:
-					System.out.println("Ir a crear Alumno");
+					crearAlumno();
 					break;
 				case 14:
-					System.out.println("Ir a ver Alumno ");
+					VerAlumno();
 					break;
 				case 15:
-					System.out.println("Ir a modificar Alumno");
+					ModificarAlumno();
 					break;
 				case 16:
-					System.out.println("Ir a habilitar o deshabilitar Alumno");
+					CambioEstadoAlumno();
 					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=13);
+		while(opcion!=17);
 	}
 
 }
