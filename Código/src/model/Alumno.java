@@ -6,13 +6,13 @@ public class Alumno
 {
 	private String nombre;
 	private String run;
-	private String edad;
+	private int edad;
 	private Apoderado apoderado;
 	private String estado;
 	private Curso_Referencia curso;
 	private ArrayList<Asistencia> asistencias;
 	
-	public Alumno(String nombre, String run, String edad, Apoderado apoderado, String estado, Curso_Referencia curso)
+	public Alumno(String nombre, String run, int edad, Apoderado apoderado, String estado, Curso_Referencia curso)
 	{
 		this.nombre = nombre;
 		this.run = run;
@@ -23,11 +23,12 @@ public class Alumno
 		this.asistencias = new ArrayList<Asistencia>();
 	}
 	
-	public Alumno(String nombre, String run, String edad)
+	public Alumno(String nombre, String run, int edad, String estado)
 	{
 		this.nombre = nombre;
 		this.run = run;
 		this.edad = edad;
+		this.estado=estado;
 		this.asistencias = new ArrayList<Asistencia>();
 	}
 
@@ -52,12 +53,12 @@ public class Alumno
 		this.run = run;
 	}
 
-	public String getEdad()
+	public int getEdad()
 	{
 		return edad;
 	}
 
-	public void setEdad(String edad)
+	public void setEdad(int edad)
 	{
 		this.edad = edad;
 	}
@@ -110,5 +111,16 @@ public class Alumno
 	public ArrayList<Asistencia> getAsistencias()
 	{
 		return asistencias;
+	}
+	
+	public void mostrarDatos() {
+
+		System.out.println("\n------------------------------------------- ");
+		System.out.println("Datos del Alumno ");
+		System.out.println("\n- Nombre: " + getNombre());
+		System.out.println("- Run: " + getRun());
+		System.out.println("- Edad: " + getEdad());
+		System.out.println("- Estado: HABILITADO");
+		System.out.println("\n------------------------------------------- ");
 	}
 }
