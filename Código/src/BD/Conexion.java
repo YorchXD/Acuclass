@@ -29,19 +29,18 @@ public class Conexion
 		}
 	}
 	
-	public static Connection conectar()
+	public static Connection conectar() 
 	{
-		Connection conexion = null;
-		try
-		{
-			conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
-		}
-		
-		catch(SQLException e)
+        Connection conexion = null;
+        try
+        {
+        	conexion = DriverManager.getConnection(URL, USUARIO, CLAVE);
+        }
+        catch(SQLException e)
 		{
 			System.out.println("Error en la conexion");
 			e.printStackTrace();
 		}
-		return conexion;
-	}	
+        return conexion;
+    }
 }
