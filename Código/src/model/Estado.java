@@ -1,21 +1,35 @@
 package model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum Estado
 {
-	HABILITADO, DESHABILITADO;
+	HABILITADO(1), DESHABILITADO(2);
 	
-	public static Estado buscarEstado(String estado)
-	{
-		Estado[] estados = Estado.values();
-		Estado estadoAux = null;
-		for (Estado estadoAux1 : estados)
-		{
-			if(estado.equals(estadoAux1.toString()))
-			{
-				estadoAux = estadoAux1;
-				break;
-			}
-		}
-		return estadoAux;
-	}
+	private int id;
+    private static final Map<Integer, Estado> MAP = new HashMap<>();
+    
+    private Estado(int id) 
+    { 
+    	this.id = id; 
+    }
+    
+    public int getId() 
+    { 
+    	return id; 
+    }
+    
+    public static Estado getEstado(int id)
+    {
+        return MAP.get(id);
+    }
+    
+    static
+    {
+        for(Estado n : values())
+        {
+            MAP.put(n.getId(), n);
+        }
+    }
 }

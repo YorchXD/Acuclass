@@ -74,4 +74,14 @@ public class Curso
 	{
 		this.estado = estado;
 	}
+	
+	public void mostrarDatos()
+	{
+		String [] nivel = this.nivel.toString().split("_");
+		System.out.println("\n###########################Datos del curso###########################");
+		System.out.println("Nivel: " + nivel[0] + " " + nivel[1]);
+		System.out.println("Tipo de division anual: " + this.tipoDivisionAnual);
+		System.out.println("Estado: " + this.estado);
+		System.out.println("######################################################################\n");
+	}
 }
