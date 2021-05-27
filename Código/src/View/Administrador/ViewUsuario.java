@@ -29,8 +29,13 @@ public class ViewUsuario
 		System.out.println("13. Ver Alumno");
 		System.out.println("14. Modificar Alumno");
 		System.out.println("15. Habilitar o deshabiliatar Alumno");
+		
+		System.out.println("16. Crear Profesor");
+		System.out.println("17. Ver Profesor");
+		System.out.println("18. Modificar Profesor");
+		System.out.println("19. Habilitar o deshabiliatar Profesor");
 
-		System.out.println("16. Cerrar sesion");
+		System.out.println("20. Cerrar sesion");
 		
 		System.out.print("\nIngrese su opcion: ");
 	}
@@ -51,12 +56,12 @@ public class ViewUsuario
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>16)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>19)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>16);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>19);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -113,6 +118,19 @@ public class ViewUsuario
 					AlumnoController.modificar();
 					break;
 				case 15:
+					AlumnoController.cambiarEstado();
+					break;
+					
+				case 16:
+					AlumnoController.crear();
+					break;
+				case 17:
+					AlumnoController.ver();
+					break;
+				case 18:
+					AlumnoController.modificar();
+					break;
+				case 19:
 					AlumnoController.cambiarEstado();
 					break;
 				default:
