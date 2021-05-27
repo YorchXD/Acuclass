@@ -2,6 +2,7 @@ package View.Administrador;
 
 import Utilidades.Utilidades;
 import controller.AlumnoController;
+import controller.CursoController;
 
 
 public class ViewUsuario
@@ -71,7 +72,7 @@ public class ViewUsuario
 			switch(opcion)
 			{
 				case 1:
-					System.out.println("Ir a crear curso");
+					CursoController.crear();
 					break;
 				case 2:
 					System.out.println("Ir a ver curso");

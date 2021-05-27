@@ -10,10 +10,14 @@ public class ViewLogin
 	
 	public static void menuTipoUsuario()
 	{
+		TipoUsuario[] tipoUsuarios = TipoUsuario.values();
 		System.out.println("Tipos de usuarios: ");
-		System.out.println("1. Administrador");
-		System.out.println("2. Profesor");
-		System.out.println("3. Apoderado");
+		
+		for (int i = 0; i< tipoUsuarios.length; i++)
+		{
+			System.out.println((i+1) + ". " + tipoUsuarios[i]);
+		}
+		
 		System.out.print("\nIngrese su opcion: ");
 	}
 	
