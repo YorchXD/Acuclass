@@ -17,26 +17,22 @@ public class LoginController
 	
 	public static void accesos(Usuario usuario)
 	{
-		do
-		{	
-			switch (usuario.getTipoUsuario().toString())
-			{
-				case "ADMINISTRADOR":
-					UsuarioController.viewAdministrador(usuario);
-					break;
-				case "PROFESOR":
-					Profesor profesor = new Profesor(usuario);
-					//profesor.mostrarDatos();
-					System.out.println("Ir al controlador profesor");
-					break;
-				default:
-					Apoderado apoderado = new Apoderado(usuario);
-					//apoderado.mostrarDatos();
-					System.out.println("Ir al controlador apoderado");
-					break;
-			}
+		switch (usuario.getTipoUsuario().toString())
+		{
+			case "ADMINISTRADOR":
+				UsuarioController.viewAdministrador(usuario);
+				break;
+			case "PROFESOR":
+				Profesor profesor = new Profesor(usuario);
+				//profesor.mostrarDatos();
+				System.out.println("Ir al controlador profesor");
+				break;
+			default:
+				Apoderado apoderado = new Apoderado(usuario);
+				//apoderado.mostrarDatos();
+				System.out.println("Ir al controlador apoderado");
+				break;
 		}
-		while (true);
 	}
 
 	public static void viewLogin()
@@ -45,3 +41,4 @@ public class LoginController
 	}
 	
 }
+

@@ -4,6 +4,10 @@ public class Main
 {
 	public static void main(String[] args)
 	{
-		LoginController.viewLogin();
+		do
+		{
+			LoginController.viewLogin();
+		}
+		while(true);
 	}
 }
