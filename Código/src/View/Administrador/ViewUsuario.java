@@ -1,9 +1,12 @@
 package View.Administrador;
 
 import Utilidades.Utilidades;
+import controller.AlumnoController;
 
-public class IndexAdministrador
+
+public class ViewUsuario
 {
+	/*Opciones administrador*/
 	public static void menuAdministrador()
 	{
 		System.out.println("####################Menu Administrador####################");
@@ -26,15 +29,13 @@ public class IndexAdministrador
 		System.out.println("14. Ver Alumno");
 		System.out.println("15. Modificar Alumno");
 		System.out.println("16. Habilitar o deshabiliatar Alumno");
-		
-		
-		
+
 		System.out.println("17. Cerrar sesion");
 		
 		System.out.print("\nIngrese su opcion: ");
 	}
 	
-	public static int accionEjecucion()
+	public static int accionEjecucionAdministrador()
 	{
 		
 		boolean validar = false;
@@ -59,5 +60,77 @@ public class IndexAdministrador
 		
 		return Integer.parseInt(opcion);
 	}
+	
+	public static void seleccionarOpcionAdministrador()
+	{	
+		int opcion;
+		do
+		{
+			opcion = accionEjecucionAdministrador();
+			
+			switch(opcion)
+			{
+				case 1:
+					System.out.println("Ir a crear curso");
+					break;
+				case 2:
+					System.out.println("Ir a ver curso");
+					break;
+				case 3:
+					System.out.println("Ir a  modificar curso");
+					break;
+				case 4:
+					System.out.println("Ir a habilitar o deshabilitar curso");
+					break;
+				case 5:
+					System.out.println("Ir a crear asignatura");
+					break;
+				case 6:
+					System.out.println("Ir a ver asignatura");
+					break;
+				case 7:
+					System.out.println("Ir a modificar asignatura");
+					break;
+				case 8:
+					System.out.println("Ir a habilitar o deshabilitar asignatura");
+					break;
+				case 9:
+					System.out.println("Ir a crear unidad");
+					break;
+				case 10:
+					System.out.println("Ir a ver unidad");
+					break;
+				case 11:
+					System.out.println("Ir a modificar unidad");
+					break;
+				case 12:
+					System.out.println("Ir a habilitar o deshabilitar unidad");
+					break;
+				case 13:
+					AlumnoController.crear();
+					break;
+				case 14:
+					AlumnoController.ver();
+					break;
+				case 15:
+					AlumnoController.modificar();
+					break;
+				case 16:
+					AlumnoController.cambiarEstado();
+					break;
+				default:
+					System.out.println("Sesion cerrada...\n\n");
+					break;
+			}
+		}
+		while(opcion!=17);
+	}
+	/*Fin opciones administrador*/
+	
+	/*Opciones profesor*/
+	/*Fin opciones profesor*/
+	
+	/*Opciones apoderado*/
+	/*Fin opciones apoderado*/
 
 }

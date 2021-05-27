@@ -5,16 +5,16 @@ public class Usuario
 	private String nombre;
 	private String email;
 	private String clave;
-	private String estado;
+	private Estado estado;
 	private String run;
-	private String tipoUsuario;
+	private TipoUsuario tipoUsuario;
 	
 	public Usuario()
 	{
 		
 	}
 
-	public Usuario(String nombre, String email, String clave, String estado, String run, String tipoUsuario)
+	public Usuario(String nombre, String email, String clave, Estado estado, String run, TipoUsuario tipoUsuario)
 	{
 		this.nombre = nombre;
 		this.email = email;
@@ -54,12 +54,12 @@ public class Usuario
 		this.clave = clave;
 	}
 
-	public String getEstado()
+	public Estado getEstado()
 	{
 		return estado;
 	}
 
-	public void setEstado(String estado)
+	public void setEstado(Estado estado)
 	{
 		this.estado = estado;
 	}
@@ -74,12 +74,12 @@ public class Usuario
 		this.run = run;
 	}
 
-	public String getTipoUsuario()
+	public TipoUsuario getTipoUsuario()
 	{
 		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(String tipoUsuario)
+	public void setTipoUsuario(TipoUsuario tipoUsuario)
 	{
 		this.tipoUsuario = tipoUsuario;
 	}

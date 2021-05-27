@@ -6,7 +6,7 @@ public class Apoderado extends Usuario
 {
 	private ArrayList<Alumno> alumnos;
 
-	public Apoderado(String nombre, String email, String clave, String estado, String run, String tipoUsuario)
+	public Apoderado(String nombre, String email, String clave, Estado estado, String run, TipoUsuario tipoUsuario)
 	{
 		super(nombre, email, clave, estado, run, tipoUsuario);
 		this.alumnos = new ArrayList<Alumno>();
