@@ -36,7 +36,7 @@ public class ViewAlumno {
 		while(!validar);
 		
 		run= run.replace(".","");
-		run= run.replace(" ","");
+		run= Utilidades.formatearRun(run);
 		
 		
 		return run;
