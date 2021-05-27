@@ -4,22 +4,22 @@ import java.util.ArrayList;
 
 public class Curso
 {
-	private String tipoCurso;
+	private Nivel nivel;
 	private ArrayList<Asignatura> asignaturas;
-	private String tipoDivisionAnual;
-	private String estado;
+	private Tipo_Division_Anual tipoDivisionAnual;
+	private Estado estado;
 	
-	public Curso(String tipoCurso, String tipoDivisionAnual)
+	public Curso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		this.tipoCurso = tipoCurso;
+		this.nivel = nivel;
 		this.asignaturas = new ArrayList<Asignatura>();
 		this.tipoDivisionAnual = tipoDivisionAnual;
-		this.estado = "Habilitado";
+		this.estado = Estado.HABILITADO;
 	}
 	
-	public Curso(String tipoCurso, String tipoDivisionAnual, String estado)
+	public Curso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual, Estado estado)
 	{
-		this.tipoCurso = tipoCurso;
+		this.nivel = nivel;
 		this.asignaturas = new ArrayList<Asignatura>();
 		this.tipoDivisionAnual = tipoDivisionAnual;
 		this.estado = estado;
@@ -40,14 +40,14 @@ public class Curso
 		return asignaturas.remove(index);
 	}
 
-	public String getTipoCurso()
+	public Nivel getNivel()
 	{
-		return tipoCurso;
+		return nivel;
 	}
 
-	public void setTipoCurso(String tipoCurso)
+	public void setNivel(Nivel nivel)
 	{
-		this.tipoCurso = tipoCurso;
+		this.nivel = nivel;
 	}
 
 	public ArrayList<Asignatura> getAsignaturas()
@@ -55,22 +55,22 @@ public class Curso
 		return asignaturas;
 	}
 
-	public String getTipoDivisionAnual()
+	public Tipo_Division_Anual getTipoDivisionAnual()
 	{
 		return tipoDivisionAnual;
 	}
 
-	public void setTipoDivisionAnual(String tipoDivisionAnual)
+	public void setTipoDivisionAnual(Tipo_Division_Anual tipoDivisionAnual)
 	{
 		this.tipoDivisionAnual = tipoDivisionAnual;
 	}
 
-	public String getEstado()
+	public Estado getEstado()
 	{
 		return estado;
 	}
 
-	public void setEstado(String estado)
+	public void setEstado(Estado estado)
 	{
 		this.estado = estado;
 	}
