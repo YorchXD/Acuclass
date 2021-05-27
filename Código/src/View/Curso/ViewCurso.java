@@ -2,6 +2,8 @@ package View.Curso;
 
 import Utilidades.Utilidades;
 import controller.CursoController;
+import model.Curso;
+import model.Estado;
 import model.Nivel;
 import model.Tipo_Division_Anual;
 
@@ -19,6 +21,35 @@ public class ViewCurso
 			cont++;
 		}
 		System.out.print("\nIngrese su opcion: ");
+	}
+	
+	public static boolean confirmacionCambiarEstado(Estado estado)
+	{
+		String opcion;
+		boolean validar = false;
+		do
+		{
+			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			opcion = Utilidades.extracted().nextLine();
+			validar = Utilidades.esNumero(opcion);
+			if(!validar )
+			{
+				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
+				opcion="-1";
+			}
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>2)
+			{
+				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
+			}
+
+		}
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>2);
+		
+		if(Integer.parseInt(opcion)==1)
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -108,12 +139,43 @@ public class ViewCurso
 	
 	public static void modificar()
 	{
-		
+		Nivel nivel = ViewCurso.solicitarNivel();
+		Tipo_Division_Anual tipoDivisionAnual = ViewCurso.solicitarTipoDivisionAnual();
+		Curso curso = CursoController.buscarCurso(nivel, tipoDivisionAnual);
+		if(curso!=null)
+		{
+			boolean confirmar = confirmacionCambiarEstado(curso.getEstado());
+			if(confirmar)
+			{
+				if(CursoController.actualizarEstadoCurso(curso))
+				{
+					System.out.println("\nEl curso se ha modificado correctamente\n");
+				}
+				else
+				{
+					System.out.println("\nNo se han guardado cambios, intentelo nuevamente.\n");
+				}
+			}
+		}
+		else
+		{
+			System.out.println("\nEl curso no se encuentra registrado\n");
+		}
 	}
 	
 	public static void ver()
 	{
-		
+		Nivel nivel = ViewCurso.solicitarNivel();
+		Tipo_Division_Anual tipoDivisionAnual = ViewCurso.solicitarTipoDivisionAnual();
+		Curso curso = CursoController.buscarCurso(nivel, tipoDivisionAnual);
+		if(curso!=null)
+		{
+			curso.mostrarDatos();
+		}
+		else
+		{
+			System.out.println("\nEl curso no se encuentra registrado\n");
+		}
 	}
 	
 }
