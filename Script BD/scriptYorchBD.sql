@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 26/05/2021 20:20:00
+ Date: 27/05/2021 19:24:44
 */
 
 SET NAMES utf8mb4;
@@ -153,6 +153,20 @@ delimiter ;;
 CREATE PROCEDURE `actualizarEstadoAlumno`(in_run VARCHAR(50), in_estado VARCHAR(100))
 BEGIN
 	update alumno set estado=in_estado where run=in_run;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for actualizarEstadoCurso
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarEstadoCurso`;
+delimiter ;;
+CREATE PROCEDURE `actualizarEstadoCurso`(`in_nivel` VARCHAR(50), `in_tipoDivAnual` VARCHAR(100), `in_estado` VARCHAR(50))
+BEGIN
+	UPDATE curso
+	SET curso.estado = in_estado
+	WHERE curso.nivel = in_nivel AND curso.tipoDivisionAnual = in_tipoDivAnual;
 END
 ;;
 delimiter ;

@@ -31,6 +31,6 @@ public class Profesor extends Usuario
 		System.out.println("\n#########################Datos del profesor#########################");
 		super.mostrarDatos();
 		System.out.println("especialidad: " + this.especialidad);
-		System.out.println("\n####################################################################\n");
+		System.out.println("####################################################################\n");
 	}
 }
