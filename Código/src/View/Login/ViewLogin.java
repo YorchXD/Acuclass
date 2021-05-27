@@ -1,6 +1,9 @@
 package View.Login;
 
 import Utilidades.Utilidades;
+import controller.LoginController;
+import model.TipoUsuario;
+import model.Usuario;
 
 public class ViewLogin 
 {
@@ -14,7 +17,7 @@ public class ViewLogin
 		System.out.print("\nIngrese su opcion: ");
 	}
 	
-	public static int solicitarTipoUsuario()
+	public static TipoUsuario solicitarTipoUsuario()
 	{
 		String opcion;
 		boolean validar;
@@ -39,7 +42,7 @@ public class ViewLogin
 		}
 		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>3);
 
-		return Integer.parseInt(opcion);
+		return TipoUsuario.getTipoUsuario(Integer.parseInt(opcion));
 	}
 	
 	public static String solicitarEmail()
@@ -67,5 +70,28 @@ public class ViewLogin
 		System.out.print("Ingrese su clave: ");
 		clave = Utilidades.extracted().nextLine();
 		return clave;
+	}
+	
+	public static void solicitarDatos()
+	{
+		TipoUsuario tipoUsuario;
+		String email, clave;
+		Usuario usuario = null;
+		do
+		{
+			tipoUsuario =solicitarTipoUsuario();
+			email = solicitarEmail();
+			clave = solicitarClave();
+			usuario = LoginController.validarDatos(tipoUsuario, email, clave);
+			
+			if(usuario==null)
+			{
+				System.out.println("Los datos ingresados no son correctos o puede que no este registrado. Favor de verificarlos e ingreselos nuevamente.");
+			}
+		}
+		while(usuario==null);
+		
+		LoginController.accesos(usuario);
+		
 	}
 }

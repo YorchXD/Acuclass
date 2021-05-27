@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import model.Alumno;
 import model.Estado;
-import model.TipoUsuario;
 
 
 public class ConsultaAlumno {
@@ -18,7 +17,7 @@ public class ConsultaAlumno {
 		
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call BuscarAlumno_run(?)}");
+			CallableStatement cs = conexion.prepareCall("{call buscarAlumno(?)}");
 			cs.setString("in_run", run);
 			
 			ResultSet rs = cs.executeQuery();
@@ -29,7 +28,7 @@ public class ConsultaAlumno {
 						rs.getString("nombre"),
 						rs.getString("run"),
 						rs.getInt("edad"),
-						rs.getString("estado")
+						Estado.valueOf(Estado.class, rs.getString("estado"))     
 						);
 			}
 		}
@@ -47,11 +46,11 @@ public class ConsultaAlumno {
 		
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call Insertar_alumno(?,?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call registrarAlumno(?,?,?)}");
 			cs.setString("in_nombre", alumno.getNombre());
 			cs.setString("in_run", alumno.getRun());
 			cs.setInt("in_edad", alumno.getEdad());
-			ResultSet rs = cs.executeQuery();
+			cs.executeQuery();
 			
 			mensaje = "Se ha guardado exitosamente al alumno";
 		}
@@ -69,18 +68,21 @@ public class ConsultaAlumno {
 		Connection conexion = Conexion.conectar();
 		String estado_update=null;
 		
-		if (alumno.getEstado().toUpperCase().equals("HABILITADO")) {
+		if (alumno.getEstado().toString().equals("HABILITADO")) 
+		{
 			estado_update=Estado.values()[1].toString();
-		}else {
+		}
+		else 
+		{
 			estado_update=Estado.values()[0].toString();
 		}
 		
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call Update_alumno_estado(?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoAlumno(?,?)}");
 			cs.setString("in_run", alumno.getRun());
 			cs.setString("in_estado", estado_update);
-			ResultSet rs = cs.executeQuery();
+			cs.executeQuery();
 			
 			mensaje = "Se ha modificado exitosamente el estado del alumno";
 		}
@@ -93,18 +95,18 @@ public class ConsultaAlumno {
 		return mensaje;
 	}
 	
-	public static String UpdateAlumno(String run, String nombre, int edad) {
+	public static String UpdateAlumno(String nombre, String run, int edad) {
 		String mensaje;
 		Connection conexion = Conexion.conectar();
 		
 		
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call Update_alumno(?,?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call actualizarAlumno(?,?,?)}");
 			cs.setString("in_run", run);
 			cs.setString("in_nombre", nombre);
 			cs.setInt("in_edad", edad);
-			ResultSet rs = cs.executeQuery();
+			cs.executeQuery();
 			
 			mensaje = "Se ha modificado exitosamente el estado del alumno";
 		}
