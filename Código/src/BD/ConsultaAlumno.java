@@ -52,12 +52,12 @@ public class ConsultaAlumno {
 			cs.setInt("in_edad", alumno.getEdad());
 			cs.executeQuery();
 			
-			mensaje = "Se ha guardado exitosamente al alumno";
+			mensaje = "\nSe ha guardado exitosamente al alumno\n";
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "No se pudo guardad al alumno";
+			mensaje = "\nNo se pudo guardad al alumno\n";
 		}
 		
 		return mensaje;
@@ -84,12 +84,12 @@ public class ConsultaAlumno {
 			cs.setString("in_estado", estado_update);
 			cs.executeQuery();
 			
-			mensaje = "Se ha modificado exitosamente el estado del alumno";
+			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "No se pudo modificar el estado del alumno";
+			mensaje = "/nNo se pudo modificar el estado del alumno/n";
 		}
 		
 		return mensaje;
@@ -108,12 +108,12 @@ public class ConsultaAlumno {
 			cs.setInt("in_edad", edad);
 			cs.executeQuery();
 			
-			mensaje = "Se ha modificado exitosamente el estado del alumno";
+			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "No se pudo modificar el estado del alumno";
+			mensaje = "/nNo se pudo modificar el estado del alumno/n";
 		}
 		
 		

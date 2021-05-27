@@ -32,9 +32,20 @@ public class Utilidades
 	    return validacion;
 	}
 	
-	public static void formatearRun(String run)
+	public static String formatearRun(String run)
 	{
+		String cuerpo, dv;
 		
+		if (!run.contains("-")) 
+		{
+		    cuerpo = run.substring(0,run.length()-1);
+		    dv = run.substring(run.length()-1).toUpperCase();
+		    
+		    /* Formatear RUN*/
+		    run = cuerpo + '-'+ dv;
+		}
+		
+		return run;
 	}
 	
 	public static boolean validarEmail(String email)
