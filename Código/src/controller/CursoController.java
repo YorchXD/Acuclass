@@ -1,6 +1,6 @@
 package controller;
 
-import BD.ConsultaAdministrador;
+import BD.ConsultaCurso;
 import View.Curso.ViewCurso;
 import model.Curso;
 import model.Estado;
@@ -11,12 +11,12 @@ public class CursoController
 {
 	public static Curso buscarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		return ConsultaAdministrador.buscarCurso(nivel, tipoDivisionAnual);
+		return ConsultaCurso.buscarCurso(nivel, tipoDivisionAnual);
 	}
 	
 	public static boolean registrarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		return ConsultaAdministrador.registrarCurso(nivel, tipoDivisionAnual);
+		return ConsultaCurso.registrarCurso(nivel, tipoDivisionAnual);
 	}
 	
 	public static boolean actualizarEstadoCurso(Curso curso)
@@ -29,7 +29,7 @@ public class CursoController
 		{
 			curso.setEstado(Estado.HABILITADO);
 		}
-		return ConsultaAdministrador.actualizarEstadoCurso(curso);
+		return ConsultaCurso.actualizarEstadoCurso(curso);
 	}
 	
 	public static void crear()
