@@ -23,9 +23,9 @@ public class ViewAsignatura
 	
 	public static void verListadoAsignatura(Map<Integer, String> asignaturas)
 	{
-		System.out.println("\n####################Asignaturas registradas####################");
 		if(!asignaturas.isEmpty())
 		{
+			System.out.println("\n####################Asignaturas registradas####################");
 			for (Map.Entry<Integer,String> asignatura : asignaturas.entrySet())
 			{
 				System.out.println(asignatura.getKey() + ". " + asignatura.getValue());
