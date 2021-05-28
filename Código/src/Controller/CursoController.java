@@ -1,11 +1,11 @@
-package controller;
+package Controller;
 
 import BD.ConsultaCurso;
+import Model.Curso;
+import Model.Estado;
+import Model.Nivel;
+import Model.Tipo_Division_Anual;
 import View.Curso.ViewCurso;
-import model.Curso;
-import model.Estado;
-import model.Nivel;
-import model.Tipo_Division_Anual;
 
 public class CursoController
 {

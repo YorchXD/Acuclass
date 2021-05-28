@@ -1,8 +1,9 @@
-package View.Administrador;
+package View.Usuario;
 
+import Controller.AlumnoController;
+import Controller.AsignaturaController;
+import Controller.CursoController;
 import Utilidades.Utilidades;
-import controller.AlumnoController;
-import controller.CursoController;
 
 
 public class ViewUsuario
@@ -12,25 +13,26 @@ public class ViewUsuario
 	{
 		System.out.println("####################Menu Administrador####################");
 		System.out.println("1. Crear Curso");
-		System.out.println("2. Ver curso");
-		System.out.println("3. Habilitar o deshabiliatar curso");
+		System.out.println("2. Ver cursos registrados con su estado");
+		System.out.println("3. Ver curso");
+		System.out.println("4. Habilitar o deshabiliatar curso");
 		
-		System.out.println("4. Crear asignatura");
-		System.out.println("5. Ver asignatura");
-		System.out.println("6. Modificar asignatura");
-		System.out.println("7. Habilitar o deshabiliatar asignatura");
+		System.out.println("5. Crear asignatura");
+		System.out.println("6. Ver asignaturas registradas");
+		System.out.println("7. Modificar asignatura");
+		System.out.println("8. Habilitar o deshabiliatar asignatura");
 		
-		System.out.println("8. Crear unidad");
-		System.out.println("9. Ver unidad");
-		System.out.println("10. Modificar unidad");
-		System.out.println("11. Habilitar o deshabiliatar unidad");
+		System.out.println("9. Crear unidad");
+		System.out.println("10. Ver unidad");
+		System.out.println("11. Modificar unidad");
+		System.out.println("12. Habilitar o deshabiliatar unidad");
 		
-		System.out.println("12. Crear Alumno");
-		System.out.println("13. Ver Alumno");
-		System.out.println("14. Modificar Alumno");
-		System.out.println("15. Habilitar o deshabiliatar Alumno");
+		System.out.println("13. Crear Alumno");
+		System.out.println("14. Ver Alumno");
+		System.out.println("15. Modificar Alumno");
+		System.out.println("16. Habilitar o deshabiliatar Alumno");
 
-		System.out.println("16. Cerrar sesion");
+		System.out.println("17. Cerrar sesion");
 		
 		System.out.print("\nIngrese su opcion: ");
 	}
@@ -51,12 +53,12 @@ public class ViewUsuario
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>16)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>17)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>16);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>17);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -74,45 +76,48 @@ public class ViewUsuario
 					CursoController.crear();
 					break;
 				case 2:
-					CursoController.ver();
+					System.out.println("Listado de cursos registrados");
 					break;
 				case 3:
-					CursoController.modificar();
+					CursoController.ver();
 					break;
 				case 4:
-					System.out.println("Ir a crear asignatura");
+					CursoController.modificar();
 					break;
 				case 5:
-					System.out.println("Ir a ver asignatura");
+					AsignaturaController.crear();
 					break;
 				case 6:
-					System.out.println("Ir a modificar asignatura");
+					AsignaturaController.verAsignaturasRegistradas();
 					break;
 				case 7:
-					System.out.println("Ir a habilitar o deshabilitar asignatura");
+					AsignaturaController.modificar();
 					break;
 				case 8:
-					System.out.println("Ir a crear unidad");
+					System.out.println("Ir a habilitar o deshabilitar asignatura");
 					break;
 				case 9:
-					System.out.println("Ir a ver unidad");
+					System.out.println("Ir a crear unidad");
 					break;
 				case 10:
-					System.out.println("Ir a modificar unidad");
+					System.out.println("Ir a ver unidad");
 					break;
 				case 11:
-					System.out.println("Ir a habilitar o deshabilitar unidad");
+					System.out.println("Ir a modificar unidad");
 					break;
 				case 12:
-					AlumnoController.crear();
+					System.out.println("Ir a habilitar o deshabilitar unidad");
 					break;
 				case 13:
-					AlumnoController.ver();
+					AlumnoController.crear();
 					break;
 				case 14:
-					AlumnoController.modificar();
+					AlumnoController.ver();
 					break;
 				case 15:
+					AlumnoController.modificar();
+					break;
+				case 16:
 					AlumnoController.cambiarEstado();
 					break;
 				default:

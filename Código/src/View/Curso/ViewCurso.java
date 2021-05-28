@@ -1,11 +1,11 @@
 package View.Curso;
 
+import Controller.CursoController;
+import Model.Curso;
+import Model.Estado;
+import Model.Nivel;
+import Model.Tipo_Division_Anual;
 import Utilidades.Utilidades;
-import controller.CursoController;
-import model.Curso;
-import model.Estado;
-import model.Nivel;
-import model.Tipo_Division_Anual;
 
 public class ViewCurso
 {
