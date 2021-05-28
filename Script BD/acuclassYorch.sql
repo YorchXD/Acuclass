@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 27/05/2021 23:19:06
+ Date: 28/05/2021 18:07:16
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,7 @@ CREATE TABLE `asignatura`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for asignatura_curso_referencia_profesor
@@ -248,6 +248,20 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for actualizarNombreAsignatura
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarNombreAsignatura`;
+delimiter ;;
+CREATE PROCEDURE `actualizarNombreAsignatura`(`in_id` INTEGER, `in_nombre` VARCHAR(100))
+BEGIN
+	UPDATE asignatura
+	SET asignatura.nombre = in_nombre
+	WHERE asignatura.id = in_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for buscarAlumno
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `buscarAlumno`;
@@ -289,6 +303,32 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for listarAsignaturas
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `listarAsignaturas`;
+delimiter ;;
+CREATE PROCEDURE `listarAsignaturas`()
+BEGIN
+		SELECT *
+		FROM asignatura;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for listarCursos
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `listarCursos`;
+delimiter ;;
+CREATE PROCEDURE `listarCursos`()
+BEGIN
+	Select *
+	From Curso;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for registrarAlumno
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `registrarAlumno`;
@@ -301,13 +341,25 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for registrarAsignatura
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarAsignatura`;
+delimiter ;;
+CREATE PROCEDURE `registrarAsignatura`(`in_nombre` VARCHAR(50))
+BEGIN
+		INSERT INTO asignatura(asignatura.nombre)
+		VALUES (in_nombre);
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for registrarCurso
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `registrarCurso`;
 delimiter ;;
 CREATE PROCEDURE `registrarCurso`(IN `in_nivel` VARCHAR(30), IN `in_tipoDivAnual` VARCHAR(30))
 BEGIN
-		/*Crea la resolucion*/
 		INSERT INTO curso(curso.nivel, curso.tipoDivisionAnual)
 		VALUES (in_nivel, in_tipoDivAnual);
 END
