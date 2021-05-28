@@ -11,7 +11,7 @@ import model.Nivel;
 import model.Tipo_Division_Anual;
 
 
-public class ConsultaAdministrador
+public class ConsultaCurso
 {
 	public static Curso buscarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
