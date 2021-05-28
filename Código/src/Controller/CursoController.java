@@ -32,6 +32,7 @@ public class CursoController
 		return ConsultaCurso.actualizarEstadoCurso(curso);
 	}
 	
+	
 	public static void crear()
 	{
 		ViewCurso.crear();
@@ -40,6 +41,11 @@ public class CursoController
 	public static void ver()
 	{
 		ViewCurso.ver();
+	}
+	
+	public static void verCursosRegistrados()
+	{
+		ViewCurso.verListadoCurso(ConsultaCurso.listadoCurso());
 	}
 
 	public static void modificar()

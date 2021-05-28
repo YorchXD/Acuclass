@@ -1,5 +1,7 @@
 package View.Curso;
 
+import java.util.Map;
+
 import Controller.CursoController;
 import Model.Curso;
 import Model.Estado;
@@ -176,6 +178,26 @@ public class ViewCurso
 		{
 			System.out.println("\nEl curso no se encuentra registrado\n");
 		}
+	}
+
+	public static void verListadoCurso(Map<Integer, Curso> cursos)
+	{
+		
+		if(!cursos.isEmpty())
+		{
+			System.out.println("\n####################Cursos registrados####################");
+			for (Map.Entry<Integer, Curso> curso : cursos.entrySet())
+			{
+				String [] cursoAux = curso.getValue().getNivel().toString().split("_");
+				System.out.println(curso.getKey() + ". " + cursoAux[0] + " " + cursoAux[1] + ", " + curso.getValue().getTipoDivisionAnual() + ", " + curso.getValue().getEstado());
+			}
+			System.out.println("###############################################################\n");
+		}
+		else
+		{
+			System.out.println("\nNo existen cursos registrados.\n");
+		}
+		
 	}
 	
 }
