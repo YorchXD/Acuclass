@@ -5,9 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Estado;
-import model.TipoUsuario;
-import model.Usuario;
+import Model.Estado;
+import Model.TipoUsuario;
+import Model.Usuario;
 
 public class ConsultaUsuario 
 {

@@ -1,16 +1,16 @@
-package model;
+package Model;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public enum TipoUsuario
+public enum Tipo_Asistencia
 {
-	ADMINISTRADOR(1), PROFESOR(2), APODERADO(3);
+	ASISTE(1), INASISTENTE(2);
 	
 	private int id;
-    private static final Map<Integer, TipoUsuario> MAP = new HashMap<>();
+    private static final Map<Integer, Tipo_Asistencia> MAP = new HashMap<>();
     
-    private TipoUsuario(int id) 
+    private Tipo_Asistencia(int id) 
     { 
     	this.id = id; 
     }
@@ -20,14 +20,14 @@ public enum TipoUsuario
     	return id; 
     }
     
-    public static TipoUsuario getTipoUsuario(int id)
+    public static Tipo_Asistencia getTipoDivAnual(int id)
     {
         return MAP.get(id);
     }
     
     static
     {
-        for(TipoUsuario n : values())
+        for(Tipo_Asistencia n : values())
         {
             MAP.put(n.getId(), n);
         }
