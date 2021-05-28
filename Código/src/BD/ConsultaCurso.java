@@ -5,10 +5,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Curso;
-import model.Estado;
-import model.Nivel;
-import model.Tipo_Division_Anual;
+import Model.Curso;
+import Model.Estado;
+import Model.Nivel;
+import Model.Tipo_Division_Anual;
 
 
 public class ConsultaCurso
