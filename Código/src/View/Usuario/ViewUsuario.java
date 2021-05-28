@@ -76,7 +76,7 @@ public class ViewUsuario
 					CursoController.crear();
 					break;
 				case 2:
-					System.out.println("Listado de cursos registrados");
+					CursoController.verCursosRegistrados();
 					break;
 				case 3:
 					CursoController.ver();
