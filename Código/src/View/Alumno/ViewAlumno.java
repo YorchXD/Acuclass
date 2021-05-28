@@ -1,9 +1,9 @@
 package View.Alumno;
 
 import BD.ConsultaAlumno;
+import Controller.AlumnoController;
+import Model.Alumno;
 import Utilidades.Utilidades;
-import controller.AlumnoController;
-import model.Alumno;
 
 public class ViewAlumno {
 	
@@ -13,8 +13,6 @@ public class ViewAlumno {
 		String nombre;
 		System.out.print("Ingrese el nombre del alumno: ");
 		nombre = Utilidades.extracted().nextLine();
-
-		
 		return nombre;
 	}
 	
@@ -36,7 +34,7 @@ public class ViewAlumno {
 		while(!validar);
 		
 		run= run.replace(".","");
-		run= run.replace(" ","");
+		run= Utilidades.formatearRun(run);
 		
 		
 		return run;

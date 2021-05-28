@@ -1,11 +1,11 @@
-package controller;
+package Controller;
 
 import BD.ConsultaUsuario;
+import Model.Apoderado;
+import Model.Profesor;
+import Model.TipoUsuario;
+import Model.Usuario;
 import View.Login.ViewLogin;
-import model.Apoderado;
-import model.Profesor;
-import model.TipoUsuario;
-import model.Usuario;
 
 public class LoginController 
 {
