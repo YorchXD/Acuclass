@@ -1,5 +1,5 @@
 package Principal;
-import controller.LoginController;
+import Controller.LoginController;
 
 public class Main
 {

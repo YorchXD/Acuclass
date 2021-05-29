@@ -5,8 +5,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Alumno;
-import model.Estado;
+import Model.Alumno;
+import Model.Estado;
 
 
 public class ConsultaAlumno {

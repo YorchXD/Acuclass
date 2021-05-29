@@ -1,7 +1,7 @@
-package controller;
+package Controller;
 
+import Model.Usuario;
 import View.Usuario.ViewUsuario;
-import model.Usuario;
 
 public class UsuarioController
 {

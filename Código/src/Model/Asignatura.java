@@ -1,15 +1,17 @@
-package model;
+package Model;
 
 import java.util.ArrayList;
 
 public class Asignatura
 {
+	private int id;
 	private String nombre;
-	private String estado;
+	private Estado estado;
 	private ArrayList<Unidad> unidades;
 	
-	public Asignatura(String nombre, String estado)
+	public Asignatura(int id, String nombre, Estado estado)
 	{
+		this.id = id;
 		this.nombre = nombre;
 		this.estado = estado;
 		this.unidades = new ArrayList<Unidad>();
@@ -40,12 +42,12 @@ public class Asignatura
 		this.nombre = nombre;
 	}
 
-	public String getEstado()
+	public Estado getEstado()
 	{
 		return estado;
 	}
 
-	public void setEstado(String estado)
+	public void setEstado(Estado estado)
 	{
 		this.estado = estado;
 	}
@@ -53,6 +55,16 @@ public class Asignatura
 	public ArrayList<Unidad> getUnidades()
 	{
 		return unidades;
+	}
+
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 	
 }
