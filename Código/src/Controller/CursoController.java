@@ -45,6 +45,11 @@ public class CursoController
 	{
 		ViewCurso.ver();
 	}
+	
+	public static void verCursosRegistrados()
+	{
+		ViewCurso.verListadoCurso(ConsultaCurso.listadoCurso());
+	}
 
 	public static void modificar()
 	{
@@ -130,15 +135,5 @@ public class CursoController
 		
 	}
 
-	public static void verCursosRegistrados()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 
-	public static void verCursosRegistrados1()
-	{
-		// TODO Auto-generated method stub
-		
-	}
 }
