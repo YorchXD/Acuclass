@@ -49,7 +49,4 @@ public class ProfesorController {
 	{
 		return ConsultaProfesor.UpdateProfesor_estado(profesor);
 	}
-
-
-
 }
