@@ -1,10 +1,8 @@
-package controller;
+package Controller;
 
 import BD.ConsultaProfesor;
 import View.Profesor.ViewProfesor;
-import model.Estado;
-import model.Profesor;
-import model.TipoUsuario;
+import Model.Profesor;
 
 public class ProfesorController {
 
@@ -50,7 +48,4 @@ public class ProfesorController {
 	{
 		return ConsultaProfesor.UpdateProfesor_estado(profesor);
 	}
-
-
-
 }

@@ -4,7 +4,7 @@ import Utilidades.Utilidades;
 import Controller.CursoController;
 import Controller.AlumnoController;
 import Controller.AsignaturaController;
-import controller.ProfesorController;
+import Controller.ProfesorController;
 
 
 public class ViewUsuario
