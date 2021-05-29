@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 29/05/2021 04:14:34
+ Date: 29/05/2021 14:04:34
 */
 
 SET NAMES utf8mb4;
@@ -40,7 +40,7 @@ CREATE TABLE `asignatura`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for asignatura_curso_referencia_profesor
@@ -85,7 +85,7 @@ CREATE TABLE `curso_asignatura`  (
   INDEX `refAsignatura`(`refAsignatura`) USING BTREE,
   CONSTRAINT `curso_asignatura_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_asignatura_ibfk_2` FOREIGN KEY (`refAsignatura`) REFERENCES `asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_referencia
@@ -263,6 +263,18 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for actualizarEstadoProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarEstadoProfesor`;
+delimiter ;;
+CREATE PROCEDURE `actualizarEstadoProfesor`(in_run varchar(100), in_estado varchar(50))
+BEGIN
+	update usuario set estado=in_estado where run=in_run;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for actualizarNombreAsignatura
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `actualizarNombreAsignatura`;
@@ -312,6 +324,18 @@ BEGIN
 		SELECT *
 		FROM curso
 		WHERE curso.nivel = in_nivel AND curso.tipoDivisionAnual=in_tipoDivAnual;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for buscarProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `buscarProfesor`;
+delimiter ;;
+CREATE PROCEDURE `buscarProfesor`(in_run varchar(100),in_tipoUsuario varchar(50))
+BEGIN
+select * from usuario where run=in_run and tipoUsuario=in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -418,6 +442,18 @@ CREATE PROCEDURE `registrarCurso`(IN `in_nivel` VARCHAR(30), IN `in_tipoDivAnual
 BEGIN
 		INSERT INTO curso(curso.nivel, curso.tipoDivisionAnual)
 		VALUES (in_nivel, in_tipoDivAnual);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for registrarProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarProfesor`;
+delimiter ;;
+CREATE PROCEDURE `registrarProfesor`(in_nombre varchar(100), in_run varchar(100), in_tipoUsuario varchar(50), in_especialidad varchar(100), in_email varchar(100), in_clave varchar(100))
+BEGIN
+	insert into usuario (nombre, run, tipoUsuario, especialidad, email, clave)values(in_nombre,in_run,in_tipoUsuario,in_especialidad,in_email,in_clave);
 END
 ;;
 delimiter ;
