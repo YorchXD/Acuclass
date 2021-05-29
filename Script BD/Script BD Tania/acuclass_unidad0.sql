@@ -16,20 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `asignatura`
+-- Table structure for table `unidad`
 --
 
-DROP TABLE IF EXISTS `asignatura`;
+DROP TABLE IF EXISTS `unidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asignatura` (
-  `nombre` varchar(100) NOT NULL,
-  `estado` varchar(50) DEFAULT 'Habilitado',
-  `refCurso` varchar(30) NOT NULL,
-  PRIMARY KEY (`nombre`,`refCurso`),
-  KEY `refCurso` (`refCurso`),
-  CONSTRAINT `asignatura_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`nivel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `unidad` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `numero` int NOT NULL,
+  `divisionAnual` int NOT NULL,
+  `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
+  `refAsignatura` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `refCurso` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -41,4 +43,4 @@ CREATE TABLE `asignatura` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-25 20:48:18
+-- Dump completed on 2021-05-29 12:09:11

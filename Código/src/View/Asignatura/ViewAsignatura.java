@@ -25,12 +25,14 @@ public class ViewAsignatura
 	{
 		if(!asignaturas.isEmpty())
 		{
-			System.out.println("\n####################Asignaturas registradas####################");
+			System.out.println("\n********************************************************");
+			System.out.println("*               Asignaturas registradas                *");
+			System.out.println("********************************************************\n");
 			for (Map.Entry<Integer,String> asignatura : asignaturas.entrySet())
 			{
 				System.out.println(asignatura.getKey() + ". " + asignatura.getValue());
 			}
-			System.out.println("###############################################################\n");
+			System.out.println("********************************************************\n");
 		}
 		else
 		{
@@ -47,12 +49,14 @@ public class ViewAsignatura
 			boolean validar = false;
 			do
 			{
-				System.out.println("\n####################Menu de asignaturas registradas####################");
+				System.out.println("\n********************************************************");
+				System.out.println("*             Menu asignaturas registradas             *");
+				System.out.println("********************************************************\n");
 				for (Map.Entry<Integer,String> asignatura : asignaturas.entrySet())
 				{
 					System.out.println(asignatura.getKey() + ". " + asignatura.getValue());
 				}
-				System.out.println("########################################################################\n");
+				System.out.println("********************************************************\n");
 				System.out.print("\nIngrese su opcion: ");
 				
 				opcion = Utilidades.extracted().nextLine();

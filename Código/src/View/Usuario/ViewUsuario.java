@@ -1,17 +1,20 @@
 package View.Usuario;
 
+import Utilidades.Utilidades;
+import Controller.CursoController;
 import Controller.AlumnoController;
 import Controller.AsignaturaController;
-import Controller.CursoController;
-import Utilidades.Utilidades;
-
+import Controller.ProfesorController;
 
 public class ViewUsuario
 {
 	/*Opciones administrador*/
 	public static void menuAdministrador()
 	{
-		System.out.println("####################Menu Administrador####################");
+		System.out.println("\n********************************************************");
+		System.out.println("*                   Menu Administrador                 *");
+		System.out.println("********************************************************\n");
+		
 		System.out.println("1. Crear Curso");
 		System.out.println("2. Ver cursos registrados con su estado");
 		System.out.println("3. Ver curso");
@@ -36,9 +39,15 @@ public class ViewUsuario
 		System.out.println("18. Modificar Alumno");
 		System.out.println("19. Habilitar o deshabiliatar Alumno");
 
-		System.out.println("20. Cerrar sesion");
+		System.out.println("20. Crear Profesor");
+		System.out.println("21. Ver Profesor");
+		System.out.println("22. Modificar Profesor");
+		System.out.println("23. Habilitar o deshabiliatar Profesor");
+
+		System.out.println("24. Cerrar sesion");
+		System.out.println("********************************************************\n");
 		
-		System.out.print("\nIngrese su opcion: ");
+		System.out.print("Ingrese su opcion: ");
 	}
 	
 	public static int accionEjecucionAdministrador()
@@ -56,12 +65,12 @@ public class ViewUsuario
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>20)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>24)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>20);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>24);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -97,13 +106,13 @@ public class ViewUsuario
 					AsignaturaController.modificar();
 					break;
 				case 8:
-					System.out.println("Asociar asignatura a curso");
+					CursoController.asociarAsignatura();
 					break;
 				case 9:
-					System.out.println("Ver listado de asignaturas asociadas a un curso");
+					CursoController.verListadoAsignaturasCurso();
 					break;
 				case 10:
-					System.out.println("Modificar estado de asignatura asociada a un curso");
+					CursoController.cambiarEstadoAsignatura();
 					break;
 				case 11:
 					System.out.println("Quitar asignatura de curso");
@@ -132,12 +141,24 @@ public class ViewUsuario
 				case 19:
 					AlumnoController.cambiarEstado();
 					break;
+				case 20:
+					ProfesorController.crear();
+					break;
+				case 21:
+					ProfesorController.ver();
+					break;
+				case 22:
+					ProfesorController.modificar();
+					break;
+				case 23:
+					ProfesorController.cambiarEstado();
+					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=20);
+		while(opcion!=24);
 	}
 	/*Fin opciones administrador*/
 	

@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 28/05/2021 18:07:16
+ Date: 29/05/2021 14:04:34
 */
 
 SET NAMES utf8mb4;
@@ -30,7 +30,7 @@ CREATE TABLE `alumno`  (
   PRIMARY KEY (`run`) USING BTREE,
   INDEX `refApoderado`(`refApoderado`) USING BTREE,
   CONSTRAINT `alumno_ibfk_1` FOREIGN KEY (`refApoderado`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for asignatura
@@ -40,7 +40,7 @@ CREATE TABLE `asignatura`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for asignatura_curso_referencia_profesor
@@ -57,18 +57,19 @@ CREATE TABLE `asignatura_curso_referencia_profesor`  (
   CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_1` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`) REFERENCES `curso_referencia` (`letra`, `año`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_2` FOREIGN KEY (`refProfesor`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_3` FOREIGN KEY (`refCursoAsignatura`) REFERENCES `curso_asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso
 -- ----------------------------
 DROP TABLE IF EXISTS `curso`;
 CREATE TABLE `curso`  (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nivel` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `tipoDivisionAnual` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
-  PRIMARY KEY (`nivel`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_asignatura
@@ -76,15 +77,15 @@ CREATE TABLE `curso`  (
 DROP TABLE IF EXISTS `curso_asignatura`;
 CREATE TABLE `curso_asignatura`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `refCurso` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `refCurso` int NOT NULL,
   `refAsignatura` int NOT NULL,
   `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `refCurso`(`refCurso`) USING BTREE,
   INDEX `refAsignatura`(`refAsignatura`) USING BTREE,
-  CONSTRAINT `curso_asignatura_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`nivel`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `curso_asignatura_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_asignatura_ibfk_2` FOREIGN KEY (`refAsignatura`) REFERENCES `asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_referencia
@@ -93,14 +94,14 @@ DROP TABLE IF EXISTS `curso_referencia`;
 CREATE TABLE `curso_referencia`  (
   `letra` varchar(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `año` int NOT NULL,
-  `refCurso` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `refCurso` int NOT NULL,
   `refProfesorEncargado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  PRIMARY KEY (`letra`, `año`) USING BTREE,
+  PRIMARY KEY (`letra`, `año`, `refCurso`) USING BTREE,
   INDEX `refCurso`(`refCurso`) USING BTREE,
   INDEX `refProfesorEncargado`(`refProfesorEncargado`) USING BTREE,
-  CONSTRAINT `curso_referencia_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`nivel`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `curso_referencia_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_referencia_ibfk_2` FOREIGN KEY (`refProfesorEncargado`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_referencia_alumno
@@ -114,7 +115,7 @@ CREATE TABLE `curso_referencia_alumno`  (
   INDEX `refLetraCurso`(`refLetraCurso`, `refAñoCurso`) USING BTREE,
   CONSTRAINT `curso_referencia_alumno_ibfk_1` FOREIGN KEY (`refAlumno`) REFERENCES `alumno` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`) REFERENCES `curso_referencia` (`letra`, `año`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for modulo
@@ -124,7 +125,7 @@ CREATE TABLE `modulo`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for operaciones
@@ -137,7 +138,7 @@ CREATE TABLE `operaciones`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `refModulo`(`refModulo`) USING BTREE,
   CONSTRAINT `operaciones_ibfk_1` FOREIGN KEY (`refModulo`) REFERENCES `modulo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rol
@@ -147,7 +148,7 @@ CREATE TABLE `rol`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rol_operacion
@@ -162,7 +163,7 @@ CREATE TABLE `rol_operacion`  (
   INDEX `refRol`(`refRol`) USING BTREE,
   CONSTRAINT `rol_operacion_ibfk_1` FOREIGN KEY (`refOperacion`) REFERENCES `operaciones` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `rol_operacion_ibfk_2` FOREIGN KEY (`refRol`) REFERENCES `rol` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for unidad
@@ -177,7 +178,7 @@ CREATE TABLE `unidad`  (
   `refAsignatura` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `refCurso` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for usuario
@@ -192,7 +193,7 @@ CREATE TABLE `usuario`  (
   `email` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `clave` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`run`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for usuario_rol
@@ -207,7 +208,7 @@ CREATE TABLE `usuario_rol`  (
   INDEX `refRol`(`refRol`) USING BTREE,
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`refUsuario`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`refRol`) REFERENCES `rol` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Procedure structure for actualizarAlumno
@@ -234,6 +235,20 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for actualizarEstadoAsignatura
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarEstadoAsignatura`;
+delimiter ;;
+CREATE PROCEDURE `actualizarEstadoAsignatura`(`in_id` int, `in_estado` VARCHAR(50))
+BEGIN
+	UPDATE curso_asignatura
+	SET curso_asignatura.estado = in_estado
+	WHERE curso_asignatura.id = in_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for actualizarEstadoCurso
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `actualizarEstadoCurso`;
@@ -243,6 +258,18 @@ BEGIN
 	UPDATE curso
 	SET curso.estado = in_estado
 	WHERE curso.nivel = in_nivel AND curso.tipoDivisionAnual = in_tipoDivAnual;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for actualizarEstadoProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarEstadoProfesor`;
+delimiter ;;
+CREATE PROCEDURE `actualizarEstadoProfesor`(in_run varchar(100), in_estado varchar(50))
+BEGIN
+	update usuario set estado=in_estado where run=in_run;
 END
 ;;
 delimiter ;
@@ -274,6 +301,20 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for buscarAsociacionCursoAsignatura
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `buscarAsociacionCursoAsignatura`;
+delimiter ;;
+CREATE PROCEDURE `buscarAsociacionCursoAsignatura`(IN `in_refCurso` INTEGER, IN `in_refAsignatura` INTEGER)
+BEGIN
+		SELECT id
+		FROM curso_asignatura
+		WHERE curso_asignatura.refCurso = in_refCurso AND curso_asignatura.refAsignatura=in_refAsignatura;
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for buscarCurso
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `buscarCurso`;
@@ -283,6 +324,18 @@ BEGIN
 		SELECT *
 		FROM curso
 		WHERE curso.nivel = in_nivel AND curso.tipoDivisionAnual=in_tipoDivAnual;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for buscarProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `buscarProfesor`;
+delimiter ;;
+CREATE PROCEDURE `buscarProfesor`(in_run varchar(100),in_tipoUsuario varchar(50))
+BEGIN
+select * from usuario where run=in_run and tipoUsuario=in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -311,6 +364,20 @@ CREATE PROCEDURE `listarAsignaturas`()
 BEGIN
 		SELECT *
 		FROM asignatura;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for listarAsignaturasCursos
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `listarAsignaturasCursos`;
+delimiter ;;
+CREATE PROCEDURE `listarAsignaturasCursos`(IN `in_refCurso` INTEGER)
+BEGIN
+		SELECT Asignatura.id, Asignatura.nombre, curso_asignatura.estado
+		FROM asignatura
+		JOIN curso_asignatura ON curso_asignatura.refAsignatura = asignatura.id AND curso_asignatura.refCurso = in_refCurso;
 END
 ;;
 delimiter ;
@@ -354,6 +421,19 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for registrarAsociacionCursoAsignatura
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarAsociacionCursoAsignatura`;
+delimiter ;;
+CREATE PROCEDURE `registrarAsociacionCursoAsignatura`(IN `in_refCurso` INTEGER, IN `in_refAsignatura` INTEGER)
+BEGIN
+		INSERT INTO curso_asignatura(curso_asignatura.refCurso,curso_asignatura.refAsignatura)
+		VALUES (in_refCurso, in_refAsignatura);
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for registrarCurso
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `registrarCurso`;
@@ -362,6 +442,18 @@ CREATE PROCEDURE `registrarCurso`(IN `in_nivel` VARCHAR(30), IN `in_tipoDivAnual
 BEGIN
 		INSERT INTO curso(curso.nivel, curso.tipoDivisionAnual)
 		VALUES (in_nivel, in_tipoDivAnual);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for registrarProfesor
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarProfesor`;
+delimiter ;;
+CREATE PROCEDURE `registrarProfesor`(in_nombre varchar(100), in_run varchar(100), in_tipoUsuario varchar(50), in_especialidad varchar(100), in_email varchar(100), in_clave varchar(100))
+BEGIN
+	insert into usuario (nombre, run, tipoUsuario, especialidad, email, clave)values(in_nombre,in_run,in_tipoUsuario,in_especialidad,in_email,in_clave);
 END
 ;;
 delimiter ;

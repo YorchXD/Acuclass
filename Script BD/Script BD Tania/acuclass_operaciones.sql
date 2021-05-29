@@ -16,22 +16,20 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `usuario`
+-- Table structure for table `operaciones`
 --
 
-DROP TABLE IF EXISTS `usuario`;
+DROP TABLE IF EXISTS `operaciones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usuario` (
-  `nombre` varchar(100) NOT NULL,
-  `run` varchar(100) NOT NULL,
-  `tipoUsuario` varchar(50) NOT NULL,
-  `especialidad` varchar(100) DEFAULT NULL,
-  `estado` varchar(50) DEFAULT 'Habilitado',
-  `email` varchar(100) NOT NULL,
-  `clave` varchar(100) NOT NULL,
-  PRIMARY KEY (`run`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `operaciones` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `refModulo` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `refModulo` (`refModulo`) USING BTREE,
+  CONSTRAINT `operaciones_ibfk_1` FOREIGN KEY (`refModulo`) REFERENCES `modulo` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -43,4 +41,4 @@ CREATE TABLE `usuario` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-25 20:48:18
+-- Dump completed on 2021-05-29 12:09:11
