@@ -2,8 +2,8 @@ package View.Alumno;
 
 import BD.ConsultaAlumno;
 import Utilidades.Utilidades;
-import controller.AlumnoController;
-import model.Alumno;
+import Controller.AlumnoController;
+import Model.Alumno;
 
 public class ViewAlumno {
 	
