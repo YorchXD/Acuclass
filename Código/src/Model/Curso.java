@@ -1,26 +1,30 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Curso
 {
 	private Nivel nivel;
-	private ArrayList<Asignatura> asignaturas;
+	private Map<Integer, Asignatura> asignaturas;
 	private Tipo_Division_Anual tipoDivisionAnual;
 	private Estado estado;
+	private int id;
 	
 	public Curso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
 		this.nivel = nivel;
-		this.asignaturas = new ArrayList<Asignatura>();
+		this.asignaturas = new HashMap<>();
 		this.tipoDivisionAnual = tipoDivisionAnual;
 		this.estado = Estado.HABILITADO;
 	}
 	
-	public Curso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual, Estado estado)
+	public Curso(int id, Nivel nivel, Tipo_Division_Anual tipoDivisionAnual, Estado estado)
 	{
+		this.id = id;
 		this.nivel = nivel;
-		this.asignaturas = new ArrayList<Asignatura>();
+		this.asignaturas = new HashMap<>();
 		this.tipoDivisionAnual = tipoDivisionAnual;
 		this.estado = estado;
 	}
@@ -28,16 +32,6 @@ public class Curso
 	public Asignatura getAsignatura(int index)
 	{
 		return asignaturas.get(index);
-	}
-
-	public boolean addAsignatura(Asignatura e)
-	{
-		return asignaturas.add(e);
-	}
-
-	public Asignatura removeAsignatura(int index)
-	{
-		return asignaturas.remove(index);
 	}
 
 	public Nivel getNivel()
@@ -50,9 +44,14 @@ public class Curso
 		this.nivel = nivel;
 	}
 
-	public ArrayList<Asignatura> getAsignaturas()
+	public Map<Integer, Asignatura> getAsignaturas()
 	{
 		return asignaturas;
+	}
+	
+	public void setAsignaturas(Map<Integer, Asignatura> asignaturas)
+	{
+		this.asignaturas = asignaturas;
 	}
 
 	public Tipo_Division_Anual getTipoDivisionAnual()
@@ -75,6 +74,16 @@ public class Curso
 		this.estado = estado;
 	}
 	
+	public int getId()
+	{
+		return id;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+
 	public void mostrarDatos()
 	{
 		String [] nivel = this.nivel.toString().split("_");
