@@ -1,9 +1,9 @@
 package View.Login;
 
 import Utilidades.Utilidades;
-import controller.LoginController;
-import model.TipoUsuario;
-import model.Usuario;
+import Controller.LoginController;
+import Model.TipoUsuario;
+import Model.Usuario;
 
 public class ViewLogin 
 {
@@ -11,14 +11,17 @@ public class ViewLogin
 	public static void menuTipoUsuario()
 	{
 		TipoUsuario[] tipoUsuarios = TipoUsuario.values();
-		System.out.println("Tipos de usuarios: ");
+		System.out.println("\n********************************************************");
+		System.out.println("*             Seleccione el tipo de usuario            *");
+		System.out.println("********************************************************\n");
 		
 		for (int i = 0; i< tipoUsuarios.length; i++)
 		{
 			System.out.println((i+1) + ". " + tipoUsuarios[i]);
 		}
+		System.out.println("********************************************************\n");
 		
-		System.out.print("\nIngrese su opcion: ");
+		System.out.print("Ingrese su opcion: ");
 	}
 	
 	public static TipoUsuario solicitarTipoUsuario()
@@ -26,7 +29,9 @@ public class ViewLogin
 		String opcion;
 		boolean validar;
 	
-		System.out.println("################LOGIN#####################");
+		System.out.println("\n********************************************************");
+		System.out.println("************************Login***************************");
+		System.out.println("********************************************************\n");
 		do
 		{
 			menuTipoUsuario();
