@@ -1,6 +1,6 @@
 package controller;
 
-import View.Administrador.ViewUsuario;
+import View.Usuario.ViewUsuario;
 import model.Usuario;
 
 public class UsuarioController
