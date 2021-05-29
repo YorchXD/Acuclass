@@ -5,9 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Model.Estado;
-import Model.TipoUsuario;
-import Model.Usuario;
+import model.Estado;
+import model.TipoUsuario;
+import model.Usuario;
 
 public class ConsultaUsuario 
 {
@@ -21,6 +21,9 @@ public class ConsultaUsuario
 			cs.setString("in_email", email);
 			cs.setString("in_clave", clave);
 			cs.setString("in_tipoUsuario", tipoUsuario.toString());
+			System.out.println("email :" + email);
+			System.out.println("clave :" + clave);
+			System.out.println("tipo_usuario:" + tipoUsuario.toString());
 			
 			ResultSet rs = cs.executeQuery();
 			
