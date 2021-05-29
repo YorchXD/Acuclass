@@ -1,7 +1,5 @@
 package View.Profesor;
 
-
-
 import BD.ConsultaProfesor;
 import Utilidades.Utilidades;
 import Controller.ProfesorController;
@@ -87,8 +85,6 @@ public class ViewProfesor {
 		System.out.println("--------------------------------------------------------- ");
 		Profesor profesor = null;
 		String nombre, run, especialidad, email, clave, mensaje;
-		Estado estado;
-		TipoUsuario tipoUsuario;
 		Boolean confirmacion=false;
 		
 		run = solicitarRun();
@@ -96,13 +92,11 @@ public class ViewProfesor {
 		
 		if(profesor!=null) 
 		{
-			
-			
-				nombre = solicitarNombre();
-				email = solicitarEmail();
-				clave=solicitarClave();
-				especialidad = solicitarEspecialidad();
-				confirmacion= solicitarRespuesta(); 
+			nombre = solicitarNombre();
+			email = solicitarEmail();
+			clave=solicitarClave();
+			especialidad = solicitarEspecialidad();
+			confirmacion= solicitarRespuesta(); 
 
 			if(confirmacion) 
 			{
@@ -119,11 +113,6 @@ public class ViewProfesor {
 			System.out.println("\n\n	El profesor no se encuentra registrado ");
 			System.out.println("\n\n------------------------------------------- ");
 		}
-		
-		
-		
-		
-		
 	}
 
 	public static void cambiarEstado() {
@@ -161,8 +150,6 @@ public class ViewProfesor {
 			System.out.println("\n\n------------------------------------------- ");
 			mensaje="profesor no registrado";
 		}
-
-		
 	}
 
 	public static String solicitarNombre()
@@ -171,7 +158,6 @@ public class ViewProfesor {
 		System.out.print("Ingrese el nombre del profesor: ");
 		nombre = Utilidades.extracted().nextLine();
 
-		
 		return nombre;
 	}
 	
@@ -194,8 +180,7 @@ public class ViewProfesor {
 		
 		run= run.replace(".","");
 		run= Utilidades.formatearRun(run);
-		
-		
+
 		return run;
 	}
 	
@@ -212,8 +197,8 @@ public class ViewProfesor {
 			{
 				System.out.println("Debe ingresar un email valido. Favor de ingresarlo nuevamente.\n");
 			}
-			
-		}while(!validar);
+		}
+		while(!validar);
 		
 		return email;
 	}
@@ -240,10 +225,8 @@ public class ViewProfesor {
 		boolean respuesta = false;
 		do 
 		{
-			
 			System.out.print("Desea modificar al profesor (SI o NO): ");
 			mensaje = Utilidades.extracted().nextLine().toUpperCase();
-
 		} 
 		while (!mensaje.equals("SI") && !mensaje.equals("NO"));
 		
