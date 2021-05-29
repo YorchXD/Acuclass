@@ -6,7 +6,6 @@ import Controller.AlumnoController;
 import Controller.AsignaturaController;
 import Controller.ProfesorController;
 
-
 public class ViewUsuario
 {
 	/*Opciones administrador*/

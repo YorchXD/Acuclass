@@ -1,5 +1,7 @@
 package View.Curso;
 
+import Utilidades.Utilidades;
+
 import java.util.Map;
 
 import Controller.CursoController;
@@ -8,7 +10,6 @@ import Model.Curso;
 import Model.Estado;
 import Model.Nivel;
 import Model.Tipo_Division_Anual;
-import Utilidades.Utilidades;
 
 public class ViewCurso
 {
@@ -34,7 +35,7 @@ public class ViewCurso
 		boolean validar = false;
 		do
 		{
-			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			System.out.print("El estado actual es: " + estado + ". ï¿½Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 			if(!validar )
