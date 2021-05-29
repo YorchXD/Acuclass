@@ -9,17 +9,18 @@ import Model.Curso;
 import Model.Estado;
 import Model.Nivel;
 import Model.Tipo_Division_Anual;
+import View.Curso.ViewCurso;
 
 public class CursoController
 {
 	public static Curso buscarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		return ConsultaAdministrador.buscarCurso(nivel, tipoDivisionAnual);
+		return ConsultaCurso.buscarCurso(nivel, tipoDivisionAnual);
 	}
 	
 	public static boolean registrarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		return ConsultaAdministrador.registrarCurso(nivel, tipoDivisionAnual);
+		return ConsultaCurso.registrarCurso(nivel, tipoDivisionAnual);
 	}
 	
 	public static boolean actualizarEstadoCurso(Curso curso)
@@ -32,7 +33,7 @@ public class CursoController
 		{
 			curso.setEstado(Estado.HABILITADO);
 		}
-		return ConsultaAdministrador.actualizarEstadoCurso(curso);
+		return ConsultaCurso.actualizarEstadoCurso(curso);
 	}
 	
 	public static void crear()
@@ -126,6 +127,18 @@ public class CursoController
 		}
 		
 		ViewCurso.cambiarEstadoAsignatura(cursos);
+		
+	}
+
+	public static void verCursosRegistrados()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void verCursosRegistrados1()
+	{
+		// TODO Auto-generated method stub
 		
 	}
 }

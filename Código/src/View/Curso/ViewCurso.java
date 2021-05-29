@@ -1,6 +1,9 @@
 package View.Curso;
 
 import Utilidades.Utilidades;
+
+import java.util.Map;
+
 import Controller.CursoController;
 import Model.Asignatura;
 import Model.Curso;
