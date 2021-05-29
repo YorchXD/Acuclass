@@ -4,10 +4,10 @@ package View.Profesor;
 
 import BD.ConsultaProfesor;
 import Utilidades.Utilidades;
-import controller.ProfesorController;
-import model.Estado;
-import model.Profesor;
-import model.TipoUsuario;
+import Controller.ProfesorController;
+import Model.Estado;
+import Model.Profesor;
+import Model.TipoUsuario;
 
 public class ViewProfesor {
 

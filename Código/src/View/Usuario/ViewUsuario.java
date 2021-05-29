@@ -1,9 +1,9 @@
 package View.Usuario;
 
 import Utilidades.Utilidades;
-import controller.AlumnoController;
-import controller.CursoController;
-import controller.ProfesorController;
+import Controller.AlumnoController;
+import Controller.CursoController;
+import Controller.ProfesorController;
 
 
 public class ViewUsuario

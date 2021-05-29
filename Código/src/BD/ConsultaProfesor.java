@@ -4,9 +4,9 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.Estado;
-import model.Profesor;
-import model.TipoUsuario;
+import Model.Estado;
+import Model.Profesor;
+import Model.TipoUsuario;
 
 
 public class ConsultaProfesor {

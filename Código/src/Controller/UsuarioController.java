@@ -1,6 +1,5 @@
 package Controller;
 
-import model.Usuario;
 import Model.Usuario;
 import View.Usuario.ViewUsuario;
 

@@ -1,9 +1,9 @@
-package controller;
+package Controller;
 
 import BD.ConsultaAlumno;
 import View.Alumno.ViewAlumno;
-import model.Alumno;
-import model.Estado;
+import Model.Alumno;
+import Model.Estado;
 
 public class AlumnoController
 {
