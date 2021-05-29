@@ -1,9 +1,9 @@
 package View.Login;
 
+import Utilidades.Utilidades;
 import Controller.LoginController;
 import Model.TipoUsuario;
 import Model.Usuario;
-import Utilidades.Utilidades;
 
 public class ViewLogin 
 {

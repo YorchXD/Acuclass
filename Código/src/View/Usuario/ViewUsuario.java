@@ -1,10 +1,10 @@
 package View.Usuario;
 
+import Utilidades.Utilidades;
+import Controller.CursoController;
 import Controller.AlumnoController;
 import Controller.AsignaturaController;
-import Controller.CursoController;
-import Utilidades.Utilidades;
-
+import Controller.ProfesorController;
 
 public class ViewUsuario
 {
@@ -142,16 +142,16 @@ public class ViewUsuario
 					AlumnoController.cambiarEstado();
 					break;
 				case 20:
-					//ProfesorController.crear();
+					ProfesorController.crear();
 					break;
 				case 21:
-					//ProfesorController.ver();
+					ProfesorController.ver();
 					break;
 				case 22:
-					//ProfesorController.modificar();
+					ProfesorController.modificar();
 					break;
 				case 23:
-					//ProfesorController.cambiarEstado();
+					ProfesorController.cambiarEstado();
 					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");

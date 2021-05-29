@@ -16,25 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `asignatura_cursoreferencia_profesor`
+-- Table structure for table `usuario`
 --
 
-DROP TABLE IF EXISTS `asignatura_cursoreferencia_profesor`;
+DROP TABLE IF EXISTS `usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `asignatura_cursoreferencia_profesor` (
-  `refLetraCurso` varchar(1) NOT NULL,
-  `refAñoCurso` int NOT NULL,
-  `refAsignatura` varchar(100) NOT NULL,
-  `refCursoAsignatura` varchar(30) NOT NULL,
-  `refProfesor` varchar(50) NOT NULL,
-  KEY `refAsignatura` (`refAsignatura`,`refCursoAsignatura`),
-  KEY `refLetraCurso` (`refLetraCurso`,`refAñoCurso`),
-  KEY `refProfesor` (`refProfesor`),
-  CONSTRAINT `asignatura_cursoreferencia_profesor_ibfk_1` FOREIGN KEY (`refAsignatura`, `refCursoAsignatura`) REFERENCES `asignatura` (`nombre`, `refCurso`),
-  CONSTRAINT `asignatura_cursoreferencia_profesor_ibfk_2` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`) REFERENCES `cursoreferencia` (`letra`, `año`),
-  CONSTRAINT `asignatura_cursoreferencia_profesor_ibfk_3` FOREIGN KEY (`refProfesor`) REFERENCES `usuario` (`run`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `usuario` (
+  `nombre` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `run` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `tipoUsuario` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `especialidad` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
+  `email` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `clave` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  PRIMARY KEY (`run`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -46,4 +43,4 @@ CREATE TABLE `asignatura_cursoreferencia_profesor` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-25 20:48:18
+-- Dump completed on 2021-05-29 12:09:12

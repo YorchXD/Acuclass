@@ -10,6 +10,8 @@ public class Profesor extends Usuario
 		this.especialidad = especialidad;
 	}
 	
+
+	
 	public Profesor(Usuario usuario)
 	{
 		super(usuario.getNombre(), usuario.getEmail(), usuario.getClave(), usuario.getEstado(), usuario.getRun(), usuario.getTipoUsuario());

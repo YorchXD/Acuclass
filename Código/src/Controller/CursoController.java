@@ -36,7 +36,6 @@ public class CursoController
 		return ConsultaCurso.actualizarEstadoCurso(curso);
 	}
 	
-	
 	public static void crear()
 	{
 		ViewCurso.crear();
@@ -135,4 +134,6 @@ public class CursoController
 		ViewCurso.cambiarEstadoAsignatura(cursos);
 		
 	}
+
+
 }
