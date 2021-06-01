@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,11 +26,6 @@ public class Curso
 		this.asignaturas = new HashMap<>();
 		this.tipoDivisionAnual = tipoDivisionAnual;
 		this.estado = estado;
-	}
-
-	public Asignatura getAsignatura(int index)
-	{
-		return asignaturas.get(index);
 	}
 
 	public Nivel getNivel()
