@@ -61,7 +61,6 @@ public class CursoController
 		Map<Integer, Curso> cursos = ConsultaCurso.listadoCurso();
 		Map<Integer, String> asignaturas = ConsultaAsignatura.listadoAsignaturas();
 		ViewCurso.asociarAsignatura(cursos, asignaturas);
-		
 	}
 
 	public static String registrarAsociacionCurso(int idCurso, int idAsignatura)
@@ -93,7 +92,7 @@ public class CursoController
 		
 		for (Map.Entry<Integer,Curso> curso : cursos.entrySet())
 		{
-			curso.getValue().setAsignaturas(ConsultaCurso.buscarAsignaturasCurso(curso.getKey()));
+			ConsultaCurso.buscarAsignaturasCurso(curso.getValue());
 		}
 		ViewCurso.verListadoAsignaturasCurso(cursos);
 	}
@@ -128,7 +127,7 @@ public class CursoController
 		
 		for (Map.Entry<Integer,Curso> curso : cursos.entrySet())
 		{
-			curso.getValue().setAsignaturas(ConsultaCurso.buscarAsignaturasCurso(curso.getKey()));
+			ConsultaCurso.buscarAsignaturasCurso(curso.getValue());
 		}
 		
 		ViewCurso.cambiarEstadoAsignatura(cursos);

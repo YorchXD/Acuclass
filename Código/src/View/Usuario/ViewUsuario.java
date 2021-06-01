@@ -5,6 +5,7 @@ import Controller.CursoController;
 import Controller.AlumnoController;
 import Controller.AsignaturaController;
 import Controller.ProfesorController;
+import Controller.UnidadController;
 
 public class ViewUsuario
 {
@@ -30,7 +31,7 @@ public class ViewUsuario
 		System.out.println("11. Quitar asignatura de un curso");
 		
 		System.out.println("12. Crear unidad");
-		System.out.println("13. Ver unidad");
+		System.out.println("13. Ver unidades de una asignatura de un curso");
 		System.out.println("14. Modificar unidad");
 		System.out.println("15. Habilitar o deshabiliatar unidad");
 		
@@ -118,16 +119,16 @@ public class ViewUsuario
 					System.out.println("Quitar asignatura de curso");
 					break;
 				case 12:
-					System.out.println("Ir a crear unidad");
+					UnidadController.crear();
 					break;
 				case 13:
-					System.out.println("Ir a ver unidad");
+					UnidadController.verListadoUnidades();
 					break;
 				case 14:
-					System.out.println("Ir a modificar unidad");
+					UnidadController.modificar();
 					break;
 				case 15:
-					System.out.println("Ir a habilitar o deshabilitar unidad");
+					UnidadController.cambiarEstadoUnidad();
 					break;
 				case 16:
 					AlumnoController.crear();
