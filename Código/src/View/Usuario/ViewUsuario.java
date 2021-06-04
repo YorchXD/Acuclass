@@ -3,6 +3,7 @@ package View.Usuario;
 import Utilidades.Utilidades;
 import Controller.CursoController;
 import Controller.AlumnoController;
+import Controller.ApoderadoController;
 import Controller.AsignaturaController;
 import Controller.ProfesorController;
 import Controller.UnidadController;
@@ -44,8 +45,13 @@ public class ViewUsuario
 		System.out.println("21. Ver Profesor");
 		System.out.println("22. Modificar Profesor");
 		System.out.println("23. Habilitar o deshabiliatar Profesor");
+		
+		System.out.println("24. Crear Apoderado");
+		System.out.println("25. Ver Apoderado");
+		System.out.println("26. Modificar Apoderado");
+		System.out.println("27. Habilitar o deshabiliatar Apoderado");
 
-		System.out.println("24. Cerrar sesion");
+		System.out.println("28. Cerrar sesion");
 		System.out.println("********************************************************\n");
 		
 		System.out.print("Ingrese su opcion: ");
@@ -66,12 +72,12 @@ public class ViewUsuario
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>24)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>28)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>24);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>28);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -154,12 +160,24 @@ public class ViewUsuario
 				case 23:
 					ProfesorController.cambiarEstado();
 					break;
+				case 24:
+					ApoderadoController.crear();
+					break;
+				case 25:
+					ApoderadoController.ver();
+					break;
+				case 26:
+					ApoderadoController.modificar();
+					break;
+				case 27:
+					ApoderadoController.cambiarEstado();
+					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=24);
+		while(opcion!=28);
 	}
 	/*Fin opciones administrador*/
 	

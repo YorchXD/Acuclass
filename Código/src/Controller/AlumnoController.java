@@ -36,18 +36,48 @@ public class AlumnoController
 	
 	public static String registrarAlumno(String nombre, String run,int edad)
 	{
+		String mensaje = "";
 		Alumno alumno = new Alumno(nombre, run, edad, Estado.HABILITADO);
-		return ConsultaAlumno.insertarAlumno(alumno);
+		boolean validar = ConsultaAlumno.insertarAlumno(alumno);
+		if(validar==true)
+		{
+			mensaje = "\nSe ha guardado exitosamente al alumno\n";
+		}
+		else
+		{
+			mensaje = "\nNo se pudo guardado al alumno\n";
+		}
+		return mensaje;
 	}
 	
 	public static String actualizarAlumno(String nombre, String run, int edad)
 	{
-		return ConsultaAlumno.UpdateAlumno(nombre, run, edad);
+		String mensaje = "";
+		boolean validar = ConsultaAlumno.UpdateAlumno(nombre, run, edad);
+		if(validar==true)
+		{
+			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+		}
+		else
+		{
+			mensaje = "/nNo se pudo modificar el estado del alumno/n";
+		}
+		return mensaje;
 	}
 	
 	public static String modificarEstadoAlumno(Alumno alumno)
 	{
-		return ConsultaAlumno.UpdateAlumno_estado(alumno);
+		String mensaje = "";
+		boolean validar = ConsultaAlumno.UpdateAlumno_estado(alumno); 
+		if(validar==true)
+		{
+			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+		}
+		else
+		{
+			mensaje = "/nNo se pudo modificar el estado del alumno/n";
+		}
+		return mensaje;
 	}
 
 }
