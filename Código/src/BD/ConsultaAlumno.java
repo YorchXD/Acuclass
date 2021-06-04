@@ -8,42 +8,39 @@ import java.sql.SQLException;
 import Model.Alumno;
 import Model.Estado;
 
+public class ConsultaAlumno
+{
 
-public class ConsultaAlumno {
-
-	public static Alumno consultarAlumno_run(String run) {
+	public static Alumno consultarAlumno_run(String run)
+	{
 		Connection conexion = Conexion.conectar();
 		Alumno alumno = null;
-		
+
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call buscarAlumno(?)}");
 			cs.setString("in_run", run);
-			
+
 			ResultSet rs = cs.executeQuery();
-			
-			while(rs.next())
+
+			while (rs.next())
 			{
-				alumno = new Alumno (
-						rs.getString("nombre"),
-						rs.getString("run"),
-						rs.getInt("edad"),
-						Estado.valueOf(Estado.class, rs.getString("estado"))     
-						);
+				alumno = new Alumno(rs.getString("nombre"), rs.getString("run"), rs.getInt("edad"),
+						Estado.valueOf(Estado.class, rs.getString("estado")));
 			}
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
-		
-		
+
 		return alumno;
 	}
-	public static String insertarAlumno(Alumno alumno) {
-		String mensaje;
+
+	public static boolean insertarAlumno(Alumno alumno)
+	{
 		Connection conexion = Conexion.conectar();
-		
+
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call registrarAlumno(?,?,?)}");
@@ -51,55 +48,50 @@ public class ConsultaAlumno {
 			cs.setString("in_run", alumno.getRun());
 			cs.setInt("in_edad", alumno.getEdad());
 			cs.executeQuery();
-			
-			mensaje = "\nSe ha guardado exitosamente al alumno\n";
+			return true;			
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "\nNo se pudo guardad al alumno\n";
 		}
-		
-		return mensaje;
+
+		return false;
 	}
-	
-	public static String UpdateAlumno_estado(Alumno alumno) {
-		String mensaje;
+
+	public static boolean UpdateAlumno_estado(Alumno alumno)
+	{
 		Connection conexion = Conexion.conectar();
-		String estado_update=null;
-		
-		if (alumno.getEstado().toString().equals("HABILITADO")) 
+		String estado_update = null;
+
+		if (alumno.getEstado().toString().equals("HABILITADO"))
 		{
-			estado_update=Estado.values()[1].toString();
+			estado_update = Estado.values()[1].toString();
 		}
-		else 
+		else
 		{
-			estado_update=Estado.values()[0].toString();
+			estado_update = Estado.values()[0].toString();
 		}
-		
+
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoAlumno(?,?)}");
 			cs.setString("in_run", alumno.getRun());
 			cs.setString("in_estado", estado_update);
 			cs.executeQuery();
-			
-			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+			return true;
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "/nNo se pudo modificar el estado del alumno/n";
 		}
-		
-		return mensaje;
+
+		return false;
 	}
-	
-	public static String UpdateAlumno(String nombre, String run, int edad) {
-		String mensaje;
+
+	public static boolean UpdateAlumno(String nombre, String run, int edad)
+	{
 		Connection conexion = Conexion.conectar();
-		
-		
+
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call actualizarAlumno(?,?,?)}");
@@ -107,20 +99,12 @@ public class ConsultaAlumno {
 			cs.setString("in_nombre", nombre);
 			cs.setInt("in_edad", edad);
 			cs.executeQuery();
-			
-			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+			return true;
 		}
-		catch(SQLException e)
+		catch (SQLException e)
 		{
 			e.printStackTrace();
-			mensaje = "/nNo se pudo modificar el estado del alumno/n";
 		}
-		
-		
-		return mensaje;
+		return false;
 	}
-	
-	
-	
-	
 }
