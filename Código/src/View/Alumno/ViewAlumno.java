@@ -1,23 +1,21 @@
 package View.Alumno;
 
-import BD.ConsultaAlumno;
 import Utilidades.Utilidades;
 import Controller.AlumnoController;
 import Model.Alumno;
 
-public class ViewAlumno {
-	
-	
+public class ViewAlumno
+{
+
 	public static String solicitarNombre()
 	{
 		String nombre;
 		System.out.print("Ingrese el nombre del alumno: ");
 		nombre = Utilidades.extracted().nextLine();
 
-		
 		return nombre;
 	}
-	
+
 	public static String solicitarRun()
 	{
 		String run;
@@ -27,62 +25,63 @@ public class ViewAlumno {
 			System.out.print("Ingrese el run del Alumno, formato (XX.XXX.XXX-X): ");
 			run = Utilidades.extracted().nextLine();
 			validar = Utilidades.validarRun(run);
-			if(!validar)
+			if (!validar)
 			{
 				System.out.println("Debe ingresar un run valido. Favor de ingresar nuevamente.\n");
 			}
-			
+
 		}
-		while(!validar);
-		
-		run= run.replace(".","");
-		run= Utilidades.formatearRun(run);
-		
-		
+		while (!validar);
+
+		run = run.replace(".", "");
+		run = Utilidades.formatearRun(run);
+
 		return run;
 	}
-	
+
 	public static int solicitarEdad()
 	{
 		int edad = 0;
-		
-		do {
-			
-			try 
+
+		do
+		{
+
+			try
 			{
 				System.out.print("Ingrese la edad del alumno: ");
-				edad = Utilidades.extracted().nextInt(); 
-				
-			} 
-			catch (Exception e) 
+				edad = Utilidades.extracted().nextInt();
+
+			}
+			catch (Exception e)
 			{
 				System.out.print("Debe ingresar un numero, ");
 			}
-			
-		} 
-		while (edad==0);
+
+		}
+		while (edad == 0);
 
 		return edad;
 	}
-	
-	public static boolean solicitarRespuesta() 
+
+	public static boolean solicitarRespuesta()
 	{
 		String mensaje = "NO";
 		boolean respuesta = false;
-		do 
+		do
 		{
-			
+
 			System.out.print("Desea modificar al alumno (SI o NO): ");
 			mensaje = Utilidades.extracted().nextLine().toUpperCase();
 
-		} 
+		}
 		while (!mensaje.equals("SI") && !mensaje.equals("NO"));
-		
-		if (mensaje.equals("SI")) respuesta = true;
-		
+
+		if (mensaje.equals("SI"))
+			respuesta = true;
+
 		return respuesta;
 	}
-	
+
 	public static void crear()
 	{
 		System.out.println("\n------------------------------------------- ");
@@ -93,30 +92,30 @@ public class ViewAlumno {
 		String nombre, run;
 		String mensaje = "";
 
-		do 
+		do
 		{
 			run = solicitarRun();
 			alumno = AlumnoController.buscarAlumno(run);
-			if(alumno==null) 
+			if (alumno == null)
 			{
 				nombre = solicitarNombre();
 				edad = solicitarEdad();
-				mensaje = AlumnoController.registrarAlumno(nombre,run,edad);
-				
+				mensaje = AlumnoController.registrarAlumno(nombre, run, edad);
+
 				System.out.println("\n\n------------------------------------------- ");
 				System.out.println(mensaje);
 			}
-			else 
+			else
 			{
 				System.out.println("\n\n----------------------------------------------------- ");
 				System.out.println("\n\n	El alumno ya se encuentra registrado ");
 				System.out.println("\n\n----------------------------------------------------- ");
-				mensaje="Alumno registrado";
+				mensaje = "Alumno registrado";
 			}
-		} 
-		while (mensaje=="Alumno registrado");
+		}
+		while (mensaje == "Alumno registrado");
 	}
-	
+
 	public static void ver()
 	{
 		System.out.println("\n------------------------------------------- ");
@@ -124,22 +123,22 @@ public class ViewAlumno {
 		System.out.println("\n------------------------------------------- ");
 		Alumno alumno = null;
 		String run;
-		
+
 		run = solicitarRun();
 		alumno = AlumnoController.buscarAlumno(run);
-		if(alumno!=null) 
+		if (alumno != null)
 		{
 			alumno.mostrarDatos();
 			System.out.println("\n\n ");
 		}
-		else 
+		else
 		{
 			System.out.println("\n\n------------------------------------------- ");
 			System.out.println("\n\n	El alumno no se encuentra registrado ");
 			System.out.println("\n\n------------------------------------------- ");
 		}
 	}
-	
+
 	public static void modificar()
 	{
 		System.out.println("\n-------------------------------------------------------");
@@ -148,68 +147,68 @@ public class ViewAlumno {
 		Alumno alumno = null;
 		int edad;
 		String nombre, run, mensaje = "";
-		Boolean confirmacion=false;
-		
+		Boolean confirmacion = false;
+
 		run = solicitarRun();
 		alumno = AlumnoController.buscarAlumno(run);
-		if(alumno!=null) 
+		if (alumno != null)
 		{
 			alumno.mostrarDatos();
-			confirmacion= solicitarRespuesta(); 
-			
-			if(confirmacion) 
+			confirmacion = solicitarRespuesta();
+
+			if (confirmacion)
 			{
 				nombre = solicitarNombre();
 				edad = solicitarEdad();
-				
-				mensaje = AlumnoController.actualizarAlumno(nombre, run,edad);
+
+				mensaje = AlumnoController.actualizarAlumno(nombre, run, edad);
 				System.out.println("\n-------------------------------------------------------- ");
 				System.out.println(mensaje);
 				System.out.println("\n-------------------------------------------------------- ");
 			}
 		}
-		else 
+		else
 		{
 			System.out.println("\n\n------------------------------------------- ");
 			System.out.println("\n\n	El alumno no se encuentra registrado ");
 			System.out.println("\n\n------------------------------------------- ");
 		}
 	}
-	
+
 	public static void cambiarEstado()
 	{
 		System.out.println("\n-------------------------------------------------------");
 		System.out.println("	Opcion para Habilitar o Deshabilitar un alumno: ");
 		System.out.println("--------------------------------------------------------- ");
-		
+
 		Alumno alumno = null;
 		String run, mensaje = "";
-		Boolean confirmacion=false;
+		Boolean confirmacion = false;
 
 		run = solicitarRun();
-		alumno =  AlumnoController.buscarAlumno(run);
-		
-		if(alumno!=null) 
+		alumno = AlumnoController.buscarAlumno(run);
+
+		if (alumno != null)
 		{
 			alumno.mostrarDatos();
 			System.out.println("\n");
-			
-			confirmacion = solicitarRespuesta(); 
-			
-			if(confirmacion)
+
+			confirmacion = solicitarRespuesta();
+
+			if (confirmacion)
 			{
-				mensaje = ConsultaAlumno.UpdateAlumno_estado(alumno);
+				mensaje = AlumnoController.modificarEstadoAlumno(alumno);
 				System.out.println("\n-------------------------------------------------------- ");
 				System.out.println(mensaje);
 				System.out.println("\n-------------------------------------------------------- ");
 			}
 		}
-		else 
+		else
 		{
 			System.out.println("\n\n------------------------------------------- ");
 			System.out.println("\n\n	El alumno no se encuentra registrado ");
 			System.out.println("\n\n------------------------------------------- ");
-			mensaje="Alumno no registrado";
+			mensaje = "Alumno no registrado";
 		}
 	}
 

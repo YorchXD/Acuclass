@@ -157,14 +157,13 @@ public class ConsultaCurso
 		return false;
 	}
 
-	public static Map<Integer, Asignatura> buscarAsignaturasCurso(int idCurso)
+	public static boolean buscarAsignaturasCurso(Curso curso)
 	{
 		Connection conexion = Conexion.conectar();
-		Map<Integer, Asignatura> asignaturas = new HashMap<>();
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call listarAsignaturasCursos(?)}");	
-			cs.setInt("in_refCurso", idCurso);
+			cs.setInt("in_refCurso", curso.getId());
 			ResultSet rs = cs.executeQuery();
 			while(rs.next())
 			{
@@ -173,15 +172,16 @@ public class ConsultaCurso
 						rs.getString("nombre"),
 						Estado.valueOf(Estado.class, rs.getString("estado"))
 						);
-				asignaturas.put(asignatura.getId(), asignatura);
+				curso.getAsignaturas().put(asignatura.getId(), asignatura);
 			}
+			return true;
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
 		}
 		
-		return asignaturas;
+		return false;
 	}
 
 	public static boolean actualizarEstadoAsignatura(Asignatura asignatura)

@@ -35,7 +35,7 @@ public class ViewCurso
 		boolean validar = false;
 		do
 		{
-			System.out.print("El estado actual es: " + estado + ". ï¿½Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 			if(!validar )
@@ -373,13 +373,13 @@ public class ViewCurso
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 					opcion="-1";
 				}
-				else if(Integer.parseInt(opcion)!=0 && asignaturas.get(Integer.parseInt(opcion))==null)
+				else if(Integer.parseInt(opcion)<0 && asignaturas.get(Integer.parseInt(opcion))==null)
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
 				
 			}
-			while(Integer.parseInt(opcion)!=0 && asignaturas.get(Integer.parseInt(opcion))==null);
+			while(Integer.parseInt(opcion)<0 && asignaturas.get(Integer.parseInt(opcion))==null);
 			
 			return Integer.parseInt(opcion);
 
