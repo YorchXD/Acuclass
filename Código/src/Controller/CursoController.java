@@ -131,7 +131,6 @@ public class CursoController
 		}
 		
 		ViewCurso.cambiarEstadoAsignatura(cursos);
-		
 	}
 
 
