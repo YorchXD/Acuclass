@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 29/05/2021 14:04:34
+ Date: 03/06/2021 20:35:56
 */
 
 SET NAMES utf8mb4;
@@ -69,7 +69,7 @@ CREATE TABLE `curso`  (
   `tipoDivisionAnual` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_asignatura
@@ -85,7 +85,7 @@ CREATE TABLE `curso_asignatura`  (
   INDEX `refAsignatura`(`refAsignatura`) USING BTREE,
   CONSTRAINT `curso_asignatura_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_asignatura_ibfk_2` FOREIGN KEY (`refAsignatura`) REFERENCES `asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for curso_referencia
@@ -99,6 +99,7 @@ CREATE TABLE `curso_referencia`  (
   PRIMARY KEY (`letra`, `año`, `refCurso`) USING BTREE,
   INDEX `refCurso`(`refCurso`) USING BTREE,
   INDEX `refProfesorEncargado`(`refProfesorEncargado`) USING BTREE,
+  INDEX `letra`(`letra`, `año`) USING BTREE,
   CONSTRAINT `curso_referencia_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_referencia_ibfk_2` FOREIGN KEY (`refProfesorEncargado`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
@@ -111,10 +112,12 @@ CREATE TABLE `curso_referencia_alumno`  (
   `refLetraCurso` varchar(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `refAñoCurso` int NOT NULL,
   `refAlumno` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `refCurso` int NOT NULL,
   INDEX `refAlumno`(`refAlumno`) USING BTREE,
   INDEX `refLetraCurso`(`refLetraCurso`, `refAñoCurso`) USING BTREE,
+  INDEX `curso_referencia_alumno_ibfk_2`(`refLetraCurso`, `refAñoCurso`, `refCurso`) USING BTREE,
   CONSTRAINT `curso_referencia_alumno_ibfk_1` FOREIGN KEY (`refAlumno`) REFERENCES `alumno` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`) REFERENCES `curso_referencia` (`letra`, `año`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`, `refCurso`) REFERENCES `curso_referencia` (`letra`, `año`, `refCurso`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
@@ -148,7 +151,7 @@ CREATE TABLE `rol`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for rol_operacion
@@ -175,10 +178,11 @@ CREATE TABLE `unidad`  (
   `numero` int NOT NULL,
   `divisionAnual` int NOT NULL,
   `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
-  `refAsignatura` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `refCurso` varchar(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+  `refCursoAsignatura` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `unidad_ibfk_1`(`refCursoAsignatura`) USING BTREE,
+  CONSTRAINT `unidad_ibfk_1` FOREIGN KEY (`refCursoAsignatura`) REFERENCES `curso_asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Table structure for usuario
@@ -187,11 +191,7 @@ DROP TABLE IF EXISTS `usuario`;
 CREATE TABLE `usuario`  (
   `nombre` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `run` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `tipoUsuario` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `especialidad` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
-  `email` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `clave` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`run`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
@@ -201,6 +201,9 @@ CREATE TABLE `usuario`  (
 DROP TABLE IF EXISTS `usuario_rol`;
 CREATE TABLE `usuario_rol`  (
   `id` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `clave` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `estado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'HABILITADO',
   `refUsuario` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `refRol` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -208,7 +211,7 @@ CREATE TABLE `usuario_rol`  (
   INDEX `refRol`(`refRol`) USING BTREE,
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`refUsuario`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`refRol`) REFERENCES `rol` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Procedure structure for actualizarAlumno
@@ -263,13 +266,30 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for actualizarEstadoProfesor
+-- Procedure structure for actualizarEstadoUnidad
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `actualizarEstadoProfesor`;
+DROP PROCEDURE IF EXISTS `actualizarEstadoUnidad`;
 delimiter ;;
-CREATE PROCEDURE `actualizarEstadoProfesor`(in_run varchar(100), in_estado varchar(50))
+CREATE PROCEDURE `actualizarEstadoUnidad`(`in_id` int, `in_estado` VARCHAR(50))
 BEGIN
-	update usuario set estado=in_estado where run=in_run;
+	UPDATE unidad
+	SET estado = in_estado
+	WHERE id = in_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for actualizarEstadoUsuario
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarEstadoUsuario`;
+delimiter ;;
+CREATE PROCEDURE `actualizarEstadoUsuario`(in_run varchar(100), in_estado varchar(50), in_tipoUsuario varchar(50))
+BEGIN
+	UPDATE usuario_rol 
+	JOIN rol ON rol.id = usuario_rol.refRol
+	SET estado = in_estado 
+	WHERE usuario_rol.refUsuario = in_run AND rol.nombre = in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -284,6 +304,41 @@ BEGIN
 	UPDATE asignatura
 	SET asignatura.nombre = in_nombre
 	WHERE asignatura.id = in_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for actualizarUnidad
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarUnidad`;
+delimiter ;;
+CREATE PROCEDURE `actualizarUnidad`(`in_nombre` VARCHAR(100), `in_numero_unidad` INTEGER, `in_division_anual` INTEGER, `in_id` INTEGER)
+BEGIN
+		UPDATE unidad
+		SET nombre = in_nombre,
+				numero = in_numero_unidad,
+				divisionAnual = in_division_anual
+		WHERE id = in_id;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for actualizarUsuario
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `actualizarUsuario`;
+delimiter ;;
+CREATE PROCEDURE `actualizarUsuario`(in_nombre varchar(100), in_email varchar(100), in_clave varchar(100), in_especialidad varchar(100), in_run varchar(100), in_tipoUsuario varchar(50))
+BEGIN
+	UPDATE usuario 
+	SET nombre=in_nombre, especialidad=in_especialidad 
+	WHERE run=in_run;
+	
+	UPDATE usuario_rol
+	JOIN rol ON rol.id = usuario_rol.refRol
+	SET email=in_email, clave=in_clave
+	WHERE usuario_rol.refUsuario = in_run AND rol.nombre = in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -329,13 +384,33 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for buscarProfesor
+-- Procedure structure for buscarUsuario
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `buscarProfesor`;
+DROP PROCEDURE IF EXISTS `buscarUsuario`;
 delimiter ;;
-CREATE PROCEDURE `buscarProfesor`(in_run varchar(100),in_tipoUsuario varchar(50))
+CREATE PROCEDURE `buscarUsuario`(in_run varchar(100))
 BEGIN
-select * from usuario where run=in_run and tipoUsuario=in_tipoUsuario;
+		SELECT usuario.nombre, usuario.run, usuario.especialidad, usuario_rol.email, usuario_rol.clave, usuario_rol.estado, rol.nombre as 'tipoUsuario'
+		FROM usuario
+		LEFT JOIN usuario_rol ON usuario_rol.refUsuario = usuario.run
+		LEFT JOIN rol ON rol.id = usuario_Rol.refRol
+		WHERE usuario.run = in_run;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for buscarUsuarioRunTipo
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `buscarUsuarioRunTipo`;
+delimiter ;;
+CREATE PROCEDURE `buscarUsuarioRunTipo`(in_run varchar(100),in_tipoUsuario varchar(50))
+BEGIN
+	SELECT usuario.nombre, usuario.run, usuario.especialidad, usuario_rol.email, usuario_rol.clave, usuario_rol.estado, rol.nombre AS 'tipoUsuario'
+	FROM usuario
+	JOIN usuario_rol ON usuario_rol.refUsuario = usuario.run
+	JOIN rol ON rol.id = usuario_rol.refRol
+	WHERE usuario.run = in_run AND rol.nombre = in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -347,10 +422,11 @@ DROP PROCEDURE IF EXISTS `iniciarSesion`;
 delimiter ;;
 CREATE PROCEDURE `iniciarSesion`(IN `in_email` VARCHAR(100), IN `in_clave` VARCHAR(100), in_tipoUsuario VARCHAR(50))
 BEGIN
-		SELECT *
+		SELECT usuario.nombre, usuario.run, usuario_rol.email, usuario_rol.clave, usuario_rol.estado, rol.nombre as 'tipoUsuario'
 		FROM usuario
-		WHERE usuario.tipoUsuario = in_tipoUsuario AND usuario.email = in_email AND usuario.clave = in_clave;
-
+		JOIN usuario_rol ON usuario_rol.refUsuario = usuario.run
+		JOIN rol ON rol.id = usuario_rol.refRol
+		WHERE usuario_rol.email = in_email AND usuario_rol.clave = in_clave AND rol.nombre=in_tipoUsuario;
 END
 ;;
 delimiter ;
@@ -375,7 +451,7 @@ DROP PROCEDURE IF EXISTS `listarAsignaturasCursos`;
 delimiter ;;
 CREATE PROCEDURE `listarAsignaturasCursos`(IN `in_refCurso` INTEGER)
 BEGIN
-		SELECT Asignatura.id, Asignatura.nombre, curso_asignatura.estado
+		SELECT curso_asignatura.id, Asignatura.nombre, curso_asignatura.estado
 		FROM asignatura
 		JOIN curso_asignatura ON curso_asignatura.refAsignatura = asignatura.id AND curso_asignatura.refCurso = in_refCurso;
 END
@@ -391,6 +467,20 @@ CREATE PROCEDURE `listarCursos`()
 BEGIN
 	Select *
 	From Curso;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for listarUnidades
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `listarUnidades`;
+delimiter ;;
+CREATE PROCEDURE `listarUnidades`(`in_refCursoAsignatura` INTEGER)
+BEGIN
+	SELECT *
+	FROM unidad
+	WHERE refCursoAsignatura = in_refCursoAsignatura;
 END
 ;;
 delimiter ;
@@ -434,6 +524,25 @@ END
 delimiter ;
 
 -- ----------------------------
+-- Procedure structure for registrarCuenta
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarCuenta`;
+delimiter ;;
+CREATE PROCEDURE `registrarCuenta`(in_run varchar(100), in_tipoUsuario varchar(50), in_email varchar(100), in_clave varchar(100))
+BEGIN
+/*Obtiene el id del rol al que pertenece el usuario*/
+	SELECT @refRol:= id
+	FROM rol
+	WHERE rol.nombre = in_tipoUsuario;
+	
+	/*Asocia al usuario con el rol*/
+	INSERT INTO usuario_rol(refUsuario, refRol, email, clave)
+	VALUES(in_run, @refRol, in_email, in_clave);
+END
+;;
+delimiter ;
+
+-- ----------------------------
 -- Procedure structure for registrarCurso
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `registrarCurso`;
@@ -447,13 +556,46 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for registrarProfesor
+-- Procedure structure for registrarUnidad
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `registrarProfesor`;
+DROP PROCEDURE IF EXISTS `registrarUnidad`;
 delimiter ;;
-CREATE PROCEDURE `registrarProfesor`(in_nombre varchar(100), in_run varchar(100), in_tipoUsuario varchar(50), in_especialidad varchar(100), in_email varchar(100), in_clave varchar(100))
+CREATE PROCEDURE `registrarUnidad`(`in_nombre` VARCHAR(100), `in_numero_unidad` INTEGER, `in_division_anual` INTEGER, `in_refAsignatura` INTEGER)
 BEGIN
-	insert into usuario (nombre, run, tipoUsuario, especialidad, email, clave)values(in_nombre,in_run,in_tipoUsuario,in_especialidad,in_email,in_clave);
+		INSERT INTO Unidad(nombre, numero, divisionAnual,refCursoAsignatura)
+		VALUES (in_nombre, in_numero_unidad, in_division_anual, in_refAsignatura);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for registrarUsuario
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `registrarUsuario`;
+delimiter ;;
+CREATE PROCEDURE `registrarUsuario`(in_nombre varchar(100), in_run varchar(100), in_tipoUsuario varchar(50), in_especialidad varchar(100), in_email varchar(100), in_clave varchar(100))
+BEGIN
+	/*Registra al usuario*/
+	INSERT INTO usuario (nombre, run, especialidad)
+	VALUES(in_nombre,in_run,in_especialidad);
+	
+	CALL registrarCuenta(in_run, in_tipoUsuario, in_email, in_clave);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for validarExistenciaCuenta
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `validarExistenciaCuenta`;
+delimiter ;;
+CREATE PROCEDURE `validarExistenciaCuenta`(in_run varchar(100), in_email varchar(100), in_tipoUsuario varchar(50))
+BEGIN
+	SELECT usuario.nombre, usuario.run, usuario.especialidad, usuario_rol.email, usuario_rol.clave, usuario_rol.estado, rol.nombre AS 'tipoUsuario'
+	FROM usuario
+	JOIN usuario_rol ON usuario_rol.refUsuario = usuario.run
+	JOIN rol ON rol.id = usuario_rol.refRol
+	WHERE usuario.run != in_run AND rol.nombre = in_tipoUsuario AND usuario_rol.email=in_email;
 END
 ;;
 delimiter ;
