@@ -1,6 +1,9 @@
 package Model;
 
-public class Usuario
+import BD.ConsultaUsuario;
+import Utilidades.AccionesPrincipales;
+
+public class Usuario implements AccionesPrincipales
 {
 	private String nombre;
 	private String email;
@@ -11,7 +14,6 @@ public class Usuario
 	
 	public Usuario()
 	{
-		
 	}
 
 	public Usuario(String nombre, String email, String clave, Estado estado, String run, TipoUsuario tipoUsuario)
@@ -84,14 +86,34 @@ public class Usuario
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	public void mostrarDatos()
+	public String mostrarDatos()
 	{
-		System.out.println("Nombre: " + this.nombre);
-		System.out.println("Email: " + this.email);
-		System.out.println("Clave: " + this.clave);
-		System.out.println("Estado: " + this.estado);
-		System.out.println("RUN: " + this.run);
-		System.out.println("tipoUsuario: " + this.tipoUsuario);
+		return	"Nombre: " + this.nombre + 
+			   	"\nEmail: " + this.email +
+			   	"\nClave: " + this.clave +
+			   	"\nEstado: " + this.estado +
+			   	"\nRUN: " + this.run +
+			   	"\nTipoUsuario: " + this.tipoUsuario;
+	}
+
+	public boolean registrarDatos()
+	{
+		return ConsultaUsuario.registrarUsuario(this.nombre, this.run, this.email, this.clave, this.tipoUsuario, null);
+	}
+
+	public boolean cambiarEstado()
+	{
+		return ConsultaUsuario.cambiarEstado(this.run, this.estado, this.tipoUsuario);
+	}
+
+	public boolean actualizarDatos()
+	{
+		return ConsultaUsuario.actualizarDatos(this.nombre, this.email, this.clave, null, this.run, this.tipoUsuario);
+	}
+	
+	public boolean registrarCuenta()
+	{
+		return ConsultaUsuario.registrarCuenta(this.run, this.email, this.clave, this.tipoUsuario, null);
 	}
 
 }

@@ -2,7 +2,10 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Alumno
+import BD.ConsultaAlumno;
+import Utilidades.AccionesPrincipales;
+
+public class Alumno implements AccionesPrincipales
 {
 	private String nombre;
 	private String run;
@@ -11,6 +14,10 @@ public class Alumno
 	private Estado estado;
 	private Curso_Referencia curso;
 	private ArrayList<Asistencia> asistencias;
+	
+	public Alumno()
+	{
+	}
 	
 	public Alumno(String nombre, String run, int edad, Apoderado apoderado, Estado estado, Curso_Referencia curso)
 	{
@@ -29,9 +36,10 @@ public class Alumno
 		this.run = run;
 		this.edad = edad;
 		this.estado=estado;
+		this.apoderado = null;
+		this.curso = null;
 		this.asistencias = new ArrayList<Asistencia>();
 	}
-
 
 	public String getNombre()
 	{
@@ -112,15 +120,32 @@ public class Alumno
 	{
 		return asistencias;
 	}
-	
-	public void mostrarDatos() {
 
-		System.out.println("\n------------------------------------------- ");
-		System.out.println("Datos del Alumno ");
-		System.out.println("\n- Nombre: " + getNombre());
-		System.out.println("- Run: " + getRun());
-		System.out.println("- Edad: " + getEdad());
-		System.out.println("- Estado: " + getEstado());
-		System.out.println("\n------------------------------------------- ");
+	public String mostrarDatos()
+	{
+		return	"Nombre: " + this.nombre + 
+				"\nRUN: " + this.run +
+			   	"\nEdad: " + this.edad +
+			   	"\nEstado: " + this.estado;
+	}
+
+	public boolean registrarDatos()
+	{
+		return ConsultaAlumno.registrarAlumno(this.nombre, this.run, this.edad);
+	}
+
+	public boolean actualizarDatos()
+	{
+		return ConsultaAlumno.actualizarDatos(this.nombre, this.run, this.edad);
+	}
+
+	public boolean cambiarEstado()
+	{
+		return ConsultaAlumno.cambiarEstado(this.run, this.estado);
+	}
+
+	public boolean asociarApoderado()
+	{
+		return ConsultaAlumno.asociarAlumnoApoderado(this.run, this.apoderado.getRun());
 	}
 }

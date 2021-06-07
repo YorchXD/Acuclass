@@ -10,38 +10,13 @@ import java.util.Map;
 import Model.Apoderado;
 import Model.Estado;
 import Model.TipoUsuario;
-import Model.Usuario;
 
 public class ConsultaApoderado
 {
-	public static boolean registrarApoderado(Apoderado apoderado)
+	public static Map<String, Apoderado> buscarUsuarioApoderado(String run)
 	{
 		Connection conexion = Conexion.conectar();
-
-		try
-		{
-			CallableStatement cs = conexion.prepareCall("{call registrarUsuario(?,?,?,?,?,?)}");
-			cs.setString("in_nombre", apoderado.getNombre());
-			cs.setString("in_run", apoderado.getRun());
-			cs.setString("in_email", apoderado.getEmail());
-			cs.setString("in_clave", apoderado.getClave());
-			cs.setString("in_tipoUsuario", apoderado.getTipoUsuario().toString());
-			cs.setString("in_especialidad", null);
-			cs.executeQuery();
-			return true;			
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		return false;
-	}
-
-	public static Map<String, Usuario> buscarUsuario(String run)
-	{
-		Connection conexion = Conexion.conectar();
-		Map<String, Usuario> roles = new HashMap<>();
+		Map<String, Apoderado> roles = new HashMap<>();
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call buscarUsuario(?)}");
@@ -51,7 +26,7 @@ public class ConsultaApoderado
 			
 			while(rs.next())
 			{
-				Usuario usuario = new Usuario(
+				Apoderado apoderado = new Apoderado(
 						rs.getString("nombre"),
 						rs.getString("email"),
 						rs.getString("clave"),
@@ -59,7 +34,7 @@ public class ConsultaApoderado
 						rs.getString("run"),
 						TipoUsuario.valueOf(TipoUsuario.class, rs.getString("tipoUsuario"))
 						);
-				roles.put(usuario.getTipoUsuario().toString(), usuario);
+				roles.put(apoderado.getTipoUsuario().toString(), apoderado);
 			}
 			
 		}
@@ -69,27 +44,6 @@ public class ConsultaApoderado
 		}
 		
 		return roles;
-	}
-
-	public static boolean registrarCuentaApoderado(String run, String email, TipoUsuario tipoUsuario)
-	{
-		Connection conexion = Conexion.conectar();
-
-		try
-		{
-			CallableStatement cs = conexion.prepareCall("{call registrarCuenta(?,?,?,?)}");
-			cs.setString("in_run", run);
-			cs.setString("in_email", email);
-			cs.setString("in_clave", run);
-			cs.setString("in_tipoUsuario", tipoUsuario.toString());
-			cs.executeQuery();
-			return true;			
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return false;
 	}
 
 	public static Apoderado buscarApoderado(String run)
@@ -122,28 +76,7 @@ public class ConsultaApoderado
 
 		return apoderado;
 	}
-	
-	public static boolean cambiarEstado(Apoderado apoderado)
-	{
-		Connection conexion = Conexion.conectar();
 
-		try
-		{
-			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoUsuario(?,?,?)}");
-			cs.setString("in_run", apoderado.getRun());
-			cs.setString("in_estado", apoderado.getEstado().toString());
-			cs.setString("in_tipoUsuario", apoderado.getTipoUsuario().toString());
-			cs.executeQuery();
-
-			return true;
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		return false;
-	}
 	
 	public static Map<String, Apoderado> validarCorreo(String run, String email, TipoUsuario tipoUsuario)
 	{	
@@ -175,27 +108,4 @@ public class ConsultaApoderado
 		}
 		return apoderados;
 	}
-	
-	public static boolean actualizarApoderado(Apoderado apoderado)
-	{
-		Connection conexion = Conexion.conectar();
-		try
-		{
-			CallableStatement cs = conexion.prepareCall("{call actualizarUsuario(?,?,?,?,?,?)}");
-			cs.setString("in_nombre", apoderado.getNombre());
-			cs.setString("in_email", apoderado.getEmail());
-			cs.setString("in_clave", apoderado.getClave());
-			cs.setString("in_especialidad", null);
-			cs.setString("in_run", apoderado.getRun());
-			cs.setString("in_tipoUsuario", apoderado.getTipoUsuario().toString());
-			cs.executeQuery();
-			return true;
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return false;
-	}
-
 }

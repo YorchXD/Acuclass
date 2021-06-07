@@ -1,6 +1,8 @@
 package Model;
 
-public class Unidad
+import Utilidades.AccionesPrincipales;
+
+public class Unidad implements AccionesPrincipales
 {
 	private String nombre;
 	private int numero_unidad;
@@ -111,5 +113,30 @@ public class Unidad
 		}
 		System.out.println("Estado: " + this.estado);
 		System.out.println("********************************************************\n");
+	}
+
+
+	public String mostrarDatos()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public boolean registrarDatos()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean actualizarDatos()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean cambiarEstado()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	} 
 }

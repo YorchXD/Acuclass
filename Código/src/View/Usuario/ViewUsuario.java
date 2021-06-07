@@ -50,8 +50,10 @@ public class ViewUsuario
 		System.out.println("25. Ver Apoderado");
 		System.out.println("26. Modificar Apoderado");
 		System.out.println("27. Habilitar o deshabiliatar Apoderado");
+		
+		System.out.println("28. Asociar apoderado a alumno");
 
-		System.out.println("28. Cerrar sesion");
+		System.out.println("29. Cerrar sesion");
 		System.out.println("********************************************************\n");
 		
 		System.out.print("Ingrese su opcion: ");
@@ -77,7 +79,7 @@ public class ViewUsuario
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>28);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>29);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -172,12 +174,15 @@ public class ViewUsuario
 				case 27:
 					ApoderadoController.cambiarEstado();
 					break;
+				case 28:
+					AlumnoController.asociarApoderado();
+					break;
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=28);
+		while(opcion!=29);
 	}
 	/*Fin opciones administrador*/
 	

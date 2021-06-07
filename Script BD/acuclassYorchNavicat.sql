@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 03/06/2021 20:35:56
+ Date: 07/06/2021 04:34:00
 */
 
 SET NAMES utf8mb4;
@@ -211,7 +211,7 @@ CREATE TABLE `usuario_rol`  (
   INDEX `refRol`(`refRol`) USING BTREE,
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`refUsuario`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`refRol`) REFERENCES `rol` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Procedure structure for actualizarAlumno
@@ -339,6 +339,20 @@ BEGIN
 	JOIN rol ON rol.id = usuario_rol.refRol
 	SET email=in_email, clave=in_clave
 	WHERE usuario_rol.refUsuario = in_run AND rol.nombre = in_tipoUsuario;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for asociarAlumnoApoderado
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `asociarAlumnoApoderado`;
+delimiter ;;
+CREATE PROCEDURE `asociarAlumnoApoderado`(in_runAlumno VARCHAR(100), in_runApoderado VARCHAR(100))
+BEGIN
+	UPDATE alumno 
+	SET alumno.refApoderado = in_runApoderado
+	WHERE alumno.run = in_runAlumno;
 END
 ;;
 delimiter ;
@@ -528,9 +542,9 @@ delimiter ;
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `registrarCuenta`;
 delimiter ;;
-CREATE PROCEDURE `registrarCuenta`(in_run varchar(100), in_tipoUsuario varchar(50), in_email varchar(100), in_clave varchar(100))
+CREATE PROCEDURE `registrarCuenta`(in_run varchar(100), in_tipoUsuario varchar(50), in_email varchar(100), in_clave varchar(100), in_especialidad varchar(100))
 BEGIN
-/*Obtiene el id del rol al que pertenece el usuario*/
+	/*Obtiene el id del rol al que pertenece el usuario*/
 	SELECT @refRol:= id
 	FROM rol
 	WHERE rol.nombre = in_tipoUsuario;
@@ -538,6 +552,18 @@ BEGIN
 	/*Asocia al usuario con el rol*/
 	INSERT INTO usuario_rol(refUsuario, refRol, email, clave)
 	VALUES(in_run, @refRol, in_email, in_clave);
+	
+	/*Obtiene el id del rol al que pertenece el usuario*/
+	SELECT @especialidadUsuario:= especialidad
+	FROM usuario
+	WHERE usuario.run = in_run;
+	
+	IF in_especialidad IS NOT NULL THEN
+			UPDATE usuario
+			SET usuario.especialidad = in_especialidad
+			WHERE usuario.run = in_run;
+	END IF;
+	
 END
 ;;
 delimiter ;
@@ -576,10 +602,10 @@ delimiter ;;
 CREATE PROCEDURE `registrarUsuario`(in_nombre varchar(100), in_run varchar(100), in_tipoUsuario varchar(50), in_especialidad varchar(100), in_email varchar(100), in_clave varchar(100))
 BEGIN
 	/*Registra al usuario*/
-	INSERT INTO usuario (nombre, run, especialidad)
-	VALUES(in_nombre,in_run,in_especialidad);
+	INSERT INTO usuario (nombre, run)
+	VALUES(in_nombre,in_run);
 	
-	CALL registrarCuenta(in_run, in_tipoUsuario, in_email, in_clave);
+	CALL registrarCuenta(in_run, in_tipoUsuario, in_email, in_clave, in_especialidad);
 END
 ;;
 delimiter ;
