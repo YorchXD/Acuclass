@@ -47,18 +47,18 @@ CREATE TABLE `asignatura`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `asignatura_curso_referencia_profesor`;
 CREATE TABLE `asignatura_curso_referencia_profesor`  (
-  `refLetraCurso` varchar(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `refAñoCurso` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `refCursoReferencia` int,
   `refProfesor` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `refCursoAsignatura` int NOT NULL,
-  INDEX `refLetraCurso`(`refLetraCurso`, `refAñoCurso`) USING BTREE,
+  PRIMARY KEY (`id`) USING BTREE,
+    INDEX `refCursoReferencia`(`refCursoReferencia`) USING BTREE,
   INDEX `refProfesor`(`refProfesor`) USING BTREE,
   INDEX `refCursoAsignatura`(`refCursoAsignatura`) USING BTREE,
-  CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_1` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`) REFERENCES `curso_referencia` (`letra`, `año`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_2` FOREIGN KEY (`refProfesor`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `asignatura_curso_referencia_profesor_ibfk_3` FOREIGN KEY (`refCursoAsignatura`) REFERENCES `curso_asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `refCursoReferencia_ibfk_1` FOREIGN KEY (`refCursoReferencia`) REFERENCES `curso_referencia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `refProfesor_ibfk_2` FOREIGN KEY (`refProfesor`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `refCursoAsignatura_ibfk_3` FOREIGN KEY (`refCursoAsignatura`) REFERENCES `curso_asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
 -- ----------------------------
 -- Table structure for curso
 -- ----------------------------
@@ -91,33 +91,33 @@ CREATE TABLE `curso_asignatura`  (
 -- Table structure for curso_referencia
 -- ----------------------------
 DROP TABLE IF EXISTS `curso_referencia`;
-CREATE TABLE `curso_referencia`  (
+CREATE TABLE `curso_referencia` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `letra` varchar(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `año` int NOT NULL,
   `refCurso` int NOT NULL,
   `refProfesorEncargado` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  PRIMARY KEY (`letra`, `año`, `refCurso`) USING BTREE,
-  INDEX `refCurso`(`refCurso`) USING BTREE,
-  INDEX `refProfesorEncargado`(`refProfesorEncargado`) USING BTREE,
-  INDEX `letra`(`letra`, `año`) USING BTREE,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `refCurso` (`refCurso`) USING BTREE,
+  KEY `refProfesorEncargado` (`refProfesorEncargado`) USING BTREE,
+  KEY `id` (`id`) USING BTREE,
   CONSTRAINT `curso_referencia_ibfk_1` FOREIGN KEY (`refCurso`) REFERENCES `curso` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_referencia_ibfk_2` FOREIGN KEY (`refProfesorEncargado`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
-
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 -- ----------------------------
 -- Table structure for curso_referencia_alumno
 -- ----------------------------
 DROP TABLE IF EXISTS `curso_referencia_alumno`;
 CREATE TABLE `curso_referencia_alumno`  (
-  `refLetraCurso` varchar(1) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `refAñoCurso` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `refCursoReferencia` int,
   `refAlumno` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `refCurso` int NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
   INDEX `refAlumno`(`refAlumno`) USING BTREE,
-  INDEX `refLetraCurso`(`refLetraCurso`, `refAñoCurso`) USING BTREE,
-  INDEX `curso_referencia_alumno_ibfk_2`(`refLetraCurso`, `refAñoCurso`, `refCurso`) USING BTREE,
+  INDEX `refCursoReferencia`(`refCursoReferencia`) USING BTREE,
+  INDEX `id`(`id`) USING BTREE,
   CONSTRAINT `curso_referencia_alumno_ibfk_1` FOREIGN KEY (`refAlumno`) REFERENCES `alumno` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refLetraCurso`, `refAñoCurso`, `refCurso`) REFERENCES `curso_referencia` (`letra`, `año`, `refCurso`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refCursoReferencia`) REFERENCES `curso_referencia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------

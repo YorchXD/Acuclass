@@ -4,9 +4,12 @@ import Utilidades.Utilidades;
 
 import java.util.Map;
 
+import Controller.AlumnoController;
 import Controller.CursoController;
+import Model.Alumno;
 import Model.Asignatura;
 import Model.Curso;
+import Model.Curso_Referencia;
 import Model.Estado;
 import Model.Nivel;
 import Model.Tipo_Division_Anual;
@@ -35,7 +38,7 @@ public class ViewCurso
 		boolean validar = false;
 		do
 		{
-			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			System.out.print("El estado actual es: " + estado + ". ï¿½Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 			if(!validar )
@@ -202,15 +205,26 @@ public class ViewCurso
 	
 	public static void asociarAsignatura(Map<Integer, Curso> cursos, Map<Integer, String> asignaturas)
 	{
-		int idCurso = solicitarSeleccionCurso(cursos);
-		if(idCurso!=-1 && idCurso!=cursos.size()+1)
-		{
-			int idAsignatura = solicitarSeleccionAsignatura(asignaturas);
-			if(idAsignatura!=-1 && idAsignatura!=asignaturas.size()+1)
+		if(cursos.size()!=0 && asignaturas.size()!=0) {
+			
+			int idCurso = solicitarSeleccionCurso(cursos);
+			
+			if(idCurso!=0) 
 			{
-				System.out.println(CursoController.registrarAsociacionCurso(idCurso, idAsignatura));
+				int idAsignatura = solicitarSeleccionAsignatura(asignaturas);
+				
+				if(idAsignatura!=0) {
+					
+					System.out.println(CursoController.registrarAsociacionCurso(idCurso, idAsignatura));	
+				}
+				
 			}
+			
+		}else 
+		{
+			System.out.println("No hay cursos o asignaturas registradas");
 		}
+	
 		
 	}
 	
@@ -230,14 +244,15 @@ public class ViewCurso
 		{
 			String opcion;
 			boolean validar = false;
+			boolean validar2 = true;
 			do
 			{
 				System.out.println("\n********************************************************");
 				System.out.println("*              Menu de cursos registradas              *");
 				System.out.println("********************************************************");
 				System.out.println("NOTA: Solo se pueden seleccionar cursos habilitados\n");
+				System.out.println("0. Volver al menu principal");
 				listarCursos(cursos);
-				System.out.println(cursos.size()+1 + ". Volver al menu principal");
 				System.out.println("********************************************************\n");
 				System.out.print("\nIngrese su opcion: ");
 				
@@ -247,18 +262,20 @@ public class ViewCurso
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
-				else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>cursos.size()+1)
+				else if(Integer.parseInt(opcion)<0)
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
-				else if(Integer.parseInt(opcion)<=cursos.size() && cursos.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO)
+				else if(cursos.get(Integer.parseInt(opcion))!=null && cursos.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO)
 				{
 					System.out.println("La opcion ingresada es un curso deshabilitado por lo cual no se puede asociar asignaturas. Favor ingrese una opcion segun las opciones que muestra el menu y cursos habilitados.\n\n");
+				}else
+				{
+					validar2 =false;
 				}
 			}
-			while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>cursos.size()+1 || (Integer.parseInt(opcion)<=cursos.size() && cursos.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO));
+			while(validar2);
 			
 			return Integer.parseInt(opcion);
 		}
@@ -284,13 +301,14 @@ public class ViewCurso
 		{
 			String opcion;
 			boolean validar = false;
+			boolean validar2 = true;
 			do
 			{
 				System.out.println("\n********************************************************");
 				System.out.println("*           Menu de asignaturas registradas            *");
 				System.out.println("********************************************************\n");
+				System.out.println("0. Volver al menu principal");
 				listarAsignaturas(asignaturas);
-				System.out.println(asignaturas.size()+1 + ". Volver al menu principal");
 				System.out.println("********************************************************\n");
 				System.out.print("\nIngrese su opcion: ");
 				
@@ -300,14 +318,19 @@ public class ViewCurso
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 					opcion="-1";
+
 				}
-				else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>asignaturas.size()+1)
+				else if((Integer.parseInt(opcion)<0 || (Integer.parseInt(opcion)>0 && asignaturas.get(Integer.parseInt(opcion))==null)))
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
+
+				}else 
+				{
+					validar2=false;
 				}
 
 			}
-			while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>asignaturas.size()+1);
+			while(validar2);
 			
 			return Integer.parseInt(opcion);
 
@@ -415,5 +438,8 @@ public class ViewCurso
 			System.out.println("\nNo existen cursos registrados.\n");
 		}
 	}
+
+	
+
 	
 }
