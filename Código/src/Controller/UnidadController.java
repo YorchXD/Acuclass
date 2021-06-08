@@ -27,8 +27,8 @@ public class UnidadController
 	{
 		String mensaje = "";
 		Unidad unidad = new Unidad(nombreUnidad, numeroUnidad, divAnual, asignatura);
-		boolean validar = ConsultaUnidad.registrarUnidad(unidad);
-		if(validar)
+
+		if(unidad.registrarDatos())
 		{
 			mensaje = "\nLa unidad se ha registrado correctamente.\n";
 		}
@@ -95,7 +95,7 @@ public class UnidadController
 				unidad.setNumero_unidad(numeroUnidad);
 			}
 			
-			if(ConsultaUnidad.actualizarDatosUnidad(unidad))
+			if(unidad.actualizarDatos())
 			{
 				mensaje = "\nLa unidad se ha modificado correctamente.\n";
 			}
@@ -123,7 +123,7 @@ public class UnidadController
 			unidad.setEstado(Estado.HABILITADO);
 		}
 		
-		if(ConsultaUnidad.actualizarEstadoUnidad(unidad))
+		if(unidad.cambiarEstado())
 		{
 			mensaje = "\nLa unidad se ha modificado correctamente\n";
 		}
