@@ -62,7 +62,7 @@ public class AsignaturaController
 		String mensaje = null;
 		
 		String buscarAsignatura = AsignaturaController.buscarAsignatura(nuevoNombre);
-		if(buscarAsignatura==null)
+		if(buscarAsignatura==null || !nuevoNombre.equals(buscarAsignatura))
 		{
 			if(ConsultaAsignatura.actualizarNombreAsignatura(nuevoNombre, idAsignatura))
 			{
@@ -71,17 +71,6 @@ public class AsignaturaController
 			else
 			{
 				mensaje = "\nNo se han registrado el curso, intentelo nuevamente.\n";
-			}
-		}
-		else if(buscarAsignatura != null && !nuevoNombre.equals(buscarAsignatura))
-		{
-			if(ConsultaAsignatura.actualizarNombreAsignatura(nuevoNombre, idAsignatura))
-			{
-				mensaje = "\nAsignatura modificada correctamente\n";
-			}
-			else
-			{
-				mensaje = "\nNo se han registrado la asignatura, intentelo nuevamente.\n";
 			}
 		}
 		else
