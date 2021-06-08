@@ -281,6 +281,7 @@ public class ViewUnidad
 	{
 		for (Map.Entry<Integer,Unidad> unidad : unidades.entrySet())
 		{
+			unidad.getValue().mostrarDatos(null);
 			System.out.println(unidad.getKey() + ". Unidad " + unidad.getValue().getNumero_unidad() + ": " + unidad.getValue().getNombre() + ", " + unidad.getValue().getEstado());
 		}
 	}

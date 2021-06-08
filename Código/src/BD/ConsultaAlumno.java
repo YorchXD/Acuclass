@@ -27,6 +27,11 @@ public class ConsultaAlumno
 			{
 				alumno = new Alumno(rs.getString("nombre"), rs.getString("run"), rs.getInt("edad"),
 						Estado.valueOf(Estado.class, rs.getString("estado")));
+				
+				if(rs.getString("refApoderado")!=null)
+				{
+					alumno.setApoderado(ConsultaApoderado.buscarApoderado(rs.getString("refApoderado")));
+				}
 			}
 		}
 		catch (SQLException e)
@@ -37,18 +42,21 @@ public class ConsultaAlumno
 		return alumno;
 	}
 
-	public static boolean insertarAlumno(Alumno alumno)
+	public static boolean registrarAlumno(String nombre, String run, int edad)
 	{
 		Connection conexion = Conexion.conectar();
 
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call registrarAlumno(?,?,?)}");
-			cs.setString("in_nombre", alumno.getNombre());
-			cs.setString("in_run", alumno.getRun());
-			cs.setInt("in_edad", alumno.getEdad());
-			cs.executeQuery();
-			return true;			
+			cs.setString("in_nombre", nombre);
+			cs.setString("in_run", run);
+			cs.setInt("in_edad", edad);
+			int resp = cs.executeUpdate();
+	        if (resp > 0) 
+	        {
+	        	return true;
+	        }		
 		}
 		catch (SQLException e)
 		{
@@ -58,27 +66,20 @@ public class ConsultaAlumno
 		return false;
 	}
 
-	public static boolean UpdateAlumno_estado(Alumno alumno)
+	public static boolean cambiarEstado(String run, Estado estado)
 	{
 		Connection conexion = Conexion.conectar();
-		String estado_update = null;
-
-		if (alumno.getEstado().toString().equals("HABILITADO"))
-		{
-			estado_update = Estado.values()[1].toString();
-		}
-		else
-		{
-			estado_update = Estado.values()[0].toString();
-		}
 
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoAlumno(?,?)}");
-			cs.setString("in_run", alumno.getRun());
-			cs.setString("in_estado", estado_update);
-			cs.executeQuery();
-			return true;
+			cs.setString("in_run", run);
+			cs.setString("in_estado", estado.toString());
+			int resp = cs.executeUpdate();
+	        if (resp > 0) 
+	        {
+	        	return true;
+	        }
 		}
 		catch (SQLException e)
 		{
@@ -88,7 +89,7 @@ public class ConsultaAlumno
 		return false;
 	}
 
-	public static boolean UpdateAlumno(String nombre, String run, int edad)
+	public static boolean actualizarDatos(String nombre, String run, int edad)
 	{
 		Connection conexion = Conexion.conectar();
 
@@ -98,8 +99,33 @@ public class ConsultaAlumno
 			cs.setString("in_run", run);
 			cs.setString("in_nombre", nombre);
 			cs.setInt("in_edad", edad);
-			cs.executeQuery();
-			return true;
+			int resp = cs.executeUpdate();
+	        if (resp > 0) 
+	        {
+	        	return true;
+	        }
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public static boolean asociarAlumnoApoderado(String runAlumno, String runApoderado)
+	{
+		Connection conexion = Conexion.conectar();
+
+		try
+		{
+			CallableStatement cs = conexion.prepareCall("{call asociarAlumnoApoderado(?,?)}");
+			cs.setString("in_runAlumno", runAlumno);
+			cs.setString("in_runApoderado", runApoderado);
+			int resp = cs.executeUpdate();
+	        if (resp > 0) 
+	        {
+	        	return true;
+	        }
 		}
 		catch (SQLException e)
 		{
