@@ -4,19 +4,18 @@ import Controller.ApoderadoController;
 import Model.Apoderado;
 import Model.Estado;
 import Model.TipoUsuario;
-import Model.Usuario;
 import Utilidades.Utilidades;
 
 public class ViewApoderado
 {
 	public static void crear()
 	{
-		Usuario usuario = null;
+		Apoderado apoderado = null;
 		String nombre, run, email;
 
 		run = solicitarRun();
-		usuario = ApoderadoController.buscarUsuario(run);
-		if (usuario == null)
+		apoderado = ApoderadoController.buscarUsuario(run);
+		if (apoderado == null)
 		{
 			nombre = solicitarNombre();
 			email = solicitarEmail();
@@ -24,16 +23,17 @@ public class ViewApoderado
 		}
 		else
 		{
-			if (usuario.getTipoUsuario() == TipoUsuario.APODERADO)
+			if (apoderado.getTipoUsuario() == TipoUsuario.APODERADO)
 			{
-				System.out.println("\nEl apoderado ya se encuentra registrado\n");
+				System.out.println("\n********************************************************");
+				System.out.println("*       El apoderado ya se encuentra registrado        *");
+				System.out.println("********************************************************\n");
 			}
 			else
 			{
-				email = solicitarEmail();
-				System.out.println(ApoderadoController.registrarCuenta(run, email));
+				apoderado.setEmail(solicitarEmail());
+				System.out.println(ApoderadoController.registrarCuenta(apoderado));
 			}
-
 		}
 	}
 
@@ -92,7 +92,6 @@ public class ViewApoderado
 		String nombre;
 		System.out.print("Ingrese el nombre del apoderado: ");
 		nombre = Utilidades.extracted().nextLine();
-
 		return nombre;
 	}
 	
@@ -124,14 +123,18 @@ public class ViewApoderado
 		apoderado = ApoderadoController.buscarApoderado(run);
 		if (apoderado != null)
 		{
-			apoderado.mostrarDatos();
-			System.out.println("\n\n ");
+			System.out.println("\n********************************************************");
+			System.out.println("*                  Datos del apoderado                 *");
+			System.out.println("********************************************************\n");
+			System.out.println(apoderado.mostrarDatos());
+			System.out.println("********************************************************\n");
 		}
 		else
 		{
-			System.out.println("\nEl apoderado no se encuentra registrado\n");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El apoderado no se encuentra registrado        *");
+			System.out.println("********************************************************\n");
 		}
-		
 	}
 	
 	public static boolean confirmacionCambiarEstado(Estado estado)
@@ -165,9 +168,9 @@ public class ViewApoderado
 
 	public static void cambiarEstado()
 	{
-		System.out.println("\n-------------------------------------------------------");
-		System.out.println("	Opcion para Habilitar o Deshabilitar un apoderado: ");
-		System.out.println("--------------------------------------------------------- ");
+		System.out.println("\n********************************************************");
+		System.out.println("*         Habilitar o Deshabilitar un Apoderado        *");
+		System.out.println("********************************************************\n");
 
 		Apoderado apoderado = null;
 		String run;
@@ -178,9 +181,11 @@ public class ViewApoderado
 
 		if (apoderado != null)
 		{
-			apoderado.mostrarDatos();
-			System.out.println("\n");
-
+			System.out.println("\n********************************************************");
+			System.out.println("*                  Datos del apoderado                 *");
+			System.out.println("********************************************************\n");
+			System.out.println(apoderado.mostrarDatos());
+			System.out.println("********************************************************\n");
 			confirmacion = confirmacionCambiarEstado(apoderado.getEstado());
 
 			if (confirmacion)
@@ -190,17 +195,17 @@ public class ViewApoderado
 		}
 		else
 		{
-			System.out.println("\n\n------------------------------------------- ");
-			System.out.println("\n\n	El apoderado no se encuentra registrado ");
-			System.out.println("\n\n------------------------------------------- ");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El apoderado no se encuentra registrado        *");
+			System.out.println("********************************************************\n");
 		}
 	}
 	
 	public static void modificar()
 	{
-		System.out.println("\n-------------------------------------------------------");
-		System.out.println("	Opcion para modificar un Apoderado: ");
-		System.out.println("--------------------------------------------------------- ");
+		System.out.println("\n********************************************************");
+		System.out.println("*                   Modificar apoderado                *");
+		System.out.println("********************************************************\n");
 		Apoderado apoderado = null;
 		String nombre, run, email, clave;
 		Boolean confirmacion = false;
@@ -222,9 +227,9 @@ public class ViewApoderado
 		}
 		else
 		{
-			System.out.println("\n\n------------------------------------------- ");
-			System.out.println("\n\n	El apoderado no se encuentra registrado ");
-			System.out.println("\n\n------------------------------------------- ");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El apoderado no se encuentra registrado        *");
+			System.out.println("********************************************************\n");
 		}
 	}
 

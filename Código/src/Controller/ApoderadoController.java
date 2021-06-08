@@ -5,7 +5,6 @@ import BD.ConsultaApoderado;
 import Model.Apoderado;
 import Model.Estado;
 import Model.TipoUsuario;
-import Model.Usuario;
 import View.Apoderado.ViewApoderado;
 
 public class ApoderadoController
@@ -30,42 +29,41 @@ public class ApoderadoController
 		ViewApoderado.cambiarEstado();
 	}
 	
-	public static Usuario buscarUsuario(String run)
+	public static Apoderado buscarUsuario(String run)
 	{
-		Usuario usuario = null;
-		Map<String, Usuario> roles = ConsultaApoderado.buscarUsuario(run);
+		Apoderado apoderado = null;
+		Map<String, Apoderado> roles = ConsultaApoderado.buscarUsuarioApoderado(run);
 		
 		if(roles.size()!=0)
 		{
 			if(roles.containsKey(TipoUsuario.APODERADO.toString()))
 			{
-				usuario= roles.get(TipoUsuario.APODERADO.toString());
+				apoderado= roles.get(TipoUsuario.APODERADO.toString());
 			}
 			else
 			{
 				if(roles.containsKey(TipoUsuario.ADMINISTRADOR.toString()))
 				{
-					usuario= roles.get(TipoUsuario.ADMINISTRADOR.toString());
+					apoderado= roles.get(TipoUsuario.ADMINISTRADOR.toString());
 				}
 				else
 				{
-					usuario= roles.get(TipoUsuario.PROFESOR.toString());
+					apoderado= roles.get(TipoUsuario.PROFESOR.toString());
 				}
-				usuario.setTipoUsuario(null);
+				apoderado.setTipoUsuario(null);
 			}
 		}
-		return usuario;
+		return apoderado;
 	}
 	
 	public static String registrarApoderado(String nombre, String email, String run)
 	{
 		String mensaje = "";
-		Apoderado apoderado = new Apoderado(nombre,email, run, Estado.HABILITADO, run, TipoUsuario.APODERADO);
+		Apoderado apoderado = new Apoderado(nombre,email, run, run);
 		Map<String, Apoderado> apoderados = ConsultaApoderado.validarCorreo(apoderado.getRun(), apoderado.getEmail(), apoderado.getTipoUsuario());
 		if(apoderados.size()==0)
 		{
-			boolean validar = ConsultaApoderado.registrarApoderado(apoderado);
-			if(validar==true)
+			if(apoderado.registrarDatos())
 			{
 				mensaje = "\nSe ha guardado exitosamente al apoderado\n";
 			}
@@ -81,15 +79,14 @@ public class ApoderadoController
 		return mensaje;
 	}
 
-	public static String registrarCuenta(String run, String email)
+	public static String registrarCuenta(Apoderado apoderado)
 	{
 		String mensaje = "";
-		
-		Map<String, Apoderado> apoderados = ConsultaApoderado.validarCorreo(run, email, TipoUsuario.APODERADO);
+		apoderado.setTipoUsuario(TipoUsuario.APODERADO);
+		Map<String, Apoderado> apoderados = ConsultaApoderado.validarCorreo(apoderado.getRun(), apoderado.getEmail(), apoderado.getTipoUsuario());
 		if(apoderados.size()==0)
 		{
-			boolean validar = ConsultaApoderado.registrarCuentaApoderado(run, email, TipoUsuario.APODERADO);
-			if(validar==true)
+			if(apoderado.registrarCuenta())
 			{
 				mensaje = "\nSe ha guardado exitosamente al apoderado\n";
 			}
@@ -102,7 +99,6 @@ public class ApoderadoController
 		{
 			mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el mismo correo\n";
 		}
-		
 		return mensaje;
 	}
 	
@@ -123,7 +119,7 @@ public class ApoderadoController
 			apoderado.setEstado(Estado.HABILITADO);
 		}
 		
-		if(ConsultaApoderado.cambiarEstado(apoderado))
+		if(apoderado.cambiarEstado())
 		{
 			mensaje = "\nEl apoderado se ha modificado correctamente\n";
 		}
@@ -171,7 +167,7 @@ public class ApoderadoController
 				
 				if(validarCambio)
 				{
-					if(ConsultaApoderado.actualizarApoderado(apoderado))
+					if(apoderado.registrarCuenta())
 					{
 						mensaje = "\nSe ha modificado los datos del apoderado\n";
 					}

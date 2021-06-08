@@ -51,9 +51,9 @@ public class ViewUsuario
 		System.out.println("25. Ver Apoderado");
 		System.out.println("26. Modificar Apoderado");
 		System.out.println("27. Habilitar o deshabiliatar Apoderado");
-
-		System.out.println("28. asociar apoderado a un alumno"); //asociar apoderado a un alumno
 		
+		System.out.println("28. Asociar apoderado a alumno");
+
 		System.out.println("29. Registrar curso promoción"); //registro curso promoción
 		System.out.println("30. Ver curso promoción");
 		System.out.println("31. Asociar alumno a curso promoción");
@@ -180,7 +180,7 @@ public class ViewUsuario
 					ApoderadoController.cambiarEstado();
 					break;
 				case 28:
-					//yorch
+					AlumnoController.asociarApoderado();
 					break;
 				case 29:
 					CursoReferenciaController.crear();
