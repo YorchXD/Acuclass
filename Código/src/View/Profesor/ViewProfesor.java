@@ -5,22 +5,20 @@ import Controller.ProfesorController;
 import Model.Estado;
 import Model.Profesor;
 import Model.TipoUsuario;
-import Model.Usuario;
 
 public class ViewProfesor
 {
-
 	public static void crear()
 	{
-
-		System.out.println("\n------------------------------------------- ");
-		System.out.println("	Opcion para Crear Profesor: ");
-		System.out.println("------------------------------------------- ");
-		Usuario profesor = null;
+		System.out.println("\n********************************************************");
+		System.out.println("*                    Crear profesor                    *");
+		System.out.println("********************************************************\n");
+		
+		Profesor profesor = null;
 		String nombre, run, especialidad, email, clave;
 		Estado estado;
 		TipoUsuario tipoUsuario;
-
+		
 		run = solicitarRun();
 		profesor = ProfesorController.buscarUsuario(run);
 		if (profesor == null)
@@ -31,32 +29,28 @@ public class ViewProfesor
 			especialidad = solicitarEspecialidad();
 			estado = Estado.HABILITADO;
 			tipoUsuario = TipoUsuario.PROFESOR;
-
 			Profesor profesorAux = new Profesor(nombre, email, clave, estado, run, tipoUsuario, especialidad);
 			System.out.println(ProfesorController.registrarProfesor(profesorAux));
 		}
 		else
 		{
-
 			if (profesor.getTipoUsuario() == TipoUsuario.PROFESOR)
 			{
-				System.out.println("\nEl profesor ya se encuentra registrado\n");
+				System.out.println("\n********************************************************");
+				System.out.println("*       El profesor ya se encuentra registrado         *");
+				System.out.println("********************************************************\n");
 			}
 			else
 			{
-				email = solicitarEmail();
-				System.out.println(ProfesorController.registrarCuenta(run, email));
+				profesor.setEspecialidad(solicitarEspecialidad());
+				profesor.setEmail(solicitarEmail());
+				System.out.println(ProfesorController.registrarCuenta(profesor));
 			}
 		}
-
 	}
 
 	public static void ver()
-	{
-
-		System.out.println("\n------------------------------------------- ");
-		System.out.println("\n	Opcion para Ver Profesor: ");
-		System.out.println("\n------------------------------------------- ");
+	{		
 		Profesor profesor = null;
 		String run;
 
@@ -64,20 +58,25 @@ public class ViewProfesor
 		profesor = ProfesorController.buscarProfesor(run);
 		if (profesor != null)
 		{
-			profesor.mostrarDatos();
-			System.out.println("\n\n ");
+			System.out.println("\n********************************************************");
+			System.out.println("*                   Datos del profesor                 *");
+			System.out.println("********************************************************\n");
+			System.out.println(profesor.mostrarDatos());
+			System.out.println("********************************************************\n");
 		}
 		else
 		{
-			System.out.println("\nEl profesor no se encuentra registrado\n");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El profesor no se encuentra registrado         *");
+			System.out.println("********************************************************\n");
 		}
 	}
 
 	public static void modificar()
 	{
-		System.out.println("\n-------------------------------------------------------");
-		System.out.println("	Opcion para modificar un Profesor: ");
-		System.out.println("--------------------------------------------------------- ");
+		System.out.println("\n********************************************************");
+		System.out.println("*                   Modificar profesor                 *");
+		System.out.println("********************************************************\n");
 		Profesor profesor = null;
 		String nombre, run, especialidad, email, clave;
 		Boolean confirmacion = false;
@@ -100,18 +99,17 @@ public class ViewProfesor
 		}
 		else
 		{
-			System.out.println("\n\n------------------------------------------- ");
-			System.out.println("\n\n	El profesor no se encuentra registrado ");
-			System.out.println("\n\n------------------------------------------- ");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El profesor no se encuentra registrado         *");
+			System.out.println("********************************************************\n");
 		}
 	}
 
 	public static void cambiarEstado()
 	{
-
-		System.out.println("\n-------------------------------------------------------");
-		System.out.println("	Opcion para Habilitar o Deshabilitar un Profesor: ");
-		System.out.println("--------------------------------------------------------- ");
+		System.out.println("\n********************************************************");
+		System.out.println("*         Habilitar o Deshabilitar un Profesor         *");
+		System.out.println("********************************************************\n");
 
 		Profesor profesor = null;
 		String run;
@@ -122,8 +120,11 @@ public class ViewProfesor
 
 		if (profesor != null)
 		{
-			profesor.mostrarDatos();
-			System.out.println("\n");
+			System.out.println("\n********************************************************");
+			System.out.println("*                   Datos del profesor                 *");
+			System.out.println("********************************************************\n");
+			System.out.println(profesor.mostrarDatos());
+			System.out.println("********************************************************\n");
 
 			confirmacion = solicitarRespuesta();
 
@@ -134,9 +135,9 @@ public class ViewProfesor
 		}
 		else
 		{
-			System.out.println("\n\n------------------------------------------- ");
-			System.out.println("\n\n	El profesor no se encuentra registrado ");
-			System.out.println("\n\n------------------------------------------- ");
+			System.out.println("\n********************************************************");
+			System.out.println("*       El profesor no se encuentra registrado         *");
+			System.out.println("********************************************************\n");
 		}
 	}
 

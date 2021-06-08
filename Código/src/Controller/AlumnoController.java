@@ -1,8 +1,10 @@
 package Controller;
 
 import BD.ConsultaAlumno;
+import BD.ConsultaApoderado;
 import View.Alumno.ViewAlumno;
 import Model.Alumno;
+import Model.Apoderado;
 import Model.Estado;
 
 public class AlumnoController
@@ -27,6 +29,11 @@ public class AlumnoController
 	{
 		ViewAlumno.cambiarEstado();
 	}
+	
+	public static void asociarApoderado()
+	{
+		ViewAlumno.asociarApoderado();
+	}
 	/*Fin mostrar vistas*/
 	
 	public static Alumno buscarAlumno(String run)
@@ -38,8 +45,8 @@ public class AlumnoController
 	{
 		String mensaje = "";
 		Alumno alumno = new Alumno(nombre, run, edad, Estado.HABILITADO);
-		boolean validar = ConsultaAlumno.insertarAlumno(alumno);
-		if(validar==true)
+
+		if(alumno.registrarDatos())
 		{
 			mensaje = "\nSe ha guardado exitosamente al alumno\n";
 		}
@@ -50,11 +57,10 @@ public class AlumnoController
 		return mensaje;
 	}
 	
-	public static String actualizarAlumno(String nombre, String run, int edad)
+	public static String actualizarAlumno(Alumno alumno)
 	{
 		String mensaje = "";
-		boolean validar = ConsultaAlumno.UpdateAlumno(nombre, run, edad);
-		if(validar==true)
+		if(alumno.actualizarDatos())
 		{
 			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
 		}
@@ -67,16 +73,57 @@ public class AlumnoController
 	
 	public static String modificarEstadoAlumno(Alumno alumno)
 	{
-		String mensaje = "";
-		boolean validar = ConsultaAlumno.UpdateAlumno_estado(alumno); 
-		if(validar==true)
+		String mensaje = null;
+		if(alumno.getEstado().equals(Estado.HABILITADO))
 		{
-			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+			alumno.setEstado(Estado.DESHABILITADO);
 		}
 		else
 		{
-			mensaje = "/nNo se pudo modificar el estado del alumno/n";
+			alumno.setEstado(Estado.HABILITADO);
 		}
+		
+		if(alumno.cambiarEstado())
+		{
+			mensaje = "\nEl alumno se ha modificado correctamente\n";
+		}
+		else
+		{
+			mensaje = "\nNo se han guardado cambios, intentelo nuevamente.\n";
+		}
+		
+		return mensaje;
+	}
+	
+	public static String asociarApoderadoAlumno(String runAlumno, String runApoderado)
+	{
+		String mensaje = null;
+		Alumno alumno = buscarAlumno(runAlumno);
+		if(alumno.getApoderado()==null || (alumno.getApoderado()!=null && !alumno.getApoderado().getRun().equals(runApoderado)))
+		{
+			Apoderado apoderado = ConsultaApoderado.buscarApoderado(runApoderado);
+			if(apoderado!=null)
+			{
+				alumno.setApoderado(apoderado);
+				if(alumno.asociarApoderado())
+				{
+					mensaje = "\nLa asociacion entre el apoderado y el alumno se ha realizado exitosamente.\n";
+				}
+				else
+				{
+					mensaje="\nHubo problemas para registrar al alumno con el apoderado. Por favor, intentelo nuevamente.\n";
+				}
+			}
+			else
+			{
+				mensaje="\nEl apoderado no se encuentra registrado\n";
+			}
+		}
+		else
+		{
+			mensaje="\nEl apoderado ya se encuentra asociado con el alumno\n";
+		}
+		
 		return mensaje;
 	}
 
