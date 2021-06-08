@@ -7,21 +7,22 @@ import java.sql.SQLException;
 
 import Model.Asignatura;
 import Model.Estado;
+import Model.Tipo_Division_Anual;
 import Model.Unidad;
 
 public class ConsultaUnidad
 {
 
-	public static boolean registrarUnidad(Unidad unidad)
+	public static boolean registrarUnidad(String nombre, int numero_unidad, int div_anual, int refAsignatura)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{			
 			CallableStatement cs = conexion.prepareCall("{call registrarUnidad(?,?,?,?)}");
-			cs.setString("in_nombre", unidad.getNombre());
-			cs.setInt("in_numero_unidad", unidad.getNumero_unidad());
-			cs.setInt("in_division_anual", unidad.getDivision_anual());
-			cs.setInt("in_refAsignatura", unidad.getAsignatura().getId());
+			cs.setString("in_nombre", nombre);
+			cs.setInt("in_numero_unidad", numero_unidad);
+			cs.setInt("in_division_anual",div_anual);
+			cs.setInt("in_refAsignatura", refAsignatura);
 			cs.executeUpdate();
 			return true;
 		}
@@ -63,16 +64,16 @@ public class ConsultaUnidad
 		return false;
 	}
 
-	public static boolean actualizarDatosUnidad(Unidad unidad)
+	public static boolean actualizarDatosUnidad(String nombre, int numero_unidad, int division_anual, int id)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{			
 			CallableStatement cs = conexion.prepareCall("{call actualizarUnidad(?,?,?,?)}");
-			cs.setString("in_nombre", unidad.getNombre());
-			cs.setInt("in_numero_unidad", unidad.getNumero_unidad());
-			cs.setInt("in_division_anual", unidad.getDivision_anual());
-			cs.setInt("in_id", unidad.getId());
+			cs.setString("in_nombre", nombre);
+			cs.setInt("in_numero_unidad", numero_unidad);
+			cs.setInt("in_division_anual", division_anual);
+			cs.setInt("in_id", id);
 			cs.executeUpdate();
 			return true;
 		}
@@ -83,14 +84,14 @@ public class ConsultaUnidad
 		return false;
 	}
 
-	public static boolean actualizarEstadoUnidad(Unidad unidad)
+	public static boolean actualizarEstadoUnidad( int id, Estado estado)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoUnidad(?,?)}");
-			cs.setInt("in_id", unidad.getId());
-			cs.setString("in_estado", unidad.getEstado().toString());
+			cs.setInt("in_id", id);
+			cs.setString("in_estado", estado.toString());
 			cs.executeUpdate();
 			return true;
 		}

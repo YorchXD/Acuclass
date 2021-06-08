@@ -142,7 +142,7 @@ public class ViewUnidad
 			System.out.println("Seleccione el semestre a que pertenece la unidad\n");
 			for(int i = 1; i<=2; i++)
 			{
-				System.out.println(i + ". " + i + "° semestre");
+				System.out.println(i + ". " + i + "Â° semestre");
 			}
 		}
 		else if(tipoDivAnual == Tipo_Division_Anual.TRIMESTRAL)
@@ -153,7 +153,7 @@ public class ViewUnidad
 			System.out.println("Seleccione el trimestre a que pertenece la unidad\n");
 			for(int i = 1; i<=3; i++)
 			{
-				System.out.println(i + ". " + i + "° trimestre");
+				System.out.println(i + ". " + i + "Â° trimestre");
 			}
 			
 		}
@@ -215,8 +215,8 @@ public class ViewUnidad
 		String numeroUnidad;
 		do
 		{
-			System.out.println("NOTA: El numero de la unidad debe ser igual o superior a 1.");
-			System.out.print("Ingrese el nombre de la unidad: ");
+			System.out.println("\n\nNOTA: El numero de la unidad debe ser igual o superior a 1.");
+			System.out.print("Ingrese el numero de la unidad: ");
 			numeroUnidad = Utilidades.extracted().nextLine();
 			if(Integer.parseInt(numeroUnidad)<1)
 			{
@@ -299,7 +299,7 @@ public class ViewUnidad
 				if(idUnidad!=-1 && idUnidad!=0)
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
-					unidad.mostrarDatos(curso.getTipoDivisionAnual());
+					mostrarDatosModUnidad(unidad,curso);
 					String nombre = solicitarNombre();
 					int divAnual = solicitarOpcion(cursos.get(idCurso).getTipoDivisionAnual());
 					int numeroUnidad = solicitarNumeroUnidad();
@@ -366,7 +366,7 @@ public class ViewUnidad
 				if(idUnidad!=-1 && idUnidad!=0)
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
-					unidad.mostrarDatos(curso.getTipoDivisionAnual());
+					mostrarDatosModUnidad(unidad,curso);
 					if(confirmacionCambiarEstado(unidad.getEstado()))
 					{
 						System.out.println(UnidadController.actualizarEstadoUnidad(unidad));
@@ -383,7 +383,7 @@ public class ViewUnidad
 		boolean validar = false;
 		do
 		{
-			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			System.out.print("El estado actual es: " + estado + ". ï¿½Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 			if(!validar )
@@ -447,5 +447,26 @@ public class ViewUnidad
 			System.out.println("\nNo existen unidaddes registradas.\n");
 		}
 		return -1;
+	}
+	
+	public static void mostrarDatosModUnidad(Unidad unidad, Curso curso) {
+		System.out.println("\n********************************************************");
+		System.out.println("*            Datos de la unidad a modificar            *");
+		System.out.println("********************************************************");
+		System.out.println(unidad.mostrarDatos());
+		if(curso.getTipoDivisionAnual() == Tipo_Division_Anual.TRIMESTRAL)
+		{
+			System.out.println("Trimestre en que se imparte la unidad: " + unidad.getDivision_anual() + "Â° trimestre");
+		}
+		else if(curso.getTipoDivisionAnual() == Tipo_Division_Anual.SEMESTRAL)
+		{
+			System.out.println("Semestre en que se imparte la unidad: " + unidad.getDivision_anual()  + "Â° semestre");
+		}
+		else
+		{
+			System.out.println("La unidad se imparte dentro del anio dado que la asignatura es anual");
+		}
+		System.out.println("********************************************************\n");
+		
 	}
 }

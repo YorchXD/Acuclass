@@ -1,6 +1,9 @@
 package Model;
 
-public class Unidad
+import BD.ConsultaUnidad;
+import Utilidades.AccionesPrincipales;
+
+public class Unidad implements AccionesPrincipales
 {
 	private String nombre;
 	private int numero_unidad;
@@ -89,27 +92,31 @@ public class Unidad
 	}
 	
 
-	public void mostrarDatos(Tipo_Division_Anual tipoDivAnual)
-	{
-		System.out.println("\n********************************************************");
-		System.out.println("*            Datos de la unidad a modificar            *");
-		System.out.println("********************************************************");
-		System.out.println("Unidad: " + this.numero_unidad);
-		System.out.println("Id: " + this.id);
-		System.out.println("Nombre: " + this.nombre);
-		if(tipoDivAnual == tipoDivAnual.TRIMESTRAL)
-		{
-			System.out.println("Trimestre en que se imparte la unidad: " + this.division_anual + "° trimestre");
-		}
-		else if(tipoDivAnual == tipoDivAnual.SEMESTRAL)
-		{
-			System.out.println("Semestre en que se imparte la unidad: " + this.division_anual + "° semestre");
-		}
-		else
-		{
-			System.out.println("La unidad se imparte dentro del año dado que la asignatura es anual");
-		}
-		System.out.println("Estado: " + this.estado);
-		System.out.println("********************************************************\n");
+
+	
+	@Override
+	public String mostrarDatos() {
+		return "Nombre: " + getNombre() + 
+				"\nNumero Unidad: " + getNumero_unidad() + 
+				"\nTipo DivisiÃ³n Anual: " + getDivision_anual()+ 
+				"\nEstado: " + getEstado();
+	}
+
+	@Override
+	public boolean registrarDatos() {
+		
+		return ConsultaUnidad.registrarUnidad(this.nombre, this.numero_unidad, this.division_anual, this.asignatura.getId());
+	}
+	
+
+	@Override
+	public boolean actualizarDatos() {
+
+		return ConsultaUnidad.actualizarDatosUnidad(this.nombre, this.numero_unidad, this.division_anual, this.id);
+	}
+
+	@Override
+	public boolean cambiarEstado() {
+		return ConsultaUnidad.actualizarEstadoUnidad(this.id, this.estado);
 	} 
 }

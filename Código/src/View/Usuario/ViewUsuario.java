@@ -2,6 +2,7 @@ package View.Usuario;
 
 import Utilidades.Utilidades;
 import Controller.CursoController;
+import Controller.CursoReferenciaController;
 import Controller.AlumnoController;
 import Controller.ApoderadoController;
 import Controller.AsignaturaController;
@@ -51,7 +52,13 @@ public class ViewUsuario
 		System.out.println("26. Modificar Apoderado");
 		System.out.println("27. Habilitar o deshabiliatar Apoderado");
 
-		System.out.println("28. Cerrar sesion");
+		System.out.println("28. asociar apoderado a un alumno"); //asociar apoderado a un alumno
+		
+		System.out.println("29. Registrar curso promoción"); //registro curso promoción
+		System.out.println("30. Ver curso promoción");
+		System.out.println("31. Asociar alumno a curso promoción");
+		System.out.println("32. Ver Alumno asociados a curso promoción");
+		System.out.println("33. Cerrar Sesión");
 		System.out.println("********************************************************\n");
 		
 		System.out.print("Ingrese su opcion: ");
@@ -72,12 +79,12 @@ public class ViewUsuario
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 				opcion="-1";
 			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>28)
+			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>32)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>28);
+		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>32);
 		
 		return Integer.parseInt(opcion);
 	}
@@ -172,12 +179,28 @@ public class ViewUsuario
 				case 27:
 					ApoderadoController.cambiarEstado();
 					break;
+				case 28:
+					//yorch
+					break;
+				case 29:
+					CursoReferenciaController.crear();
+					break;
+				case 30:
+					CursoReferenciaController.ver();
+					break;
+				case 31:
+					CursoReferenciaController.asociarAlumno();;
+					break;	
+				case 32:
+					CursoReferenciaController.verAlumno();
+					break;
+					
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=28);
+		while(opcion!=32);
 	}
 	/*Fin opciones administrador*/
 	

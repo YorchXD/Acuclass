@@ -31,6 +31,12 @@ public class Alumno
 		this.estado=estado;
 		this.asistencias = new ArrayList<Asistencia>();
 	}
+	
+	public Alumno(String nombre, String run)
+	{
+		this.nombre = nombre;
+		this.run = run;
+	}
 
 
 	public String getNombre()
