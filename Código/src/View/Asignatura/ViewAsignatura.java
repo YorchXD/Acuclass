@@ -42,10 +42,10 @@ public class ViewAsignatura
 	
 	public static int solicitarSeleccionAsignatura(Map<Integer, String> asignaturas)
 	{
-		
+		String opcion = "0";
+		boolean validar2=true;
 		if(!asignaturas.isEmpty())
 		{
-			String opcion;
 			boolean validar = false;
 			do
 			{
@@ -64,31 +64,30 @@ public class ViewAsignatura
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
 				else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>asignaturas.size())
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
-
+				else
+				{
+					validar2 = false;
+				}
 			}
-			while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>asignaturas.size());
-			
-			return Integer.parseInt(opcion);
-
+			while(validar2);
 		}
 		else
 		{
 			System.out.println("\nNo existen asignaturas registradas.\n");
 		}
-		return -1;
+		return Integer.parseInt(opcion);
 	}
 	
 	public static void modificarAsignatura(Map<Integer, String> asignaturas)
 	{
 		int idAsignatura = solicitarSeleccionAsignatura(asignaturas);
 		
-		if(idAsignatura!=-1)
+		if(idAsignatura!=0)
 		{
 			String nuevoNombre = solicitarNombre();
 			System.out.println(AsignaturaController.actualizarNombreAsignatura(nuevoNombre, idAsignatura));

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import Model.Asignatura;
 import Model.Estado;
-import Model.Tipo_Division_Anual;
 import Model.Unidad;
 
 public class ConsultaUnidad

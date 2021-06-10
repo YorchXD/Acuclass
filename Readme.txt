@@ -1,19 +1,8 @@
 Consideraciones para hacer funcionar el proyecto
 
--> Apache tomcat 10.0.6
--> Eclipse IDE for Enterprise Java and Web Developers   
+-> Java 1.8
+-> Creacion de la base de datos en MYSQL
+-> Parametros de conexion en la clase Conexion ubicado en el package BD
 
-Una vez que esté instalado ambas cosas, se debe configurar el servidor apache en Eclipse. Para ello, se debe realizar lo siguiente:
-
--> Abrir Eclipse
--> Ir a la opcion Windows y seleccionar preference
--> Seleccionar Server
--> Seleccionar RunTime Environments
--> Presionar en el boton add
--> Seleccionar la version de tomcat. En este caso es la version Apache Tomcat v10.0
--> Luego presionar el boton next
--> Despues buscar la carpeta en donde se encuentra la carpeta Apache toomcat, en mi caso, descomprimi la carpeta que contenia apache y la pegue en  Archivo de programa que se encuentra en el disco local C:/
--> Una vez que se enocontró la carpeta, se debe presionar en el boton finalizar y se cerrará la ventala
--> Luego presionar el boton apply and close para terminar la configuración
-
-Link que explica como configura eclipse con apache tomcat: https://www.youtube.com/watch?v=F94PL49pa7Q
+-> Los diagramas a considerar se encuentran en el archivo "Diagramas de clases mejorado.mdj" (diagrama de clase, diagrama de flujos y diagrama E/R)
+-> Para visualizar los diagramas se debe utilizar la aplicacion staruml
