@@ -1364,7 +1364,7 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 136,
+									"left": 144,
 									"top": 72,
 									"width": 169.3388671875,
 									"height": 25,
@@ -1513,7 +1513,7 @@
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 136,
+									"left": 144,
 									"top": 97,
 									"width": 169.3388671875,
 									"height": 98
@@ -1528,7 +1528,7 @@
 										"$ref": "AAAAAAF5Z/R7IqS8pbg="
 									},
 									"font": "Arial;13;0",
-									"left": 136,
+									"left": 144,
 									"top": 195,
 									"width": 169.3388671875,
 									"height": 10
@@ -1571,7 +1571,7 @@
 							"left": 144,
 							"top": 72,
 							"width": 169.3388671875,
-							"height": 191,
+							"height": 137,
 							"nameCompartment": {
 								"$ref": "AAAAAAF5Z/R7I6S/XNQ="
 							},
@@ -2105,8 +2105,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 209,
-									"top": 222,
+									"left": 213,
+									"top": 221,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -2126,8 +2126,8 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 194,
-									"top": 223,
+									"left": 198,
+									"top": 221,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 30,
@@ -2147,8 +2147,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 238,
-									"top": 221,
+									"left": 242,
+									"top": 222,
 									"height": 13,
 									"alpha": -1.5707963267948966,
 									"distance": 15,
@@ -2166,7 +2166,7 @@
 								"$ref": "AAAAAAF5Z/Wj1ab80r8="
 							},
 							"lineStyle": 1,
-							"points": "228:247;228:263",
+							"points": "228:247;228:209",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF5Z/Z596luHsE="
@@ -2199,7 +2199,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 323,
+									"left": 327,
 									"top": 151,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -2220,7 +2220,7 @@
 									},
 									"visible": null,
 									"font": "Arial;13;0",
-									"left": 323,
+									"left": 327,
 									"top": 166,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -2241,7 +2241,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 324,
+									"left": 328,
 									"top": 121,
 									"height": 13,
 									"alpha": -1.5707963267948966,
@@ -2260,7 +2260,7 @@
 								"$ref": "AAAAAAF5Z/XDTqd3a24="
 							},
 							"lineStyle": 1,
-							"points": "343:156;313:159",
+							"points": "343:143;313:142",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF5Z/aWO6m+V9Y="
@@ -7278,7 +7278,7 @@
 								"$ref": "AAAAAAF5Z/R7IqS+J5M="
 							},
 							"lineStyle": 1,
-							"points": "143:154;72:144;71:207",
+							"points": "143:142;72:144;71:207",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF5jJJyp+YS71s="
@@ -7887,7 +7887,7 @@
 								"$ref": "AAAAAAF5Z/R7IqS+J5M="
 							},
 							"lineStyle": 1,
-							"points": "143:158;16:144;16:800;471:795",
+							"points": "143:142;16:144;16:800;471:795",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF5j+PrNSq8d0M="
@@ -8993,7 +8993,7 @@
 								"$ref": "AAAAAAF5Z/R7IqS+J5M="
 							},
 							"lineStyle": 1,
-							"points": "225:71;224:24;1024:24;1024:96",
+							"points": "226:71;224:24;1024:24;1024:96",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAF56QOo49iXxTo="
@@ -31258,7 +31258,7 @@
 									"top": 114,
 									"width": 165,
 									"height": 13,
-									"text": "cursos = listarCursos()",
+									"text": "cusros = listarCursos()",
 									"wordWrap": true
 								}
 							],
@@ -32418,7 +32418,7 @@
 									"top": 970,
 									"width": 87.70556640625,
 									"height": 51,
-									"text": "\"La unidad no se ha registrado. Por favor, intentelo nuevamente\"",
+									"text": "\"La unidad se ha registrado correctamente\"",
 									"wordWrap": true
 								}
 							],
@@ -32452,7 +32452,7 @@
 									"top": 970,
 									"width": 103.55078125,
 									"height": 51,
-									"text": "\"La unidad se ha registrado correctamente\"",
+									"text": "La unidad no se ha registrado. Por favor, intentelo nuevamente",
 									"wordWrap": true
 								}
 							],

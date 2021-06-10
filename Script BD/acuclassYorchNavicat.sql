@@ -11,7 +11,7 @@
  Target Server Version : 100136
  File Encoding         : 65001
 
- Date: 08/06/2021 22:17:26
+ Date: 09/06/2021 21:28:08
 */
 
 SET NAMES utf8mb4;
@@ -35,8 +35,6 @@ CREATE TABLE `alumno`  (
 -- ----------------------------
 -- Records of alumno
 -- ----------------------------
-INSERT INTO `alumno` VALUES ('Yorch Sepulveda', '17824523-6', 29, '12296649-6', 'HABILITADO');
-INSERT INTO `alumno` VALUES ('Juana Perez', '22222222-2', 11, NULL, 'HABILITADO');
 
 -- ----------------------------
 -- Table structure for asignatura
@@ -156,7 +154,7 @@ CREATE TABLE `curso_referencia_alumno`  (
   INDEX `id`(`id`) USING BTREE,
   CONSTRAINT `curso_referencia_alumno_ibfk_1` FOREIGN KEY (`refAlumno`) REFERENCES `alumno` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `curso_referencia_alumno_ibfk_2` FOREIGN KEY (`refCursoReferencia`) REFERENCES `curso_referencia` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of curso_referencia_alumno
@@ -243,12 +241,12 @@ CREATE TABLE `unidad`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `unidad_ibfk_1`(`refCursoAsignatura`) USING BTREE,
   CONSTRAINT `unidad_ibfk_1` FOREIGN KEY (`refCursoAsignatura`) REFERENCES `curso_asignatura` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of unidad
 -- ----------------------------
-INSERT INTO `unidad` VALUES (1, 'Verb to be', 3, 2, 'HABILITADO', 1);
+INSERT INTO `unidad` VALUES (2, 'Verb to be', 1, 1, 'HABILITADO', 1);
 
 -- ----------------------------
 -- Table structure for usuario
@@ -286,7 +284,7 @@ CREATE TABLE `usuario_rol`  (
   INDEX `refRol`(`refRol`) USING BTREE,
   CONSTRAINT `usuario_rol_ibfk_1` FOREIGN KEY (`refUsuario`) REFERENCES `usuario` (`run`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `usuario_rol_ibfk_2` FOREIGN KEY (`refRol`) REFERENCES `rol` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = COMPACT;
 
 -- ----------------------------
 -- Records of usuario_rol
@@ -295,8 +293,8 @@ INSERT INTO `usuario_rol` VALUES (1, 'admin@usuario.cl', '12345', 'HABILITADO', 
 INSERT INTO `usuario_rol` VALUES (6, 'patricia@usuario.cl', '12345', 'HABILITADO', '12296649-6', 2);
 INSERT INTO `usuario_rol` VALUES (7, 'patricia@apoderado.cl', '12345', 'HABILITADO', '12296649-6', 3);
 INSERT INTO `usuario_rol` VALUES (8, 'yorch@profesor.cl', '12345', 'HABILITADO', '17824523-6', 2);
-INSERT INTO `usuario_rol` VALUES (13, 'gregory@apoderado.cl', '12345', 'HABILITADO', '19043138-k', 3);
 INSERT INTO `usuario_rol` VALUES (14, 'tania@profesor.cl', '12345', 'HABILITADO', '17307859-5', 2);
+INSERT INTO `usuario_rol` VALUES (15, 'gregory@apoderado.cl', '12345', 'HABILITADO', '19043138-k', 3);
 
 -- ----------------------------
 -- Procedure structure for actualizarAlumno
