@@ -91,29 +91,24 @@ public class ViewAlumno
 		String nombre, run;
 		String mensaje = "";
 
-		do
+		run = solicitarRun("Alumno");
+		alumno = AlumnoController.buscarAlumno(run);
+		if (alumno == null)
 		{
-			run = solicitarRun("Alumno");
-			alumno = AlumnoController.buscarAlumno(run);
-			if (alumno == null)
-			{
-				nombre = solicitarNombre();
-				edad = solicitarEdad();
-				mensaje = AlumnoController.registrarAlumno(nombre, run, edad);
+			nombre = solicitarNombre();
+			edad = solicitarEdad();
+			mensaje = AlumnoController.registrarAlumno(nombre, run, edad);
 
-				System.out.println("\n********************************************************");
-				System.out.println(mensaje);
-				System.out.println("********************************************************\n");
-			}
-			else
-			{
-				System.out.println("\n********************************************************");
-				System.out.println("*         El alumno ya se encuentra registrado         *");
-				System.out.println("********************************************************\n");
-				mensaje = "Alumno registrado";
-			}
+			System.out.println("\n********************************************************");
+			System.out.println(mensaje);
+			System.out.println("********************************************************\n");
 		}
-		while (mensaje == "Alumno registrado");
+		else
+		{
+			System.out.println("\n********************************************************");
+			System.out.println("*         El alumno ya se encuentra registrado         *");
+			System.out.println("********************************************************\n");
+		}
 	}
 
 	public static void ver()

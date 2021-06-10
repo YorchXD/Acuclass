@@ -23,10 +23,9 @@ public class ViewUnidad
 	
 	public static int solicitarSeleccionCurso(Map<Integer, Curso> cursos)
 	{
-		
+		String opcion="0";
 		if(!cursos.isEmpty())
 		{
-			String opcion;
 			boolean validar = false, validar2 = true;
 			do
 			{
@@ -45,30 +44,28 @@ public class ViewUnidad
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
-				else if(Integer.parseInt(opcion)<0 || Integer.parseInt(opcion)>cursos.size())
+				else if(Integer.parseInt(opcion)<0 
+						|| (Integer.parseInt(opcion)>0 && cursos.get(Integer.parseInt(opcion))==null))
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
 				else if(cursos.get(Integer.parseInt(opcion))!=null && cursos.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO)
 				{
-					System.out.println("La opcion ingresada es un curso deshabilitado por lo cual no se puede asociar asignaturas. Favor ingrese una opcion segun las opciones que muestra el menu y cursos habilitados.\n\n");
+					System.out.println("La opcion ingresada es un curso deshabilitado por lo cual no se puede asociar unidades. Favor ingrese una opcion segun las opciones que muestra el menu y cursos habilitados.\n\n");
 				}
 				else
 				{
 					validar2=false;
 				}
 			}
-			while(validar2);
-			
-			return Integer.parseInt(opcion);
+			while(validar2);			
 		}
 		else
 		{
 			System.out.println("\nNo existen cursos registrados.\n");
 		}
-		return -1;
+		return Integer.parseInt(opcion);
 	}
 	
 	public static void listarAsignaturas(Map<Integer, Asignatura> asignaturas)
@@ -81,10 +78,9 @@ public class ViewUnidad
 	
 	public static int solicitarSeleccionAsignatura(Map<Integer, Asignatura> asignaturas)
 	{
-		
+		String opcion = "0";
 		if(!asignaturas.isEmpty())
 		{
-			String opcion;
 			boolean validar = false, validar2 = true;
 			do
 			{
@@ -102,9 +98,10 @@ public class ViewUnidad
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
-				else if((Integer.parseInt(opcion)>0 && asignaturas.get(Integer.parseInt(opcion))==null) ||(asignaturas.get(Integer.parseInt(opcion))!=null && asignaturas.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO))
+				else if(Integer.parseInt(opcion)<0 
+						|| (Integer.parseInt(opcion)>0 && asignaturas.get(Integer.parseInt(opcion))==null) 
+						||(asignaturas.get(Integer.parseInt(opcion))!=null && asignaturas.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO))
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
@@ -114,14 +111,12 @@ public class ViewUnidad
 				}
 			}
 			while(validar2);
-			
-			return Integer.parseInt(opcion);
 		}
 		else
 		{
 			System.out.println("\nNo existen asignaturas registradas.\n");
 		}
-		return -1;
+		return Integer.parseInt(opcion);
 	}
 	
 	public static String solicitarNombre()
@@ -142,7 +137,7 @@ public class ViewUnidad
 			System.out.println("Seleccione el semestre a que pertenece la unidad\n");
 			for(int i = 1; i<=2; i++)
 			{
-				System.out.println(i + ". " + i + "Â° semestre");
+				System.out.println(i + ". " + i + "° semestre");
 			}
 		}
 		else if(tipoDivAnual == Tipo_Division_Anual.TRIMESTRAL)
@@ -153,7 +148,7 @@ public class ViewUnidad
 			System.out.println("Seleccione el trimestre a que pertenece la unidad\n");
 			for(int i = 1; i<=3; i++)
 			{
-				System.out.println(i + ". " + i + "Â° trimestre");
+				System.out.println(i + ". " + i + "° trimestre");
 			}
 			
 		}
@@ -192,7 +187,6 @@ public class ViewUnidad
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
 				else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>cantTipoDiv)
 				{
@@ -231,15 +225,15 @@ public class ViewUnidad
 	public static void crear(Map<Integer, Curso> cursos)
 	{
 		int idCurso = solicitarSeleccionCurso(cursos);
-		if(idCurso!=-1 && idCurso!=0)
+		if(idCurso!=0)
 		{
 			Curso curso = cursos.get(idCurso);
 			int idAsignatura = solicitarSeleccionAsignatura(curso.getAsignaturas());
-			if(idAsignatura!=-1 && idAsignatura!=0)
+			if(idAsignatura!=0)
 			{
 				Asignatura asignatura = curso.getAsignaturas().get(idAsignatura);
 				String nombre = solicitarNombre();
-				int divAnual = solicitarOpcion(cursos.get(idCurso).getTipoDivisionAnual());
+				int divAnual = solicitarOpcion(curso.getTipoDivisionAnual());
 				int numeroUnidad = solicitarNumeroUnidad();
 				System.out.println(UnidadController.registrarUnidad(asignatura, nombre, divAnual, numeroUnidad));
 			}
@@ -249,11 +243,11 @@ public class ViewUnidad
 	public static void verListadoUnidades(Map<Integer, Curso> cursos)
 	{
 		int idCurso = solicitarSeleccionCurso(cursos);
-		if(idCurso!=-1 && idCurso!=0)
+		if(idCurso!=0)
 		{
 			Curso curso = cursos.get(idCurso);
 			int idAsignatura = solicitarSeleccionAsignatura(curso.getAsignaturas());
-			if(idAsignatura!=-1 && idAsignatura!=0)
+			if(idAsignatura!=0)
 			{
 				Asignatura asignatura = curso.getAsignaturas().get(idAsignatura);
 				mostrarlistarUnidades(asignatura.getUnidades());
@@ -289,20 +283,20 @@ public class ViewUnidad
 	public static void modificarUnidad(Map<Integer, Curso> cursos)
 	{
 		int idCurso = solicitarSeleccionCurso(cursos);
-		if(idCurso!=-1 && idCurso!=0)
+		if(idCurso!=0)
 		{
 			Curso curso = cursos.get(idCurso);
 			int idAsignatura = solicitarSeleccionAsignatura(curso.getAsignaturas());
-			if(idAsignatura!=-1 && idAsignatura!=0)
+			if(idAsignatura!=0)
 			{
 				Asignatura asignatura = curso.getAsignaturas().get(idAsignatura);
 				int idUnidad = solicitarSeleccionUnidad(asignatura.getUnidades());
-				if(idUnidad!=-1 && idUnidad!=0)
+				if(idUnidad!=0)
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
 					mostrarDatosModUnidad(unidad,curso);
 					String nombre = solicitarNombre();
-					int divAnual = solicitarOpcion(cursos.get(idCurso).getTipoDivisionAnual());
+					int divAnual = solicitarOpcion(curso.getTipoDivisionAnual());
 					int numeroUnidad = solicitarNumeroUnidad();
 					System.out.println(UnidadController.actualizarUnidad(unidad, nombre, divAnual, numeroUnidad));
 				}
@@ -310,11 +304,11 @@ public class ViewUnidad
 		}
 	}
 
-	private static int solicitarSeleccionUnidad(Map<Integer, Unidad> unidades)
+	public static int solicitarSeleccionUnidad(Map<Integer, Unidad> unidades)
 	{
+		String opcion="0";
 		if(!unidades.isEmpty())
 		{
-			String opcion;
 			boolean validar = false, validar2 = true;
 			do
 			{
@@ -331,9 +325,8 @@ public class ViewUnidad
 				if(!validar )
 				{
 					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
 				}
-				else if((Integer.parseInt(opcion)>0 && unidades.get(Integer.parseInt(opcion))==null) ||(unidades.get(Integer.parseInt(opcion))!=null && unidades.get(Integer.parseInt(opcion)).getEstado()==Estado.DESHABILITADO))
+				else if(Integer.parseInt(opcion)>0 && unidades.get(Integer.parseInt(opcion))==null)
 				{
 					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 				}
@@ -343,28 +336,27 @@ public class ViewUnidad
 				}
 			}
 			while(validar2);
-			
-			return Integer.parseInt(opcion);
 		}
 		else
 		{
 			System.out.println("\nNo existen unidaddes registradas.\n");
 		}
-		return -1;
+		
+		return Integer.parseInt(opcion);
 	}
 
 	public static void cambiarEstadoUnidad(Map<Integer, Curso> cursos)
 	{
 		int idCurso = solicitarSeleccionCurso(cursos);
-		if(idCurso!=-1 && idCurso!=0)
+		if(idCurso!=0)
 		{
 			Curso curso = cursos.get(idCurso);
 			int idAsignatura = solicitarSeleccionAsignatura(curso.getAsignaturas());
-			if(idAsignatura!=-1 && idAsignatura!=0)
+			if(idAsignatura!=0)
 			{
 				Asignatura asignatura = curso.getAsignaturas().get(idAsignatura);
-				int idUnidad = solicitarSeleccionUnidad2(asignatura.getUnidades());
-				if(idUnidad!=-1 && idUnidad!=0)
+				int idUnidad = solicitarSeleccionUnidad(asignatura.getUnidades());
+				if(idUnidad!=0)
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
 					mostrarDatosModUnidad(unidad,curso);
@@ -372,7 +364,6 @@ public class ViewUnidad
 					{
 						System.out.println(UnidadController.actualizarEstadoUnidad(unidad));
 					}
-					
 				}
 			}
 		}
@@ -382,72 +373,33 @@ public class ViewUnidad
 	{
 		String opcion;
 		boolean validar = false;
+		boolean validar2 = true;
 		do
 		{
-			System.out.print("El estado actual es: " + estado + ". ï¿½Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
+			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 			if(!validar )
 			{
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-				opcion="-1";
 			}
 			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>2)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
+			else
+			{
+				validar2=false;
+			}
 
 		}
-		while(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>2);
+		while(validar2);
 		
 		if(Integer.parseInt(opcion)==1)
 		{
 			return true;
 		}
 		return false;
-	}
-	
-	public static int solicitarSeleccionUnidad2(Map<Integer, Unidad> unidades)
-	{
-		if(!unidades.isEmpty())
-		{
-			String opcion;
-			boolean validar = false, validar2 = true;
-			do
-			{
-				System.out.println("\n********************************************************");
-				System.out.println("*             Menu de unidades registradas             *");
-				System.out.println("********************************************************\n");
-				System.out.println("0. Volver al menu principal");
-				listarUnidades(unidades);
-				System.out.println("********************************************************\n");
-				System.out.print("\nIngrese su opcion: ");
-				
-				opcion = Utilidades.extracted().nextLine();
-				validar = Utilidades.esNumero(opcion);
-				if(!validar )
-				{
-					System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-					opcion="-1";
-				}
-				else if((Integer.parseInt(opcion)>0 && unidades.get(Integer.parseInt(opcion))==null))
-				{
-					System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
-				}
-				else
-				{
-					validar2 = false;
-				}
-			}
-			while(validar2);
-			
-			return Integer.parseInt(opcion);
-		}
-		else
-		{
-			System.out.println("\nNo existen unidaddes registradas.\n");
-		}
-		return -1;
 	}
 	
 	public static void mostrarDatosModUnidad(Unidad unidad, Curso curso) {

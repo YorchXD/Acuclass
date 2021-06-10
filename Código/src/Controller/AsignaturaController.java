@@ -7,6 +7,7 @@ import View.Asignatura.ViewAsignatura;
 
 public class AsignaturaController
 {
+	/*Metodos que activan la vista segun sea el caso*/
 	public static void crear()
 	{
 		ViewAsignatura.crear();
@@ -21,7 +22,14 @@ public class AsignaturaController
 	{
 		ViewAsignatura.modificarAsignatura(ConsultaAsignatura.listadoAsignaturas());
 	}
+	/*Fin mostrar vistas*/
 	
+	/**
+	 * Tras obtener el nombre de la asignatura, se obtiene un listado de asignatura que se encuentran registradas en la BD. Posteriormente se procede
+	 * a buscar el nombre de la asignatura en el listado de asignaturas registradas.
+	 * @param nombre
+	 * @return asignatura o null.
+	 */
 	public static String buscarAsignatura(String nombre)
 	{
 		Map<Integer, String> asignaturas = ConsultaAsignatura.listadoAsignaturas();
@@ -35,6 +43,11 @@ public class AsignaturaController
 		return null;
 	}
 
+	/**
+	 * Tras obtener el nombre de la asignatura, se procede a buscar si existe en la base de datos. En caso de no encontrarlo, se registra.
+	 * @param nombre
+	 * @return "Asignatura registrada correctamente", "No se han registrado la asignatura, intentelo nuevamente" o "La asignatura ya se encuentra registrada"
+	 */
 	public static String registrarAsignatura(String nombre)
 	{
 		String mensaje = null;
@@ -56,7 +69,14 @@ public class AsignaturaController
 		
 		return mensaje;
 	}
-
+	
+	/**
+	 * Tras obtener el id de la asignatura se procede a buscar si existe. En caso de encontrarla y el nuevo nombre es diferente al actual,
+	 * se procede a actualizar la asignatura en la BD.
+	 * @param nuevoNombre
+	 * @param idAsignatura
+	 * @return "Asignatura modificada correctamente" o "No se han registrado el curso, intentelo nuevamente"
+	 */
 	public static String actualizarNombreAsignatura(String nuevoNombre, int idAsignatura)
 	{
 		String mensaje = null;

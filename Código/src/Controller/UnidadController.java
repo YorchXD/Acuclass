@@ -80,20 +80,9 @@ public class UnidadController
 		String mensaje = "";
 		if(!unidad.getNombre().equals(nombre) || unidad.getDivision_anual()!=divAnual || unidad.getNumero_unidad()!=numeroUnidad)
 		{
-			if(!unidad.getNombre().equals(nombre))
-			{
-				unidad.setNombre(nombre);
-			}
-			
-			if(unidad.getDivision_anual()!=divAnual)
-			{
-				unidad.setDivision_anual(divAnual);
-			}
-			
-			if(unidad.getNumero_unidad()!=numeroUnidad)
-			{
-				unidad.setNumero_unidad(numeroUnidad);
-			}
+			unidad.setNombre(nombre);
+			unidad.setDivision_anual(divAnual);
+			unidad.setNumero_unidad(numeroUnidad);
 			
 			if(unidad.actualizarDatos())
 			{

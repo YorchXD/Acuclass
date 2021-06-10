@@ -21,6 +21,7 @@ public class ViewProfesor
 		
 		run = solicitarRun();
 		profesor = ProfesorController.buscarUsuario(run);
+		
 		if (profesor == null)
 		{
 			nombre = solicitarNombre();
