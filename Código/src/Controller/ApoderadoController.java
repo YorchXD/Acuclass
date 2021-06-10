@@ -147,7 +147,7 @@ public class ApoderadoController
 				}
 				else
 				{
-					mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario ocn el rol de profesor que tiene el mismo correo\n";
+					mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el rol de profesor que tiene el mismo correo\n";
 				}
 			}
 			

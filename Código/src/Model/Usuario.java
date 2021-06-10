@@ -25,7 +25,33 @@ public class Usuario implements AccionesPrincipales
 		this.run = run;
 		this.tipoUsuario = tipoUsuario;
 	}
+	
+	public String mostrarDatos()
+	{
+		return	"Nombre: " + this.nombre + 
+			   	"\nEmail: " + this.email +
+			   	"\nClave: " + this.clave +
+			   	"\nEstado: " + this.estado +
+			   	"\nRUN: " + this.run +
+			   	"\nTipoUsuario: " + this.tipoUsuario;
+	}
 
+	public boolean registrarDatos()
+	{
+		return ConsultaUsuario.registrarUsuario(this.nombre, this.run, this.email, this.clave, this.tipoUsuario, null);
+	}
+
+	public boolean cambiarEstado()
+	{
+		return ConsultaUsuario.cambiarEstado(this.run, this.estado, this.tipoUsuario);
+	}
+
+	public boolean actualizarDatos()
+	{
+		return ConsultaUsuario.actualizarDatos(this.nombre, this.email, this.clave, null, this.run, this.tipoUsuario);
+	}
+	
+	
 	public String getNombre()
 	{
 		return nombre;
@@ -86,31 +112,7 @@ public class Usuario implements AccionesPrincipales
 		this.tipoUsuario = tipoUsuario;
 	}
 	
-	public String mostrarDatos()
-	{
-		return	"Nombre: " + this.nombre + 
-			   	"\nEmail: " + this.email +
-			   	"\nClave: " + this.clave +
-			   	"\nEstado: " + this.estado +
-			   	"\nRUN: " + this.run +
-			   	"\nTipoUsuario: " + this.tipoUsuario;
-	}
 
-	public boolean registrarDatos()
-	{
-		return ConsultaUsuario.registrarUsuario(this.nombre, this.run, this.email, this.clave, this.tipoUsuario, null);
-	}
-
-	public boolean cambiarEstado()
-	{
-		return ConsultaUsuario.cambiarEstado(this.run, this.estado, this.tipoUsuario);
-	}
-
-	public boolean actualizarDatos()
-	{
-		return ConsultaUsuario.actualizarDatos(this.nombre, this.email, this.clave, null, this.run, this.tipoUsuario);
-	}
-	
 	public boolean registrarCuenta()
 	{
 		return ConsultaUsuario.registrarCuenta(this.run, this.email, this.clave, this.tipoUsuario, null);
