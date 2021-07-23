@@ -23,10 +23,10 @@ public class UnidadController
 		View.Unidad.ViewUnidad.crear(cursos);
 	}
 	
-	public static String registrarUnidad(Asignatura asignatura, String nombreUnidad, int divAnual, int numeroUnidad)
+	public static String registrarUnidad(int idAsignatura, int idCurso, String nombreUnidad, int divAnual, int numeroUnidad)
 	{
 		String mensaje = "";
-		Unidad unidad = new Unidad(nombreUnidad, numeroUnidad, divAnual, asignatura);
+		Unidad unidad = new Unidad(nombreUnidad, numeroUnidad, divAnual, idAsignatura, idCurso);
 
 		if(unidad.registrarDatos())
 		{
@@ -50,7 +50,7 @@ public class UnidadController
 			ConsultaCurso.buscarAsignaturasCurso(cursoAux);
 			for(Map.Entry<Integer,Asignatura> asignatura : cursoAux.getAsignaturas().entrySet())
 			{
-				ConsultaUnidad.listadoUnidades(asignatura.getValue());
+				ConsultaUnidad.listadoUnidades(asignatura.getValue(), cursoAux.getId());
 			}
 		}
 		return cursos;

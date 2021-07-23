@@ -25,10 +25,10 @@ class UnidadTest {
 			ConsultaCurso.buscarAsignaturasCurso(curso.getValue());
 		}
 		
-		Curso curso = cursos.get(3);
-		Asignatura asignatura = curso.getAsignaturas().get(6);
+		Curso curso = cursos.get(1);
+		Asignatura asignatura = curso.getAsignaturas().get(1);
 		
-		Unidad unidad = new Unidad("Resta", 2, 1, asignatura);
+		Unidad unidad = new Unidad("Resta", 2, 1, asignatura.getId(), curso.getId());
 		
 		boolean esperado = true;
 		boolean resultado = unidad.registrarDatos();
@@ -40,18 +40,18 @@ class UnidadTest {
 	void testMostrarDatos() 
 	{
 		Map<Integer, Curso> cursos = UnidadController.obtenerTodosDatosCurso();
-		Map <Integer, Unidad> unidades = cursos.get(3).getAsignaturas().get(6).getUnidades();
+		Map <Integer, Unidad> unidades = cursos.get(1).getAsignaturas().get(1).getUnidades();
 
 		String resultado=null;
 		
-		String esperado = "Nombre: " + "Sumas" + 
+		String esperado = "Nombre: " + "Resta" + 
 		"\nNumero Unidad: " + 2 + 
-		"\nTipo División Anual: " + 1 + 
+		"\nTipo Division Anual: " + 1 + 
 		"\nEstado: " + "DESHABILITADO";
 		
 		for (Map.Entry<Integer,Unidad> unidad : unidades.entrySet())
 		{
-			if(unidad.getValue().getNombre().equals("Sumas")) {
+			if(unidad.getValue().getNombre().equals("Resta")) {
 				resultado=unidad.getValue().mostrarDatos();
 				break;
 			}
@@ -64,7 +64,7 @@ class UnidadTest {
 	void testActualizarDatos() 
 	{
 		Map<Integer, Curso> cursos = UnidadController.obtenerTodosDatosCurso();
-		Map <Integer, Unidad> unidades = cursos.get(3).getAsignaturas().get(6).getUnidades();
+		Map <Integer, Unidad> unidades = cursos.get(1).getAsignaturas().get(1).getUnidades();
 		Unidad unidad_extraida  = unidades.get(2);
 		
 		
@@ -77,15 +77,14 @@ class UnidadTest {
 		boolean esperado = true;
 		boolean resultado = unidad_extraida.actualizarDatos();
 		assertEquals(esperado, resultado);
-	
 	}
 	
 	@Test
 	void testCambiarEstado()
 	{
 		Map<Integer, Curso> cursos = UnidadController.obtenerTodosDatosCurso();
-		Map <Integer, Unidad> unidades = cursos.get(3).getAsignaturas().get(6).getUnidades();
-		Unidad unidad_extraida  = unidades.get(2);
+		Map <Integer, Unidad> unidades = cursos.get(1).getAsignaturas().get(1).getUnidades();
+		Unidad unidad_extraida  = unidades.get(1);
 		
 		unidad_extraida.setEstado(Estado.DESHABILITADO);
 		

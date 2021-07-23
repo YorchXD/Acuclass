@@ -12,9 +12,9 @@ import Model.Alumno;
 import Model.Curso;
 import Model.Curso_Referencia;
 import Model.Estado;
+import Model.LetraCurso;
 import Model.Nivel;
 import Model.Profesor;
-import Model.TipoUsuario;
 import Model.Tipo_Division_Anual;
 
 public class ConsultaCursoReferencia
@@ -43,7 +43,7 @@ public class ConsultaCursoReferencia
 		return cursos;
 	}
 
-	public static int buscarCursoReferencia(String letra, String refProfesor, int refCurso, int anio)
+	public static int buscarCursoReferencia(int refLetra, String refProfesor, int refCurso, int anio)
 	{
 		Connection conexion = Conexion.conectar();
 		int id = 0;
@@ -51,7 +51,7 @@ public class ConsultaCursoReferencia
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call buscarCursoReferencia(?,?,?,?)}");
-			cs.setString("in_letra", letra);
+			cs.setInt("in_refLetra", refLetra);
 			cs.setInt("in_anio", anio);
 			cs.setInt("in_refCurso", refCurso);
 			cs.setString("in_refProfesorEncargado", refProfesor);
@@ -60,7 +60,7 @@ public class ConsultaCursoReferencia
 
 			while (rs.next())
 			{
-				id = rs.getInt("id");
+				id = rs.getInt("existe");
 
 			}
 		}
@@ -72,15 +72,15 @@ public class ConsultaCursoReferencia
 		return id;
 	}
 
-	public static Boolean RegistrarReferencia(String letra, String refProfesor, int refCurso, int anio)
+	public static Boolean registrarCursoReferencia(int refLetra, String refProfesor, int refCurso, int anio)
 	{
 		Connection conexion = Conexion.conectar();
 		boolean veficicacion = false;
 
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call RegistrarCursoReferencia(?,?,?,?)}");
-			cs.setString("in_letra", letra);
+			CallableStatement cs = conexion.prepareCall("{call registrarCursoReferencia(?,?,?,?)}");
+			cs.setInt("in_refLetra", refLetra);
 			cs.setInt("in_anio", anio);
 			cs.setInt("in_refCurso", refCurso);
 			cs.setString("in_refProfesorEncargado", refProfesor);
@@ -103,11 +103,12 @@ public class ConsultaCursoReferencia
 		Curso_Referencia curso_referencia = null;
 		Curso curso = null;
 		Profesor profesor = null;
+		LetraCurso letra = null;
 		Map<Integer, Curso_Referencia> cursos_referencia = new HashMap<>();
 
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call ListarCursosReferencia_anio (?)}");
+			CallableStatement cs = conexion.prepareCall("{call listarCursosReferencia_anio (?)}");
 			cs.setInt("in_anio", anio);
 			cs.executeQuery();
 
@@ -115,15 +116,25 @@ public class ConsultaCursoReferencia
 
 			while (rs.next())
 			{
-				profesor = new Profesor(rs.getString("nombre"), "", "", Estado.HABILITADO, rs.getString("run"),
-						TipoUsuario.PROFESOR, rs.getString("especialidad"));
+				profesor = new Profesor(rs.getString("nombre"), 
+										rs.getString("email"), 
+										Estado.valueOf(rs.getString("estado")),
+										rs.getString("run"),
+										ConsultaProfesor.listarEspecialidadesProfesor(rs.getString("run")));
 
-				curso = new Curso(0, Nivel.valueOf(Nivel.class, rs.getString("nivel")),
-						Tipo_Division_Anual.valueOf(Tipo_Division_Anual.class, rs.getString("tipoDivisionAnual")),
-						Estado.valueOf(Estado.class, rs.getString("estado")));
+				curso = new Curso(	rs.getInt("idCurso"), 
+									Nivel.valueOf(rs.getString("nivel")),
+									Tipo_Division_Anual.valueOf(rs.getString("tipoDivisionAnual")),
+									Estado.valueOf(rs.getString("estado")));
+				
+				letra = new LetraCurso(	rs.getInt("idLetra"),
+									rs.getString("letra"));
 
-				curso_referencia = new Curso_Referencia(rs.getInt("id"), rs.getString("letra").charAt(0), profesor,
-						curso, rs.getInt("anio"));
+				curso_referencia = new Curso_Referencia(rs.getInt("id"), 
+														letra, 
+														profesor,
+														curso, 
+														rs.getInt("anio"));
 				cursos_referencia.put(curso_referencia.getId(), curso_referencia);
 
 			}
@@ -138,13 +149,12 @@ public class ConsultaCursoReferencia
 
 	public static boolean registrarCursoReferenciaAlumno(int id_cursoReferencia, String refAlumno)
 	{
-
 		Connection conexion = Conexion.conectar();
 		boolean veficicacion = false;
 
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call RegistrarCursoReferenciaAlumno(?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call registrarCursoReferenciaAlumno(?,?)}");
 			cs.setInt("in_refCursoReferencia", id_cursoReferencia);
 			cs.setString("in_refAlumno", refAlumno);
 			cs.executeQuery();
@@ -191,4 +201,36 @@ public class ConsultaCursoReferencia
 		return alumnos;
 
 	}
+	
+	public static Map<Integer, LetraCurso> listarLetraCurso()
+	{
+		Connection conexion = Conexion.conectar();
+		Map<Integer, LetraCurso> letras = new HashMap<>();
+		try
+		{
+			CallableStatement cs = conexion.prepareCall("{call listarLetraCurso()}");
+			cs.executeQuery();
+
+			ResultSet rs = cs.executeQuery();
+
+			while (rs.next())
+			{
+				LetraCurso letra = new LetraCurso(
+						rs.getInt("id"),
+						rs.getString("letra")
+						);
+				letras.put(letra.getId(), letra);
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+
+		return letras;
+	}
+	
+	
+	
+	
 }

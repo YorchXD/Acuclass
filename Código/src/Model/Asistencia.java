@@ -5,10 +5,10 @@ import java.util.Date;
 public class Asistencia
 {
 	private Date fecha;
-	private String asiste;
+	private Tipo_Asistencia asiste;
 	private Asignatura_Referencia asignatura;
 	
-	public Asistencia(Date fecha, String asiste, Asignatura_Referencia asignatura)
+	public Asistencia(Date fecha, Tipo_Asistencia asiste, Asignatura_Referencia asignatura)
 	{
 		this.fecha = fecha;
 		this.asiste = asiste;
@@ -25,12 +25,12 @@ public class Asistencia
 		this.fecha = fecha;
 	}
 
-	public String getAsiste()
+	public Tipo_Asistencia getAsiste()
 	{
 		return asiste;
 	}
 
-	public void setAsiste(String asiste)
+	public void setAsiste(Tipo_Asistencia asiste)
 	{
 		this.asiste = asiste;
 	}

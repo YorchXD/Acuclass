@@ -8,26 +8,29 @@ public class Unidad implements AccionesPrincipales
 	private String nombre;
 	private int numero_unidad;
 	private int division_anual;
-	private Asignatura asignatura;
+	private int idAsignatura;
+	private int idCurso;
 	private Estado estado;
 	private int id;
 	
-	public Unidad(String nombre, int numero_unidad, int division_anual, Asignatura asignatura)
+	public Unidad(String nombre, int numero_unidad, int division_anual, int idAsignatura, int idCurso)
 	{
 		this.nombre = nombre;
 		this.numero_unidad = numero_unidad;
 		this.division_anual = division_anual;
-		this.asignatura = asignatura;
+		this.idAsignatura = idAsignatura;
+		this.idCurso = idCurso;
 		this.estado = Estado.HABILITADO;
 	}
 	
-	public Unidad(int id, String nombre, int numero_unidad, int division_anual, Asignatura asignatura, Estado estado)
+	public Unidad(int id, String nombre, int numero_unidad, int division_anual, int idAsignatura, int idCurso, Estado estado)
 	{
 		this.id = id;
 		this.nombre = nombre;
 		this.numero_unidad = numero_unidad;
 		this.division_anual = division_anual;
-		this.asignatura = asignatura;
+		this.idAsignatura = idAsignatura;
+		this.idCurso = idCurso;
 		this.estado = estado;
 	}
 
@@ -61,14 +64,14 @@ public class Unidad implements AccionesPrincipales
 		this.division_anual = division_anual;
 	}
 
-	public Asignatura getAsignatura()
+	public int getAsignatura()
 	{
-		return asignatura;
+		return idAsignatura;
 	}
 
-	public void setAsignatura(Asignatura asignatura)
+	public void setAsignatura(int idAsignatura)
 	{
-		this.asignatura = asignatura;
+		this.idAsignatura = idAsignatura;
 	}
 
 	public Estado getEstado()
@@ -91,32 +94,40 @@ public class Unidad implements AccionesPrincipales
 		this.id = id;
 	}
 	
+	public int getCurso()
+	{
+		return idCurso;
+	}
 
+	public void setCurso(int idCurso)
+	{
+		this.idCurso = idCurso;
+	}
 
-	
 	@Override
-	public String mostrarDatos() {
+	public String mostrarDatos() 
+	{
 		return "Nombre: " + getNombre() + 
 				"\nNumero Unidad: " + getNumero_unidad() + 
-				"\nTipo División Anual: " + getDivision_anual()+ 
+				"\nTipo Division Anual: " + getDivision_anual()+ 
 				"\nEstado: " + getEstado();
 	}
 
 	@Override
-	public boolean registrarDatos() {
-		
-		return ConsultaUnidad.registrarUnidad(this.nombre, this.numero_unidad, this.division_anual, this.asignatura.getId());
+	public boolean registrarDatos() 
+	{
+		return ConsultaUnidad.registrarUnidad(this.nombre, this.numero_unidad, this.division_anual, this.idAsignatura, this.idCurso);
 	}
-	
 
 	@Override
-	public boolean actualizarDatos() {
-
+	public boolean actualizarDatos() 
+	{
 		return ConsultaUnidad.actualizarDatosUnidad(this.nombre, this.numero_unidad, this.division_anual, this.id);
 	}
 
 	@Override
-	public boolean cambiarEstado() {
+	public boolean cambiarEstado() 
+	{
 		return ConsultaUnidad.actualizarEstadoUnidad(this.id, this.estado);
 	} 
 }

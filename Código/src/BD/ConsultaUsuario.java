@@ -39,7 +39,7 @@ public class ConsultaUsuario
 						rs.getString("clave"),
 						Estado.valueOf(Estado.class, rs.getString("estado")),
 						rs.getString("run"),
-						TipoUsuario.valueOf(TipoUsuario.class, rs.getString("tipoUsuario"))
+						tipoUsuario
 						);
 			}
 			
@@ -52,18 +52,17 @@ public class ConsultaUsuario
 		return usuario;
 	}
 
-	public static boolean registrarUsuario(String nombre, String run, String email, String clave, TipoUsuario tipoUsuario, String especialidad)
+	public static boolean registrarUsuario(String nombre, String run, String email, String clave, TipoUsuario tipoUsuario)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call registrarUsuario(?,?,?,?,?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call registrarUsuario(?,?,?,?,?)}");
 			cs.setString("in_nombre", nombre);
 			cs.setString("in_run", run);
 			cs.setString("in_email", email);
 			cs.setString("in_clave", clave);
 			cs.setString("in_tipoUsuario", tipoUsuario.toString());
-			cs.setString("in_especialidad", especialidad);
 			cs.executeQuery();
 			return true;
 		}
@@ -96,40 +95,17 @@ public class ConsultaUsuario
 		return false;
 	}
 	
-	public static boolean actualizarDatos(String nombre, String email, String clave, String especialidad, String run, TipoUsuario tipoUsuario)
+	public static boolean actualizarDatos(String nombre, String email, String clave, String run, TipoUsuario tipoUsuario)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call actualizarUsuario(?,?,?,?,?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call actualizarUsuario(?,?,?,?,?)}");
 			cs.setString("in_nombre", nombre);
 			cs.setString("in_email", email);
 			cs.setString("in_clave", clave);
-			cs.setString("in_especialidad", especialidad);
 			cs.setString("in_run", run);
 			cs.setString("in_tipoUsuario", tipoUsuario.toString());
-			cs.executeQuery();
-			return true;
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		return false;
-	}
-	
-	public static boolean registrarCuenta(String run, String email, String clave, TipoUsuario tipoUsuario, String especialidad)
-	{
-		Connection conexion = Conexion.conectar();
-
-		try
-		{
-			CallableStatement cs = conexion.prepareCall("{call registrarCuenta(?,?,?,?,?)}");
-			cs.setString("in_run", run);
-			cs.setString("in_email", email);
-			cs.setString("in_clave", clave);
-			cs.setString("in_tipoUsuario", tipoUsuario.toString());
-			cs.setString("in_especialidad", especialidad);
 			cs.executeQuery();
 			return true;
 		}

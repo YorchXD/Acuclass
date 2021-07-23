@@ -5,9 +5,12 @@ import java.util.Map;
 
 import BD.ConsultaCurso;
 import BD.ConsultaCursoReferencia;
+import BD.ConsultaProfesor;
 import Model.Alumno;
 import Model.Curso;
 import Model.Curso_Referencia;
+import Model.LetraCurso;
+import Model.Profesor;
 import View.CursoReferencia.ViewCursoReferencia;
 
 public class CursoReferenciaController
@@ -15,7 +18,10 @@ public class CursoReferenciaController
 
 	public static void crear()
 	{
-		ViewCursoReferencia.crear();
+		Map<Integer, LetraCurso> letras = ConsultaCursoReferencia.listarLetraCurso();
+		Map<Integer, Curso> cursos = ConsultaCurso.listadoCurso();
+		Map<String, Profesor> profesores = ConsultaProfesor.listarProfesoresHabilitados();
+		ViewCursoReferencia.crear(letras, cursos, profesores);
 	}
 
 	public static void ver()
@@ -30,9 +36,7 @@ public class CursoReferenciaController
 
 	public static void asociarAlumno()
 	{
-		int anio = ViewCursoReferencia.solicitarAnio();
-		Map<Integer, Curso_Referencia> cursos_ref = ConsultaCursoReferencia.verCursoReferencia(anio);
-		ViewCursoReferencia.asociarAlumno(cursos_ref);
+		ViewCursoReferencia.asociarAlumno();
 	}
 
 	/**
@@ -41,9 +45,19 @@ public class CursoReferenciaController
 	 * @param refAlumno
 	 * @return true o false
 	 */
-	public static boolean registrarCursoReferenciaAlumno(int id_cursoReferencia, String refAlumno)
+	public static String registrarCursoReferenciaAlumno(Curso_Referencia cursoReferencia, String refAlumno)
 	{
-		return ConsultaCursoReferencia.registrarCursoReferenciaAlumno(id_cursoReferencia, refAlumno);
+		String mensaje = "";
+		if (ConsultaCursoReferencia.registrarCursoReferenciaAlumno(cursoReferencia.getId(), refAlumno))
+		{
+
+			mensaje = "\n Alumno registrado correctamente\n";
+		}
+		else
+		{
+			mensaje = "\n El alumno no se ha podido registrar, intentelo nuevamente\n";
+		}
+		return mensaje;
 	}
 
 	/**
@@ -57,37 +71,35 @@ public class CursoReferenciaController
 		return cursos;
 	}
 
-	/*public static Map<Integer, Profesor> ObtenerProfesoresRegistrados()
-	{
-		Map<Integer, Profesor> profesores = new HashMap<>();
-		//profesores= ProfesorController.obtenerListadoProfesores();
-		return profesores;
-	}*/
 
 	/**
-	 * Tras obtener los parametros principales de un curso referencia, se procede a buscar en la BD
+	 * Tras obtener los parametros principales de un curso referencia, se procede a verificar su existencia. En caso de no existir
+	 * se registran los datos en la BD
 	 * @param letra
 	 * @param refProfesor
 	 * @param refCurso
 	 * @param anio
-	 * @return id o 0
+	 * @return "Curso promocion registrado correctamente", "No se han guardado cambios, intentelo nuevamente" o "El curso promocion ya existe"
 	 */
-	public static int buscarCursoReferencia(String letra, String refProfesor, int refCurso, int anio)
+	public static String registrarCurso(LetraCurso letra, Profesor profesorEncargado, int refCurso, int anio)
 	{
-		return ConsultaCursoReferencia.buscarCursoReferencia(letra, refProfesor, refCurso, anio);
-	}
-
-	/**
-	 * Tras obtener los parametros principales de un curso referencia, se procede a registrar en la BD
-	 * @param letra
-	 * @param refProfesor
-	 * @param refCurso
-	 * @param anio
-	 * @return true o false
-	 */
-	public static boolean registrarCurso(String letra, String refProfesor, int refCurso, int anio)
-	{
-		return ConsultaCursoReferencia.RegistrarReferencia(letra, refProfesor, refCurso, anio);
+		String mensaje = "";
+		if (ConsultaCursoReferencia.buscarCursoReferencia(letra.getId(), profesorEncargado.getRun(), refCurso, anio) == 0)
+		{
+			if (ConsultaCursoReferencia.registrarCursoReferencia(letra.getId(), profesorEncargado.getRun(), refCurso, anio))
+			{
+				mensaje = "\nCurso promocion registrado correctamente\n";
+			}
+			else
+			{
+				mensaje ="\nNo se han guardado cambios, intentelo nuevamente\n";
+			}
+		}
+		else
+		{
+			mensaje = "\nEl curso promocion ya existe\n";
+		}
+		return mensaje;
 	}
 
 	/**
@@ -95,7 +107,7 @@ public class CursoReferenciaController
 	 * @param anio
 	 * @return listado de cursos referencia
 	 */
-	public static Map<Integer, Curso_Referencia> verCursoReferencia(int anio)
+	public static Map<Integer, Curso_Referencia> buscarCursoReferencia(int anio)
 	{
 		return ConsultaCursoReferencia.verCursoReferencia(anio);
 	}
@@ -105,9 +117,9 @@ public class CursoReferenciaController
 	 * @param id_cursoReferencia
 	 * @return listado de alumnos asociados al curso
 	 */
-	public static Map<Integer, Alumno> verAlumnoAsociados(int id_cursoReferencia)
+	public static Map<Integer, Alumno> verAlumnoAsociados(Curso_Referencia cursoReferencia)
 	{
-		return ConsultaCursoReferencia.verCursoReferenciaAlumno(id_cursoReferencia);
+		return ConsultaCursoReferencia.verCursoReferenciaAlumno(cursoReferencia.getId());
 	}
 
 }

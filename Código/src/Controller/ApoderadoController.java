@@ -38,7 +38,7 @@ public class ApoderadoController
 	 * @return null en caso de no encontrar al usuario. Apoderado con su tipo de usuario (Apoderado) en caso de serlo o apoderado con su tipo de usuario null
 	 * en caso de encontrar al usuario pero que no es de tipoUsuario apoderado
 	 */
-	public static Apoderado buscarUsuario(String run)
+	/*public static Apoderado buscarUsuario(String run)
 	{
 		Apoderado apoderado = null;
 		Map<String, Apoderado> roles = ConsultaApoderado.buscarUsuarioApoderado(run);
@@ -63,37 +63,47 @@ public class ApoderadoController
 			}
 		}
 		return apoderado;
-	}
+	}*/
 	
 	/**
-	 * Tras obtener los parametros iniciales de apoderado, se crea una instancia de apoderado, posteriormente se procede a buscar usuarios de tipo apoderado
-	 * que sean diferente al RUN ingresado y que tengan el mismo email. Si en el listado obtenido es igual a cero, se procede a registrar al apoderado y se 
-	 * crea su cuenta.
+	 * Tras obtener los parametros iniciales de apoderado, se procede a verificar si el apoderado ya se encuentra registrado. En caso
+	 * de no estar registrado se crea una instancia de apoderado y posteriormente se procede a buscar usuarios de tipo apoderado
+	 * que sean diferente al RUN ingresado y que tengan el mismo email. Si en el listado obtenido es igual a cero, se procede a registrar 
+	 * al apoderado y se crea su cuenta.
 	 * @param nombre
 	 * @param email
 	 * @param run
-	 * @return "Se ha guardado exitosamente al apoderado", "No se pudo guardado al apoderado" o "El apoderado no puede ser registrado ya que existe otro usuario 
-	 * con el mismo correo"
+	 * @return "Se ha guardado exitosamente al apoderado", "No se pudo guardado al apoderado", "El apoderado no puede ser registrado ya que existe otro usuario 
+	 * con el mismo correo" o "El profesor ya se encuentra registrado"
 	 */
-	public static String registrarApoderado(String nombre, String email, String run)
+	public static String registrarApoderado(String nombre, String email, String run, String clave)
 	{
 		String mensaje = "";
-		Apoderado apoderado = new Apoderado(nombre,email, run, run);
-		Map<String, Apoderado> apoderados = ConsultaApoderado.validarCorreo(apoderado.getRun(), apoderado.getEmail(), apoderado.getTipoUsuario());
-		if(apoderados.size()==0)
+		Apoderado apoderadoAux = ConsultaApoderado.buscarApoderado(run);
+		
+		if(apoderadoAux==null)
 		{
-			if(apoderado.registrarDatos())
+			Map<String, Apoderado> apoderados = ConsultaApoderado.validarCorreo(run, email, TipoUsuario.APODERADO);
+			if(apoderados.size()==0)
 			{
-				mensaje = "\nSe ha guardado exitosamente al apoderado\n";
+				Apoderado apoderado = new Apoderado(nombre,email, clave, run);
+				if(apoderado.registrarDatos())
+				{
+					mensaje = "\nSe ha guardado exitosamente al apoderado\n";
+				}
+				else
+				{
+					mensaje = "\nNo se pudo guardado al apoderado\n";
+				}
 			}
 			else
 			{
-				mensaje = "\nNo se pudo guardado al apoderado\n";
+				mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el mismo correo\n";
 			}
 		}
 		else
 		{
-			mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el mismo correo\n";
+			mensaje = "\nEl apoderado ya se encuentra registrado\n";
 		}
 		return mensaje;
 	}
@@ -105,7 +115,7 @@ public class ApoderadoController
 	 * @return "Se ha guardado exitosamente al apoderado", "No se pudo guardado al apoderado" o "El apoderado no puede ser registrado 
 	 * ya que existe otro usuario con el mismo correo"
 	 */
-	public static String registrarCuenta(Apoderado apoderado)
+	/*public static String registrarCuenta(Apoderado apoderado)
 	{
 		String mensaje = "";
 		apoderado.setTipoUsuario(TipoUsuario.APODERADO);
@@ -126,7 +136,7 @@ public class ApoderadoController
 			mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el mismo correo\n";
 		}
 		return mensaje;
-	}
+	}*/
 	
 	/**
 	 * Tras obtener el run del apoderado, lo manda al metodo que se conecta con la base de datos para que obtenga los datos del apoderado.
@@ -195,7 +205,7 @@ public class ApoderadoController
 				}
 				else
 				{
-					mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el rol de profesor que tiene el mismo correo\n";
+					mensaje="\nEl apoderado no puede ser registrado ya que existe otro usuario con el rol de apoderado que tiene el mismo correo\n";
 				}
 			}
 			
@@ -203,7 +213,7 @@ public class ApoderadoController
 			{
 				apoderado.setNombre(nombre);
 				apoderado.setClave(clave);
-				if(apoderado.registrarCuenta())
+				if(apoderado.actualizarDatos())
 				{
 					mensaje = "\nSe ha modificado los datos del apoderado\n";
 				}
@@ -215,7 +225,7 @@ public class ApoderadoController
 		}
 		else
 		{
-			mensaje = "\nNo existen cambios en el profesor.\n";
+			mensaje = "\nNo existen cambios en el apoderado.\n";
 		}
 		return mensaje;
 	}

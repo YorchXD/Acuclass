@@ -7,17 +7,9 @@ import Utilidades.Utilidades;
 
 public class ViewAsignatura
 {
-	public static String solicitarNombre()
-	{
-		String nombre;
-		System.out.print("Ingrese el nombre de la asignatura: ");
-		nombre = Utilidades.extracted().nextLine();
-		return nombre;
-	}
-	
 	public static void crear()
 	{
-		String nombre = solicitarNombre();
+		String nombre = Utilidades.solicitarNombre(Utilidades.ASIGNATURA);
 		System.out.println(AsignaturaController.registrarAsignatura(nombre));
 	}
 	
@@ -89,7 +81,7 @@ public class ViewAsignatura
 		
 		if(idAsignatura!=0)
 		{
-			String nuevoNombre = solicitarNombre();
+			String nuevoNombre = Utilidades.solicitarNombre(Utilidades.ASIGNATURA);
 			System.out.println(AsignaturaController.actualizarNombreAsignatura(nuevoNombre, idAsignatura));
 		}
 	}

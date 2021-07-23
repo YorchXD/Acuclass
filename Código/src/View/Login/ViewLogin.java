@@ -54,33 +54,6 @@ public class ViewLogin
 		return TipoUsuario.getTipoUsuario(Integer.parseInt(opcion));
 	}
 	
-	public static String solicitarEmail()
-	{
-		String email;
-		boolean validar;
-		do
-		{
-			System.out.print("Ingrese su email: ");
-			email = Utilidades.extracted().nextLine();
-			validar = Utilidades.validarEmail(email);
-			if(!validar)
-			{
-				System.out.println("Debe ingresar un email valido. Favor de ingresarlo nuevamente.\n");
-			}
-			
-		}while(!validar);
-		
-		return email;
-	}
-	
-	public static String solicitarClave()
-	{
-		String clave;
-		System.out.print("Ingrese su clave: ");
-		clave = Utilidades.extracted().nextLine();
-		return clave;
-	}
-	
 	public static void solicitarDatos()
 	{
 		TipoUsuario tipoUsuario;
@@ -89,8 +62,23 @@ public class ViewLogin
 		do
 		{
 			tipoUsuario =solicitarTipoUsuario();
-			email = solicitarEmail();
-			clave = solicitarClave();
+			String rol = "";
+			
+			if(tipoUsuario.equals(TipoUsuario.ADMINISTRADOR))
+			{
+				rol = Utilidades.ADMINISTRADOR;
+			}
+			else if(tipoUsuario.equals(TipoUsuario.PROFESOR))
+			{
+				rol = Utilidades.PROFESOR;
+			}
+			else
+			{
+				rol = Utilidades.APODERADO;
+			}
+			
+			email = Utilidades.solicitarEmail(rol);
+			clave = Utilidades.solicitarClave(rol);
 			usuario = LoginController.validarDatos(tipoUsuario, email, clave);
 			
 			if(usuario==null)
@@ -101,6 +89,5 @@ public class ViewLogin
 		while(usuario==null);
 		
 		LoginController.accesos(usuario);
-		
 	}
 }

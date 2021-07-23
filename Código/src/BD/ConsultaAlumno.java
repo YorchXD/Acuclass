@@ -11,7 +11,7 @@ import Model.Estado;
 public class ConsultaAlumno
 {
 
-	public static Alumno consultarAlumno_run(String run)
+	public static Alumno buscarAlumno(String run)
 	{
 		Connection conexion = Conexion.conectar();
 		Alumno alumno = null;

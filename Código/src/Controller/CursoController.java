@@ -31,7 +31,7 @@ public class CursoController
 
 	public static void modificar()
 	{
-		ViewCurso.modificar();
+		ViewCurso.modificar(ConsultaCurso.listadoCurso());
 	}
 	
 	public static void asociarAsignatura()
@@ -79,25 +79,43 @@ public class CursoController
 	}
 	
 	/**
-	 * Tras obtener el nivel del curso (Primero, segundo, tercero,...) y el tipo de division anual (trimestral, semestral o anual) se procede a registrar
-	 * en la base de datos.
+	 * Tras obtener el nivel del curso (Primero, segundo, tercero,...) y el tipo de division anual (trimestral, semestral o anual) se valida que el curso no
+	 * no se encuentre registrado. Si ocurre lo mencionado con anteriorirdad, procede a registrar el curso en la base de datos.
 	 * @param nivel
 	 * @param tipoDivisionAnual
-	 * @return true o false
+	 * @return "Curso registrado correctamente", "No se han guardado cambios, intentelo nuevamente" o "El curso ya existe"
 	 */
-	public static boolean registrarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
+	public static String registrarCurso(Nivel nivel, Tipo_Division_Anual tipoDivisionAnual)
 	{
-		return ConsultaCurso.registrarCurso(nivel, tipoDivisionAnual);
+		String mensaje = "";
+		if (buscarCurso(nivel, tipoDivisionAnual) == null)
+		{
+			if (ConsultaCurso.registrarCurso(nivel, tipoDivisionAnual))
+			{
+				mensaje = "\nCurso registrado correctamente\n";
+			}
+			else
+			{
+				mensaje = "\nNo se han guardado cambios, intentelo nuevamente.\n";
+			}
+		}
+		else
+		{
+			mensaje = "\nEl curso ya existe\n";
+		}
+		
+		return mensaje;
 	}
 	
 	/**
 	 * Tras obtener la instancia del curso, se procede a setear el atributo estado. Si es "HABILITADO" cambia a "DESHABILITADO" y viceversa. Posteriormente
 	 * se procede a registrar en la base de datos.
 	 * @param curso
-	 * @return true o false
+	 * @return "El curso se ha modificado correctamente" o "No se han guardado cambios, intentelo nuevamente."
 	 */
-	public static boolean actualizarEstadoCurso(Curso curso)
+	public static String actualizarEstadoCurso(Curso curso)
 	{
+		String mensaje = "";
 		if(curso.getEstado().equals(Estado.HABILITADO))
 		{
 			curso.setEstado(Estado.DESHABILITADO);
@@ -106,12 +124,22 @@ public class CursoController
 		{
 			curso.setEstado(Estado.HABILITADO);
 		}
-		return ConsultaCurso.actualizarEstadoCurso(curso);
+		
+		if(ConsultaCurso.actualizarEstadoCurso(curso))
+		{
+			mensaje = "\nEl curso se ha modificado correctamente\n";
+		}
+		else
+		{
+			mensaje = "\\nNo se han guardado cambios, intentelo nuevamente.\\n";
+		}
+		
+		return mensaje;
 	}
 	
 	/**
-	 * Tras obtener el id del curso y de asignatura, se procede a buscar si existe una relacion entre ellos. En caso de no encontrar un id de la relacion
-	 * entre ambas instancias, se procede a registrarla en la BD
+	 * Tras obtener el id del curso y de asignatura, se procede a buscar si existe una relacion entre ellos. En caso de no encontrar la existencia
+	 * de la relacion entre ambas instancias, se procede a registrarla en la BD
 	 * @param idCurso
 	 * @param idAsignatura
 	 * @return "Asociacion registrada correctamente", "No se han registrado la asociacion, intentelo nuevamente" o "La asociacion ya se encuentra registrada"
@@ -119,7 +147,7 @@ public class CursoController
 	public static String registrarAsociacionCurso(int idCurso, int idAsignatura)
 	{
 		String mensaje = null;
-		int buscarAsociacion = ConsultaCurso.buscarAsociacionCurso(idCurso, idAsignatura);
+		int buscarAsociacion = ConsultaCurso.existenciaAsociacionCurso(idCurso, idAsignatura);
 		if(buscarAsociacion==0)
 		{
 			if(ConsultaCurso.registrarAsociacionCurso(idCurso, idAsignatura))
@@ -145,7 +173,7 @@ public class CursoController
 	 * @param asignatura
 	 * @return "La asignatura se ha modificado correctamente" o "No se han guardado cambios, intentelo nuevamente"
 	 */
-	public static String cambiarEstadoAsignatura(Asignatura asignatura)
+	public static String cambiarEstadoAsignatura(int refCurso, Asignatura asignatura)
 	{
 		String mensaje = null;
 		if(asignatura.getEstado().equals(Estado.HABILITADO))
@@ -157,7 +185,7 @@ public class CursoController
 			asignatura.setEstado(Estado.HABILITADO);
 		}
 		
-		if(ConsultaCurso.actualizarEstadoAsignatura(asignatura))
+		if(ConsultaCurso.actualizarEstadoAsignatura(refCurso, asignatura))
 		{
 			mensaje = "\nLa asignatura se ha modificado correctamente\n";
 		}

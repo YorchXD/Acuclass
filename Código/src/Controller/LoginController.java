@@ -34,12 +34,10 @@ public class LoginController
 				break;
 			case "PROFESOR":
 				Profesor profesor = new Profesor(usuario);
-				//profesor.mostrarDatos();
 				System.out.println("Ir al controlador profesor");
 				break;
 			default:
 				Apoderado apoderado = new Apoderado(usuario);
-				//apoderado.mostrarDatos();
 				System.out.println("Ir al controlador apoderado");
 				break;
 		}

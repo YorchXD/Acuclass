@@ -44,7 +44,7 @@ public class AlumnoController
 	 */
 	public static Alumno buscarAlumno(String run)
 	{
-		return ConsultaAlumno.consultarAlumno_run(run);
+		return ConsultaAlumno.buscarAlumno(run);
 	}
 	
 	/**
@@ -55,19 +55,27 @@ public class AlumnoController
 	 * @param edad
 	 * @return "Se ha guardado exitosamente al alumno" o "No se pudo guardado al alumno"
 	 */
-	public static String registrarAlumno(String nombre, String run,int edad)
+	public static String registrarAlumno(String nombre, String run, int edad)
 	{
 		String mensaje = "";
-		Alumno alumno = new Alumno(nombre, run, edad, Estado.HABILITADO);
-
-		if(alumno.registrarDatos())
+		if(ConsultaAlumno.buscarAlumno(run)==null)
 		{
-			mensaje = "\nSe ha guardado exitosamente al alumno\n";
+			Alumno alumno = new Alumno(nombre, run, edad, Estado.HABILITADO);
+
+			if(alumno.registrarDatos())
+			{
+				mensaje = "\nEl alumno se ha registrado exitosamente\n";
+			}
+			else
+			{
+				mensaje = "\nNo se pudo registrar al alumno.\n";
+			}
 		}
 		else
 		{
-			mensaje = "\nNo se pudo guardado al alumno\n";
+			mensaje = "\nNo se pudo registrar al alumno porque ya se encuentra registrado\n";
 		}
+		
 		return mensaje;
 	}
 	
@@ -77,17 +85,30 @@ public class AlumnoController
 	 * @param alumno
 	 * @return "Se ha modificado exitosamente el estado del alumno" o "No se pudo modificar el estado del alumno"
 	 */
-	public static String actualizarAlumno(Alumno alumno)
+	public static String actualizarAlumno(Alumno alumno, String nombre, int edad)
 	{
 		String mensaje = "";
-		if(alumno.actualizarDatos())
+		if(!alumno.getNombre().equals(nombre) || alumno.getEdad()!=edad)
 		{
-			mensaje = "/nSe ha modificado exitosamente el estado del alumno/n";
+			alumno.setNombre(nombre);
+			alumno.setEdad(edad);
+			if(alumno.actualizarDatos())
+			{
+				mensaje = "\nSe ha modificado exitosamente los datos del alumno\n";
+			}
+			else
+			{
+				mensaje = "\nNo se pudo modificar los datos del alumno\n";
+			}
 		}
 		else
 		{
-			mensaje = "/nNo se pudo modificar el estado del alumno/n";
+			mensaje = "\nNo existen cambios en los datos del alumno\n";
 		}
+		
+		
+		
+		
 		return mensaje;
 	}
 	

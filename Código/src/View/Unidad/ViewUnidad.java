@@ -72,7 +72,7 @@ public class ViewUnidad
 	{
 		for (Map.Entry<Integer,Asignatura> asignatura : asignaturas.entrySet())
 		{
-			System.out.println(asignatura.getKey() + ". " + asignatura.getValue().getNombre());
+			System.out.println(asignatura.getKey() + ". " + asignatura.getValue().getNombre() + ", " + asignatura.getValue().getEstado());
 		}
 	}
 	
@@ -87,6 +87,7 @@ public class ViewUnidad
 				System.out.println("\n********************************************************");
 				System.out.println("*           Menu de asignaturas registradas            *");
 				System.out.println("********************************************************\n");
+				System.out.println("NOTA: Solo se pueden seleccionar asignaturas habilitados\n");
 				System.out.println("0. Volver al menu principal");
 				listarAsignaturas(asignaturas);
 				
@@ -119,13 +120,6 @@ public class ViewUnidad
 		return Integer.parseInt(opcion);
 	}
 	
-	public static String solicitarNombre()
-	{
-		String nombre;
-		System.out.print("Ingrese el nombre de la unidad: ");
-		nombre = Utilidades.extracted().nextLine();
-		return nombre;
-	}
 	
 	public static void solicitarDivAnual(Tipo_Division_Anual tipoDivAnual)
 	{
@@ -231,11 +225,10 @@ public class ViewUnidad
 			int idAsignatura = solicitarSeleccionAsignatura(curso.getAsignaturas());
 			if(idAsignatura!=0)
 			{
-				Asignatura asignatura = curso.getAsignaturas().get(idAsignatura);
-				String nombre = solicitarNombre();
+				String nombre = Utilidades.solicitarNombre(Utilidades.UNIDAD);
 				int divAnual = solicitarOpcion(curso.getTipoDivisionAnual());
 				int numeroUnidad = solicitarNumeroUnidad();
-				System.out.println(UnidadController.registrarUnidad(asignatura, nombre, divAnual, numeroUnidad));
+				System.out.println(UnidadController.registrarUnidad(idAsignatura, idCurso, nombre, divAnual, numeroUnidad));
 			}
 		}
 	}
@@ -295,7 +288,7 @@ public class ViewUnidad
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
 					mostrarDatosModUnidad(unidad,curso);
-					String nombre = solicitarNombre();
+					String nombre = Utilidades.solicitarNombre(Utilidades.UNIDAD);
 					int divAnual = solicitarOpcion(curso.getTipoDivisionAnual());
 					int numeroUnidad = solicitarNumeroUnidad();
 					System.out.println(UnidadController.actualizarUnidad(unidad, nombre, divAnual, numeroUnidad));
@@ -360,46 +353,13 @@ public class ViewUnidad
 				{
 					Unidad unidad = asignatura.getUnidades().get(idUnidad);
 					mostrarDatosModUnidad(unidad,curso);
-					if(confirmacionCambiarEstado(unidad.getEstado()))
+					if(Utilidades.confirmacionCambiarEstado(unidad.getEstado(), Utilidades.UNIDAD))
 					{
 						System.out.println(UnidadController.actualizarEstadoUnidad(unidad));
 					}
 				}
 			}
 		}
-	}
-	
-	public static boolean confirmacionCambiarEstado(Estado estado)
-	{
-		String opcion;
-		boolean validar = false;
-		boolean validar2 = true;
-		do
-		{
-			System.out.print("El estado actual es: " + estado + ". ¿Desea cambiar el estado?\n1. Si\n2. No\nIngrese su opcion: ");
-			opcion = Utilidades.extracted().nextLine();
-			validar = Utilidades.esNumero(opcion);
-			if(!validar )
-			{
-				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-			}
-			else if(Integer.parseInt(opcion)<1 || Integer.parseInt(opcion)>2)
-			{
-				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
-			}
-			else
-			{
-				validar2=false;
-			}
-
-		}
-		while(validar2);
-		
-		if(Integer.parseInt(opcion)==1)
-		{
-			return true;
-		}
-		return false;
 	}
 	
 	public static void mostrarDatosModUnidad(Unidad unidad, Curso curso) {
@@ -409,11 +369,11 @@ public class ViewUnidad
 		System.out.println(unidad.mostrarDatos());
 		if(curso.getTipoDivisionAnual() == Tipo_Division_Anual.TRIMESTRAL)
 		{
-			System.out.println("Trimestre en que se imparte la unidad: " + unidad.getDivision_anual() + "Â° trimestre");
+			System.out.println("Trimestre en que se imparte la unidad: " + unidad.getDivision_anual() + "° trimestre");
 		}
 		else if(curso.getTipoDivisionAnual() == Tipo_Division_Anual.SEMESTRAL)
 		{
-			System.out.println("Semestre en que se imparte la unidad: " + unidad.getDivision_anual()  + "Â° semestre");
+			System.out.println("Semestre en que se imparte la unidad: " + unidad.getDivision_anual()  + "° semestre");
 		}
 		else
 		{

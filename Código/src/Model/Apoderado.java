@@ -42,22 +42,5 @@ public class Apoderado extends Usuario
 	public ArrayList<Alumno> getAlumnos()
 	{
 		return alumnos;
-	}
-	
-
-	/*@Override
-	public void mostrarDatos()
-	{
-		System.out.println("\n********************************************************");
-		System.out.println("*                  Datos del apoderado                 *");
-		System.out.println("********************************************************\n");
-		System.out.println("Nombre: " + super.getNombre());
-		System.out.println("Email: " + super.getEmail());
-		System.out.println("Clave: " + super.getClave());
-		System.out.println("Estado: " + super.getEstado());
-		System.out.println("RUN: " + super.getRun());
-		System.out.println("tipoUsuario: " + super.getTipoUsuario());
-		System.out.println("********************************************************\n");
-	}*/
-	
+	}	
 }

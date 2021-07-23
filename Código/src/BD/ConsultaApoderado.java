@@ -13,7 +13,7 @@ import Model.TipoUsuario;
 
 public class ConsultaApoderado
 {
-	public static Map<String, Apoderado> buscarUsuarioApoderado(String run)
+	/*public static Map<String, Apoderado> buscarUsuarioApoderado(String run)
 	{
 		Connection conexion = Conexion.conectar();
 		Map<String, Apoderado> roles = new HashMap<>();
@@ -44,7 +44,7 @@ public class ConsultaApoderado
 		}
 		
 		return roles;
-	}
+	}*/
 
 	public static Apoderado buscarApoderado(String run)
 	{
@@ -66,7 +66,7 @@ public class ConsultaApoderado
 										rs.getString("clave"),
 										Estado.valueOf(Estado.class, rs.getString("estado")), 
 										rs.getString("run"),
-										TipoUsuario.valueOf(TipoUsuario.class, rs.getString("tipoUsuario")));
+										TipoUsuario.APODERADO);
 			}
 		}
 		catch (SQLException e)

@@ -6,89 +6,57 @@ import java.util.Map;
 
 import Controller.AlumnoController;
 import Controller.CursoReferenciaController;
-import Controller.ProfesorController;
 import Model.Alumno;
 import Model.Curso;
 import Model.Curso_Referencia;
 import Model.Estado;
+import Model.LetraCurso;
 import Model.Profesor;
 import Utilidades.Utilidades;
 
 public class ViewCursoReferencia
 {
 
-	public static void crear()
+	public static void crear(Map<Integer, LetraCurso> letras, Map<Integer, Curso> cursos, Map<String, Profesor> profesores)
 	{
-		int id_curso = 0;
-		String letra, refProfesor;
 		int anio = solicitarAnio();
-		id_curso = solicitarSeleccionCurso(CursoReferenciaController.ObtenerCursosRegistrados());
-		letra = SeleccionLetra();
-		refProfesor = solicitarRun();
-
-		if (ProfesorController.buscarProfesor(refProfesor) != null)
-		{
-			if (CursoReferenciaController.buscarCursoReferencia(letra, refProfesor, id_curso, anio) == 0)
-			{
-				if (CursoReferenciaController.registrarCurso(letra, refProfesor, id_curso, anio))
-				{
-					System.out.println("\nCurso Promoción registrado correctamente\n");
-				}
-				else
-				{
-					System.out.println("\nNo se han guardado cambios, intentelo nuevamente.\n");
-				}
-
-			}
-			else
-			{
-				System.out.println("\nEl curso promoción ya existe\n");
-			}
-		}
-		else
-		{
-			System.out.println("\nEl profesor no se encuentra registrado.\n");
-		}
-
+		int id_curso = solicitarSeleccionCurso(cursos);
+		LetraCurso letra = SeleccionLetra(letras);
+		Profesor profesorEncargado = SeleccionarProfesor(profesores);
+		System.out.println(CursoReferenciaController.registrarCurso(letra, profesorEncargado, id_curso, anio));
+		
 	}
 
 	public static void ver()
 	{
 		int anio = solicitarAnio();
 		Map<Integer, Curso_Referencia> cursos_referencia = new HashMap<>();
-		cursos_referencia = CursoReferenciaController.verCursoReferencia(anio);
+		cursos_referencia = CursoReferenciaController.buscarCursoReferencia(anio);
 
 		if (cursos_referencia.size() > 0)
 		{
-			listarCursosReferencia(cursos_referencia);
+			listarCursosReferencia(cursos_referencia, anio);
 		}
 		else
 		{
-			System.out.println("\nNo hay cursos promoción registrados\n");
+			System.out.println("\nNo hay cursos promocion registrados\n");
 		}
 	}
 
-	public static String SeleccionLetra()
+	public static LetraCurso SeleccionLetra(Map<Integer, LetraCurso> letras)
 	{
-
-		Map<Integer, String> letra = new HashMap<>();
-		letra.put(1, "A");
-		letra.put(2, "B");
-		letra.put(3, "C");
-		letra.put(4, "D");
-
-		System.out.println("\n*************Seleccion de letra Curso **************************");
-
-		letra.forEach((k, v) -> System.out.println("- " + k + ": " + v));
-
-		System.out.println("******************************************************************");
+		System.out.println("\n********************************************************");
+		System.out.println("*               Seleccionar letra de curso             *");
+		System.out.println("********************************************************\n");
+		letras.forEach((key, value) -> System.out.println(key + ". " + value.getLetra()));
+		System.out.println("********************************************************\n");
 
 		String opcion;
-		boolean validar = false;
-		String letra_aux = "";
+		boolean validar = false, validar2=false;
+		LetraCurso letraAux=null;
 		do
 		{
-			System.out.println("\nIngrese su opción: ");
+			System.out.println("\nIngrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(opcion);
 
@@ -96,19 +64,48 @@ public class ViewCursoReferencia
 			{
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 			}
-			else if (Integer.parseInt(opcion) < 1 || Integer.parseInt(opcion) > 4)
+			else if (letras.get(Integer.parseInt(opcion))==null)
 			{
-				System.out.println(
-						"La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
+				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
 			else
 			{
-				letra_aux = letra.get(Integer.parseInt(opcion));
+				letraAux = letras.get(Integer.parseInt(opcion));
+				validar2=true;
+			}
+		}
+		while (!validar2);
+
+		return letraAux;
+	}
+	
+	public static Profesor SeleccionarProfesor(Map<String, Profesor> profesores)
+	{
+		System.out.println("\n********************************************************");
+		System.out.println("*                  Seleccionar profesor                *");
+		System.out.println("********************************************************\n");
+		profesores.forEach((key, value) -> System.out.println("RUN: " + key + ", Nombre: " + value.getNombre()));
+		System.out.println("********************************************************\n");
+
+		boolean validar = false;
+		Profesor profesor=null;
+		do
+		{
+			String run = Utilidades.solicitarRun(Utilidades.PROFESOR);
+
+			if (profesores.get(run)==null)
+			{
+				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
+			}
+			else
+			{
+				profesor = profesores.get(run);
+				validar=true;
 			}
 		}
 		while (!validar);
 
-		return letra_aux;
+		return profesor;
 	}
 
 	public static int solicitarAnio()
@@ -119,13 +116,13 @@ public class ViewCursoReferencia
 
 		do
 		{
-			System.out.print("Ingrese el año: ");
+			System.out.print("Ingrese el anio: ");
 			anio_aux = Utilidades.extracted().nextLine();
 			validar = Utilidades.esNumero(anio_aux);
 
 			if (!validar)
 			{
-				System.out.println("Debe ingresar un año valido. Favor de ingresar nuevamente.\n");
+				System.out.println("Debe ingresar un anio valido. Favor de ingresar nuevamente.\n");
 				validar = false;
 
 			}
@@ -133,7 +130,7 @@ public class ViewCursoReferencia
 			{
 
 				System.out.println(
-						"No puede ingresar un año mayor al actual:  " + Calendar.getInstance().get(Calendar.YEAR));
+						"No puede ingresar un anio mayor al actual:  " + Calendar.getInstance().get(Calendar.YEAR));
 				validar = false;
 
 			}
@@ -148,41 +145,13 @@ public class ViewCursoReferencia
 		return anio;
 	}
 
-	public static String solicitarRun()
-	{
-		String run;
-		boolean validar;
-		do
-		{
-			System.out.print("Ingrese el run, formato (XX.XXX.XXX-X): ");
-			run = Utilidades.extracted().nextLine();
-			validar = Utilidades.validarRun(run);
-			if (!validar)
-			{
-				System.out.println("Debe ingresar un run valido. Favor de ingresar nuevamente.\n");
-			}
-
-		}
-		while (!validar);
-
-		run = run.replace(".", "");
-		run = Utilidades.formatearRun(run);
-
-		return run;
-	}
-
-	/*
-	 * public static Map<Integer, Profesor> obenerProfesores() { return
-	 * CursoReferenciaController.ObtenerProfesoresRegistrados(); }
-	 */
-
 	public static void listarProfesores(Map<Integer, Profesor> profesores)
 	{
 
 		for (Map.Entry<Integer, Profesor> profesor : profesores.entrySet())
 		{
 			System.out.println(profesor.getKey() + ". " + profesor.getValue().getNombre() + ", "
-					+ profesor.getValue().getRun() + ", " + profesor.getValue().getEspecialidad());
+					+ profesor.getValue().getRun());
 		}
 	}
 
@@ -196,23 +165,25 @@ public class ViewCursoReferencia
 		}
 	}
 
-	public static void listarCursosReferencia(Map<Integer, Curso_Referencia> cursos_referencia)
+	public static void listarCursosReferencia(Map<Integer, Curso_Referencia> cursos_referencia, int aniopromocion)
 	{
+		System.out.println("\n********************************************************");
+		System.out.println("*              Listado de los cursos "+ aniopromocion +"              *");
+		System.out.println("********************************************************\n");
 		for (Map.Entry<Integer, Curso_Referencia> cursos : cursos_referencia.entrySet())
 		{
-			System.out.println("Datos cursos promoción");
+			System.out.println("\n********************************************************");
+			System.out.println("* Curso");
 			System.out.println("- id : " + cursos.getValue().getId());
-			System.out.println("\n*Datos Profesor Encargado");
-			System.out.println("- Nombre: " + cursos.getValue().getProfesorEncargado().getNombre());
-			System.out.println("- Run:  " + cursos.getValue().getProfesorEncargado().getRun());
-			System.out.println("- Especialidad:  " + cursos.getValue().getProfesorEncargado().getEspecialidad());
-			System.out.println("\n* Curso");
 			System.out.println("- Nivel: " + cursos.getValue().getCurso().getNivel());
 			System.out.println("- Tipo Division Anual: " + cursos.getValue().getCurso().getTipoDivisionAnual().toString());
 			System.out.println("- Estado:  " + cursos.getValue().getCurso().getEstado().toString());
-			System.out.println("- Letra: " + cursos.getValue().getLetra());
+			System.out.println("- Letra: " + cursos.getValue().getLetra().getLetra());
 			System.out.println("- Anio : " + cursos.getValue().getAnio());
-
+			System.out.println("\n*Datos Profesor Encargado");
+			System.out.println("- Nombre: " + cursos.getValue().getProfesorEncargado().getNombre());
+			System.out.println("- Run:  " + cursos.getValue().getProfesorEncargado().getRun());
+			System.out.println("********************************************************\n");
 		}
 	}
 
@@ -272,20 +243,19 @@ public class ViewCursoReferencia
 		}
 		return -1;
 	}
-
-	public static void asociarAlumno(Map<Integer, Curso_Referencia> cursos_ref)
+	
+	public static Curso_Referencia solicitarCursoPromocion(Map<Integer, Curso_Referencia> cursos_ref)
 	{
-
-		System.out.println("\n------------------------------------------- ");
-		System.out.println("\n	Opcion para asociar alumno a un curso: ");
-		System.out.println("\n------------------------------------------- ");
-		Alumno alumno = null;
-		String run, opcion;
 		boolean validar2 = true;
+		String opcion;
 		do
 		{
+			System.out.println("\n********************************************************");
+			System.out.println("*              Seleccionar curso promocion             *");
+			System.out.println("********************************************************\n");
 			listarCursosReferenciaReducido(cursos_ref);
-			System.out.println("\n Seleccione el curso: ");
+			System.out.println("********************************************************\n");
+			System.out.print("Ingrese su opcion: ");
 			opcion = Utilidades.extracted().nextLine();
 			boolean validar = Utilidades.esNumero(opcion);
 
@@ -293,7 +263,7 @@ public class ViewCursoReferencia
 			{
 				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
 			}
-			else if (Integer.parseInt(opcion) < 1)
+			else if (cursos_ref.get(Integer.parseInt(opcion))==null)
 			{
 				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
 			}
@@ -303,66 +273,40 @@ public class ViewCursoReferencia
 			}
 		}
 		while(validar2);
-		
-		int id_cursoReferencia = Integer.parseInt(opcion);
+		return cursos_ref.get(Integer.parseInt(opcion));
+	}
 
-		run = solicitarRun();
-		alumno = AlumnoController.buscarAlumno(run);
+	public static void asociarAlumno()
+	{
+		int anio = solicitarAnio();
+		Map<Integer, Curso_Referencia> cursos_ref = CursoReferenciaController.buscarCursoReferencia(anio);
+		Curso_Referencia cursoReferencia = solicitarCursoPromocion(cursos_ref);
+		String run = Utilidades.solicitarRun(Utilidades.ALUMNO);
+		Alumno alumno = AlumnoController.buscarAlumno(run);
 		if (alumno != null)
 		{
-
-			if (CursoReferenciaController.registrarCursoReferenciaAlumno(id_cursoReferencia, run))
-			{
-
-				System.out.println("\n\n Alumno registrado correctamente ");
-			}
-			else
-			{
-				System.out.println("\n\n El alumno no se ha podido registrar, intentelo nuevamente ");
-			}
+			System.out.println(CursoReferenciaController.registrarCursoReferenciaAlumno(cursoReferencia, run));
 		}
 		else
 		{
-			System.out.println("\n\n------------------------------------------- ");
-			System.out.println("\n\n	El alumno no se encuentra registrado ");
-			System.out.println("\n\n------------------------------------------- ");
+			System.out.println("\nEl alumno no se encuentra registrado\n");
 		}
-
 	}
 
 	public static void verAlumnos()
 	{
-
 		int anio = solicitarAnio();
-		Map<Integer, Curso_Referencia> cursos_referencia = new HashMap<>();
-		cursos_referencia = CursoReferenciaController.verCursoReferencia(anio);
+		Map<Integer, Curso_Referencia> cursos_referencia = CursoReferenciaController.buscarCursoReferencia(anio);
 
 		if (cursos_referencia.size() > 0)
 		{
-			listarCursosReferenciaReducido(cursos_referencia);
-			System.out.println("\n Seleccione el curso: ");
-			String opcion = Utilidades.extracted().nextLine();
-			boolean validar = Utilidades.esNumero(opcion);
-
-			if (!validar)
-			{
-				System.out.println("Ha ingresado un parametro incorrecto. Por favor, ingrese una opcion valida..\n\n");
-				opcion = "-1";
-			}
-			else if (Integer.parseInt(opcion) < 1)
-			{
-				System.out.println("La opcion ingresada no es valida. Favor ingrese una opcion segun las opciones que muestra el menu.\n\n");
-
-			}
-
-			int id_cursoReferencia = Integer.parseInt(opcion);
-			Map<Integer, Alumno> alumnos = CursoReferenciaController.verAlumnoAsociados(id_cursoReferencia);
+			Curso_Referencia cursoReferencia = solicitarCursoPromocion(cursos_referencia);
+			Map<Integer, Alumno> alumnos = CursoReferenciaController.verAlumnoAsociados(cursoReferencia);
 			System.out.println("\n********************************************************");
 			System.out.println("*              Alumnos registrados al curso            *");
 			System.out.println("********************************************************");
 			listarAlumnos(alumnos);
 			System.out.println("********************************************************\n");
-
 		}
 		else
 		{

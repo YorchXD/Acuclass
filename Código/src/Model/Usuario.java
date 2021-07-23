@@ -26,6 +26,15 @@ public class Usuario implements AccionesPrincipales
 		this.tipoUsuario = tipoUsuario;
 	}
 	
+	public Usuario(String nombre, String email, Estado estado, String run, TipoUsuario tipoUsuario)
+	{
+		this.nombre = nombre;
+		this.email = email;
+		this.estado = estado;
+		this.run = run;
+		this.tipoUsuario = tipoUsuario;
+	}
+	
 	public String mostrarDatos()
 	{
 		return	"Nombre: " + this.nombre + 
@@ -38,7 +47,7 @@ public class Usuario implements AccionesPrincipales
 
 	public boolean registrarDatos()
 	{
-		return ConsultaUsuario.registrarUsuario(this.nombre, this.run, this.email, this.clave, this.tipoUsuario, null);
+		return ConsultaUsuario.registrarUsuario(this.nombre, this.run, this.email, this.clave, this.tipoUsuario);
 	}
 
 	public boolean cambiarEstado()
@@ -48,7 +57,7 @@ public class Usuario implements AccionesPrincipales
 
 	public boolean actualizarDatos()
 	{
-		return ConsultaUsuario.actualizarDatos(this.nombre, this.email, this.clave, null, this.run, this.tipoUsuario);
+		return ConsultaUsuario.actualizarDatos(this.nombre, this.email, this.clave, this.run, this.tipoUsuario);
 	}
 	
 	
@@ -110,12 +119,6 @@ public class Usuario implements AccionesPrincipales
 	public void setTipoUsuario(TipoUsuario tipoUsuario)
 	{
 		this.tipoUsuario = tipoUsuario;
-	}
-	
-
-	public boolean registrarCuenta()
-	{
-		return ConsultaUsuario.registrarCuenta(this.run, this.email, this.clave, this.tipoUsuario, null);
 	}
 
 }

@@ -112,10 +112,10 @@ public class ConsultaCurso
 		return false;
 	}
 
-	public static int buscarAsociacionCurso(int idCurso, int idAsignatura)
+	public static int existenciaAsociacionCurso(int idCurso, int idAsignatura)
 	{
 		Connection conexion = Conexion.conectar();
-		int idAsociacion = 0;
+		int existe = 0;
 		try
 		{
 			CallableStatement cs = conexion.prepareCall("{call buscarAsociacionCursoAsignatura(?,?)}");
@@ -126,7 +126,7 @@ public class ConsultaCurso
 			
 			while(rs.next())
 			{
-				idAsociacion =  rs.getInt("id");
+				existe =  rs.getInt("existe");
 			}
 		}
 		catch(SQLException e)
@@ -134,7 +134,7 @@ public class ConsultaCurso
 			e.printStackTrace();
 		}
 		
-		return idAsociacion;
+		return existe;
 	}
 
 	public static boolean registrarAsociacionCurso(int idCurso, int idAsignatura)
@@ -184,13 +184,14 @@ public class ConsultaCurso
 		return false;
 	}
 
-	public static boolean actualizarEstadoAsignatura(Asignatura asignatura)
+	public static boolean actualizarEstadoAsignatura(int refCurso, Asignatura asignatura)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{
-			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoAsignatura(?,?)}");
-			cs.setInt("in_id", asignatura.getId());
+			CallableStatement cs = conexion.prepareCall("{call actualizarEstadoAsignatura(?,?,?)}");
+			cs.setInt("in_refCurso", refCurso);
+			cs.setInt("in_refAsignatura", asignatura.getId());
 			cs.setString("in_estado", asignatura.getEstado().toString());
 			cs.executeUpdate();
 			return true;

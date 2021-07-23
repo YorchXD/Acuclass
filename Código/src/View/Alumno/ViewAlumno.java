@@ -6,79 +6,25 @@ import Model.Alumno;
 
 public class ViewAlumno
 {
-
-	public static String solicitarNombre()
-	{
-		String nombre;
-		System.out.print("Ingrese el nombre del alumno: ");
-		nombre = Utilidades.extracted().nextLine();
-
-		return nombre;
-	}
-
-	public static String solicitarRun(String rol)
-	{
-		String run;
-		boolean validar;
-		do
-		{
-			System.out.print("Ingrese el run del " + rol + ", formato (XX.XXX.XXX-X): ");
-			run = Utilidades.extracted().nextLine();
-			validar = Utilidades.validarRun(run);
-			if (!validar)
-			{
-				System.out.println("Debe ingresar un run valido. Favor de ingresar nuevamente.\n");
-			}
-
-		}
-		while (!validar);
-
-		run = run.replace(".", "");
-		run = Utilidades.formatearRun(run);
-
-		return run;
-	}
-
 	public static int solicitarEdad()
 	{
-		int edad = 0;
-
+		boolean validar = true;
+		String edad = "0";
 		do
 		{
-			try
+			System.out.print("Ingrese la edad del alumno: ");
+			edad = Utilidades.extracted().nextLine();
+			if(Utilidades.esNumero(edad) && Integer.parseInt(edad)>0 && Integer.parseInt(edad)<100 )
 			{
-				System.out.print("Ingrese la edad del alumno: ");
-				edad = Utilidades.extracted().nextInt();
-
+				validar = false;
 			}
-			catch (Exception e)
+			else
 			{
-				System.out.print("Debe ingresar un numero, ");
+				System.out.println("Se deben ingresar solo numeros, mayores que cero y menores que 100. Favor de volver a ingresar una edad valida.");
 			}
-
 		}
-		while (edad == 0);
-
-		return edad;
-	}
-
-	public static boolean solicitarRespuesta()
-	{
-		String mensaje = "NO";
-		boolean respuesta = false;
-		do
-		{
-
-			System.out.print("Desea modificar al alumno (SI o NO): ");
-			mensaje = Utilidades.extracted().nextLine().toUpperCase();
-
-		}
-		while (!mensaje.equals("SI") && !mensaje.equals("NO"));
-
-		if (mensaje.equals("SI"))
-			respuesta = true;
-
-		return respuesta;
+		while(validar);
+		return Integer.parseInt(edad);
 	}
 
 	public static void crear()
@@ -86,29 +32,14 @@ public class ViewAlumno
 		System.out.println("\n********************************************************");
 		System.out.println("*                      Crear alumno                    *");
 		System.out.println("********************************************************\n");
-		Alumno alumno = null;
-		int edad;
-		String nombre, run;
-		String mensaje = "";
+		
+		String run = Utilidades.solicitarRun(Utilidades.ALUMNO);
+		String nombre  = Utilidades.solicitarNombre(Utilidades.ALUMNO);
+		int edad = solicitarEdad();
 
-		run = solicitarRun("Alumno");
-		alumno = AlumnoController.buscarAlumno(run);
-		if (alumno == null)
-		{
-			nombre = solicitarNombre();
-			edad = solicitarEdad();
-			mensaje = AlumnoController.registrarAlumno(nombre, run, edad);
-
-			System.out.println("\n********************************************************");
-			System.out.println(mensaje);
-			System.out.println("********************************************************\n");
-		}
-		else
-		{
-			System.out.println("\n********************************************************");
-			System.out.println("*         El alumno ya se encuentra registrado         *");
-			System.out.println("********************************************************\n");
-		}
+		System.out.println("\n********************************************************");
+		System.out.println(AlumnoController.registrarAlumno(nombre, run, edad));
+		System.out.println("********************************************************\n");
 	}
 
 	public static void ver()
@@ -116,7 +47,7 @@ public class ViewAlumno
 		Alumno alumno = null;
 		String run;
 
-		run = solicitarRun("Alumno");
+		run = Utilidades.solicitarRun(Utilidades.ALUMNO);
 		alumno = AlumnoController.buscarAlumno(run);
 		if (alumno != null)
 		{
@@ -143,7 +74,7 @@ public class ViewAlumno
 		String run;
 		Boolean confirmacion = false;
 
-		run = solicitarRun("Alumno");
+		run = Utilidades.solicitarRun(Utilidades.ALUMNO);
 		alumno = AlumnoController.buscarAlumno(run);
 		if (alumno != null)
 		{
@@ -152,14 +83,14 @@ public class ViewAlumno
 			System.out.println("********************************************************\n");
 			System.out.println(alumno.mostrarDatos());
 			System.out.println("********************************************************\n");
-			confirmacion = solicitarRespuesta();
+			confirmacion = Utilidades.confirmacionModificarDatos(Utilidades.ALUMNO);
 
 			if (confirmacion)
 			{
-				alumno.setNombre(solicitarNombre());
-				alumno.setEdad(solicitarEdad());
+				String nombre = Utilidades.solicitarNombre(Utilidades.ALUMNO);
+				int edad = solicitarEdad();
 				System.out.println("\n********************************************************");
-				System.out.println(AlumnoController.actualizarAlumno(alumno));
+				System.out.println(AlumnoController.actualizarAlumno(alumno, nombre, edad));
 				System.out.println("********************************************************\n");
 			}
 		}
@@ -181,7 +112,7 @@ public class ViewAlumno
 		String run, mensaje = "";
 		Boolean confirmacion = false;
 
-		run = solicitarRun("Alumno");
+		run = Utilidades.solicitarRun(Utilidades.ALUMNO);
 		alumno = AlumnoController.buscarAlumno(run);
 
 		if (alumno != null)
@@ -192,7 +123,7 @@ public class ViewAlumno
 			System.out.println(alumno.mostrarDatos());
 			System.out.println("********************************************************\n");
 
-			confirmacion = solicitarRespuesta();
+			confirmacion = Utilidades.confirmacionCambiarEstado(alumno.getEstado(), Utilidades.ALUMNO);
 
 			if (confirmacion)
 			{
@@ -215,12 +146,11 @@ public class ViewAlumno
 		System.out.println("\n********************************************************");
 		System.out.println("*             Asociar apoderado a un alumno            *");
 		System.out.println("********************************************************\n");
-		String runAlumno = solicitarRun("Alumno");
-		String runApoderado = solicitarRun("Apoderado");
+		String runAlumno = Utilidades.solicitarRun(Utilidades.ALUMNO);
+		String runApoderado = Utilidades.solicitarRun(Utilidades.APODERADO);
 		System.out.println("\n********************************************************");
 		System.out.println(AlumnoController.asociarApoderadoAlumno(runAlumno, runApoderado));
 		System.out.println("********************************************************\n");
-		
 	}
 
 }

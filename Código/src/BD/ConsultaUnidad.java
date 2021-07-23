@@ -12,16 +12,17 @@ import Model.Unidad;
 public class ConsultaUnidad
 {
 
-	public static boolean registrarUnidad(String nombre, int numero_unidad, int div_anual, int refAsignatura)
+	public static boolean registrarUnidad(String nombre, int numero_unidad, int div_anual, int refAsignatura, int refCurso)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{			
-			CallableStatement cs = conexion.prepareCall("{call registrarUnidad(?,?,?,?)}");
+			CallableStatement cs = conexion.prepareCall("{call registrarUnidad(?,?,?,?,?)}");
 			cs.setString("in_nombre", nombre);
 			cs.setInt("in_numero_unidad", numero_unidad);
 			cs.setInt("in_division_anual",div_anual);
 			cs.setInt("in_refAsignatura", refAsignatura);
+			cs.setInt("in_refCurso", refCurso);
 			cs.executeUpdate();
 			return true;
 		}
@@ -33,14 +34,15 @@ public class ConsultaUnidad
 		return false;
 	}
 	
-	public static boolean listadoUnidades(Asignatura asignatura)
+	public static boolean listadoUnidades(Asignatura asignatura, int refCurso)
 	{
 		Connection conexion = Conexion.conectar();
 		try
 		{
 			asignatura.getUnidades().clear();
-			CallableStatement cs = conexion.prepareCall("{call listarUnidades(?)}");	
-			cs.setInt("in_refCursoAsignatura", asignatura.getId());
+			CallableStatement cs = conexion.prepareCall("{call listarUnidades(?, ?)}");	
+			cs.setInt("in_refAsignatura", asignatura.getId());
+			cs.setInt("in_refCurso", refCurso);
 			ResultSet rs = cs.executeQuery();
 			while(rs.next())
 			{	
@@ -49,7 +51,8 @@ public class ConsultaUnidad
 						rs.getString("nombre"),
 						rs.getInt("numero"),
 						rs.getInt("divisionAnual"),
-						asignatura,
+						rs.getInt("refAsignatura"),
+						rs.getInt("refCurso"),
 						Estado.valueOf(Estado.class, rs.getString("estado"))
 						);
 				asignatura.getUnidades().put(unidad.getId(), unidad);

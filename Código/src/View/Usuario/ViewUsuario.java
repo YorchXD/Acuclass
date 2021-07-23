@@ -56,8 +56,8 @@ public class ViewUsuario
 
 		System.out.println("29. Registrar curso promocion"); //registro curso promoción
 		System.out.println("30. Ver curso promocion");
-		System.out.println("31. Asociar alumno a curso promoción");
-		System.out.println("32. Ver Alumno asociados a curso promoción");
+		System.out.println("31. Asociar alumno a curso promocion");
+		System.out.println("32. Ver Alumno asociados a curso promocion");
 		System.out.println("33. Cerrar Sesion");
 		System.out.println("********************************************************\n");
 		
@@ -194,13 +194,12 @@ public class ViewUsuario
 				case 32:
 					CursoReferenciaController.verAlumno();
 					break;
-					
 				default:
 					System.out.println("Sesion cerrada...\n\n");
 					break;
 			}
 		}
-		while(opcion!=32);
+		while(opcion!=33);
 	}
 	/*Fin opciones administrador*/
 	

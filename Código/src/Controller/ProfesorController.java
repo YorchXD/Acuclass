@@ -4,6 +4,7 @@ import java.util.Map;
 
 import BD.ConsultaProfesor;
 import View.Profesor.ViewProfesor;
+import Model.Especialidad;
 import Model.Estado;
 import Model.Profesor;
 import Model.TipoUsuario;
@@ -13,7 +14,7 @@ public class ProfesorController
 	/* Metodos que activan la vista segun sea el caso */
 	public static void crear()
 	{
-		ViewProfesor.crear();
+		ViewProfesor.crear(ConsultaProfesor.listarEspecialidades());
 	}
 
 	public static void ver()
@@ -33,99 +34,45 @@ public class ProfesorController
 	/* Fin mostrar vistas */
 
 	/**
-	 * Tras obtener el run del usuario, se procede a buscar sus respectivas cuentas (tanto de profesor como de apoderado y administrador, si es que existen). En caso de encontrar la cuenta de profesor del run
-	 * ingresado, se envia la instancia de profesor, en caso de encontrar una de las cuentas del usuario pero no es profesor, solo se envian sus datos pero con
-	 * el parametro tipoUsuario igual a null y en caso de no encontrar al usuario, se devuelve null.
+	 * Se valida primero si el profesor se encuentra registrado. En caso de no estar registrado, se procede a validar si el correo
+	 * lo tiene asociado otro usuario profesor. En caso de que no este registrado el profesor y el email no esté asociado a un profesor
+	 * se procede a registrarlo.
+	 * @param nombre
 	 * @param run
-	 * @return null, profesor con tipoUsuario = TipoUsuario.PROFESOR o profesor con tipoUsuario = null
+	 * @param email
+	 * @param clave
+	 * @param especialidad
+	 * @return "Se ha guardado exitosamente al profesor", "No se pudo guardado los datos del profesor", "El profesor no puede ser registrado
+	 * con la cuenta ya que existe otro usuario con el mismo correo" o "El profesor ya se encuentra registrado"
 	 */
-	public static Profesor buscarUsuario(String run)
+	public static String registrarProfesor(String nombre, String run, String email, String clave, Map<Integer, Especialidad> especialidades)
 	{
-		Profesor profesor = null;
-		Map<String, Profesor> roles = ConsultaProfesor.buscarUsuarioProfesor(run);
-
-		if (roles.size() != 0)
+		String mensaje = "";
+		Profesor profesorAux = ConsultaProfesor.buscarProfesor(run);
+		if(profesorAux == null)
 		{
-			if (roles.containsKey(TipoUsuario.PROFESOR.toString()))
+			Map<String, Profesor> profesores = ConsultaProfesor.validarCorreo(run, email, TipoUsuario.PROFESOR);
+			if (profesores.size() == 0)
 			{
-				profesor = roles.get(TipoUsuario.PROFESOR.toString());
-			}
-			else
-			{
-				if (roles.containsKey(TipoUsuario.ADMINISTRADOR.toString()))
+				Profesor profesor = new Profesor(nombre, email, clave, run, especialidades);
+				if (profesor.registrarDatos())
 				{
-					profesor = roles.get(TipoUsuario.ADMINISTRADOR.toString());
+					mensaje = "\nSe ha guardado exitosamente al profesor\n";
 				}
 				else
 				{
-					profesor = roles.get(TipoUsuario.APODERADO.toString());
+					mensaje = "\nNo se pudo guardado los datos del profesor\n";
 				}
-				profesor.setTipoUsuario(null);
-			}
-		}
-		return profesor;
-	}
-
-	/**
-	 * Se busca los usuarios con sus respectivos roles que tengan en comun el RUN y se crean como Profesor, pero solo en caso de ser profesor se conserva su tipo, en caso contrario,
-	 * el parametro tipoUsario se setea como null
-	 * @param run
-	 * @return null en caso de no encontrar al usuario. Profesor con su tipo de usuario (PROFESOR) en caso de serlo o apoderado con su tipo de usuario null
-	 * en caso de encontrar al usuario pero que no es de tipoUsuario apoderado
-	 */
-	public static String registrarProfesor(Profesor profesor)
-	{
-		String mensaje = "";
-		Map<String, Profesor> profesores = ConsultaProfesor.validarCorreo(profesor.getRun(), profesor.getEmail(),
-				profesor.getTipoUsuario());
-		if (profesores.size() == 0)
-		{
-			if (profesor.registrarDatos())
-			{
-				mensaje = "\nSe ha guardado exitosamente al profesor\n";
 			}
 			else
 			{
-				mensaje = "\nNo se pudo guardado los datos del profesor\n";
+				mensaje = "\nEl profesor no puede ser registrado con la cuenta ya que existe otro usuario con el mismo correo\n";
 			}
 		}
 		else
 		{
-			mensaje = "\nEl profesor no puede ser registrado con la cuenta ya que existe otro usuario con el mismo correo\n";
+			mensaje = "\nEl profesor ya se encuentra registrado\n";
 		}
-		return mensaje;
-	}
-	
-	/**
-	 * Tras tener la instancia del profesor, se procede a validar que no exista otro profesor que tenga asociado el mismo email 
-	 * que el profesor a registrar la cuenta. En caso de no encontrar usuarios, se procede a registrar la cuenta del profesor.
-	 * @param profesor
-	 * @return "Se ha guardado exitosamente al apoderado", "No se pudo guardado al apoderado" o "El profesor no puede ser registrado 
-	 * con la cuenta ya que existe otro usuario con el mismo correo"
-	 */
-	public static String registrarCuenta(Profesor profesor)
-	{
-		String mensaje = "";
-		profesor.setTipoUsuario(TipoUsuario.PROFESOR);
-
-		Map<String, Profesor> profesores = ConsultaProfesor.validarCorreo(profesor.getRun(), profesor.getEmail(),
-				profesor.getTipoUsuario());
-		if (profesores.size() == 0)
-		{
-			if (profesor.registrarCuenta())
-			{
-				mensaje = "\nSe ha guardado exitosamente al apoderado\n";
-			}
-			else
-			{
-				mensaje = "\nNo se pudo guardado al apoderado\n";
-			}
-		}
-		else
-		{
-			mensaje = "\nEl profesor no puede ser registrado con la cuenta ya que existe otro usuario con el mismo correo\n";
-		}
-
 		return mensaje;
 	}
 
@@ -179,16 +126,14 @@ public class ProfesorController
 	 * @param nombre
 	 * @param email
 	 * @param clave
-	 * @param especialidad
 	 * @return "El profesor no puede ser registrado ya que existe otro usuario con el rol de profesor que tiene el mismo correo", "Se ha modificado los datos 
 	 * del apoderado", "No se han registrado los cambios del apoderado dado a que ha ocurrido un problema. Por favor vuelva a intentarlo" o No existen cambios en el profesor
 	 */
-	public static String actualizarProfesor(Profesor profesor, String nombre, String email, String clave,
-			String especialidad)
+	public static String actualizarProfesor(Profesor profesor, String nombre, String email, String clave)
 	{
 		String mensaje = "";
 		if (!profesor.getNombre().equals(nombre) || !profesor.getEmail().equals(email)
-				|| !profesor.getClave().equals(clave) || !profesor.getEspecialidad().equals(especialidad))
+				|| !profesor.getClave().equals(clave))
 		{
 			if (!profesor.getEmail().equals(email))
 			{
@@ -208,7 +153,6 @@ public class ProfesorController
 			{
 				profesor.setNombre(nombre);
 				profesor.setClave(clave);
-				profesor.setEspecialidad(especialidad);
 				if (profesor.actualizarDatos())
 				{
 					mensaje = "\nSe ha modificado los datos del profesor\n";
