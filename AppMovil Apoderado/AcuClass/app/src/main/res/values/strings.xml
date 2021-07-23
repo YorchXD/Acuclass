@@ -3,7 +3,7 @@
     <string name="app_name">AcuClass</string>
     <string name="hint_email">Correo</string>
     <string name="hint_password">Clave</string>
-    <string name="ini_sesion_name_btn">Iniciar sesión 1</string>
+    <string name="ini_sesion_name_btn">Iniciar sesión 2</string>
     <string name="welcome">Bienvenido a</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
