@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import android.util.Pair as UtilPair
 
-class MainActivity : AppCompatActivity()
+class SplashActivity : AppCompatActivity()
 {
     override fun onCreate(savedInstanceState: Bundle?)
     {

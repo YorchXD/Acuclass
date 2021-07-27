@@ -110,7 +110,6 @@
                 android:text="@string/ini_sesion_name_btn"
                 android:textColor="@color/white"
                 android:layout_marginTop="12dp">
-
             </com.google.android.material.button.MaterialButton>
 
         </LinearLayout>
