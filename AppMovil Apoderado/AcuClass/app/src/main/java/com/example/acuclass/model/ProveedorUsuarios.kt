@@ -25,7 +25,5 @@ class ProveedorUsuarios
                 clave = "12345"
             )
         )
-
-
     }
 }

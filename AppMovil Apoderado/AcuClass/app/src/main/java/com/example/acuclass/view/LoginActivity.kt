@@ -40,14 +40,14 @@ class LoginActivity : AppCompatActivity(),LifecycleOwner {
                 }
                 else
                 {
-                    dialogo("Datos incorrectos", "Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.")
-                    //Toast.makeText(this,"Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.", Toast.LENGTH_LONG).show()
+                    //dialogo("Datos incorrectos", "Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.")
+                    Toast.makeText(this,"Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.", Toast.LENGTH_LONG).show()
                 }
             }
             else
             {
-                dialogo("Campos vacios", "Los campos de correo y clave no deben estar vacios")
-                //Toast.makeText(this,"Los campos de correo y clave no deben estar vacios", Toast.LENGTH_LONG).show()
+                //dialogo("Campos vacios", "Los campos de correo y clave no deben estar vacios")
+                Toast.makeText(this,"Los campos de correo y clave no deben estar vacios", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -61,4 +61,5 @@ class LoginActivity : AppCompatActivity(),LifecycleOwner {
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
+
 }
