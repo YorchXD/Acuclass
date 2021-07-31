@@ -1,4 +1,4 @@
-package com.example.acuclass
+package com.example.acuclass.view
 
 import android.app.ActivityOptions
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.acuclass.R
 import android.util.Pair as UtilPair
 
 class SplashActivity : AppCompatActivity()
