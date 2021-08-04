@@ -1,6 +1,6 @@
 package com.example.acuclass.interfaces
 
-interface IcomunicaFragments
+interface IcomunicaFragmentsMenu
 {
     /**
      * Para ver las notas debe ir primero a seleccionar alumno

@@ -10,7 +10,14 @@
     <string name="activities">EVALUACIONES</string>
     <string name="settings">CONFIGURACIÓN</string>
     <string name="logout">SALIR</string>
+    <string name="menu_principal">Menu principal</string>
+    <string name="listadoAlumnos">Listado de alumnos</string>
+    <string name="listadoCursos">Listado de cursos</string>
+    <string name="listadoAsignaturas">Listado de Asignaturas</string>
+    <string name="Notas">Notas</string>
+    <string name="btnBack">VOLVER</string>
+    <string name="btnBackMenu">VOLVER A MENÚ</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="menu_principal">Menu principal</string>
+
 </resources>

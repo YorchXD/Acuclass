@@ -1,8 +1,9 @@
 package com.example.acuclass.model
 
-import android.provider.ContactsContract
-
 data class Usuario(
+    val nombre: String,
     val email: String,
-    val clave: String
+    val clave: String,
+    val run: String,
+    val alumnos: ArrayList<Alumno> = arrayListOf<Alumno>()
 )

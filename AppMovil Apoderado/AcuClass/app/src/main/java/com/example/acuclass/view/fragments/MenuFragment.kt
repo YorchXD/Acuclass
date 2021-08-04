@@ -1,4 +1,4 @@
-package com.example.acuclass.view.Fragments
+package com.example.acuclass.view.fragments
 
 import android.app.Activity
 import android.content.Context
@@ -7,11 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import com.example.acuclass.R
-import com.example.acuclass.interfaces.IcomunicaFragments
+import com.example.acuclass.interfaces.IcomunicaFragmentsMenu
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +27,7 @@ class MenuFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var interfaceComunicaFragments: IcomunicaFragments
+    lateinit var interfaceComunicaFragmentsMenu: IcomunicaFragmentsMenu
     lateinit var cardNotas: CardView
     lateinit var cardAsistencia: CardView
     lateinit var cardEvaluaciones: CardView
@@ -65,7 +64,7 @@ class MenuFragment : Fragment() {
         if(context is Activity)
         {
             actividad = context as Activity
-            interfaceComunicaFragments = actividad as IcomunicaFragments
+            interfaceComunicaFragmentsMenu = actividad as IcomunicaFragmentsMenu
         }
     }
 
@@ -86,35 +85,35 @@ class MenuFragment : Fragment() {
             {
                 //dialogo("Notas", "ver notas desde el fragment")
                 //Toast.makeText(requireActivity(),"Ver notas desde el fragment", Toast.LENGTH_SHORT).show()
-                interfaceComunicaFragments.verAlumnosNotas()
+                interfaceComunicaFragmentsMenu.verAlumnosNotas()
             }
         })
 
         cardAsistencia.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
-                interfaceComunicaFragments.verAlumnosAsistencia()
+                interfaceComunicaFragmentsMenu.verAlumnosAsistencia()
             }
         })
 
         cardEvaluaciones.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
-                interfaceComunicaFragments.verAlumnosEvaluaciones()
+                interfaceComunicaFragmentsMenu.verAlumnosEvaluaciones()
             }
         })
 
         cardConfiguracion.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
-                interfaceComunicaFragments.configuracion()
+                interfaceComunicaFragmentsMenu.configuracion()
             }
         })
 
         cardSalir.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
-                interfaceComunicaFragments.salir()
+                interfaceComunicaFragmentsMenu.salir()
             }
         })
     }

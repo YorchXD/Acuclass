@@ -9,6 +9,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import com.example.acuclass.MainActivity
 import com.example.acuclass.R
+import com.example.acuclass.model.Usuario
 import com.example.acuclass.viewmodel.UsuarioViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
@@ -30,9 +31,9 @@ class LoginActivity : AppCompatActivity(),LifecycleOwner {
             if(!correo.editText?.text.toString().isEmpty() && !clave.editText?.text.toString().isEmpty())
             {
                 this.viewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
-                viewModel.buscarUsuario(correo.editText?.text.toString(), clave.editText?.text.toString())
+                val usuario: Usuario? = viewModel.buscarUsuario(correo.editText?.text.toString(), clave.editText?.text.toString())
 
-                if(viewModel.obtenerUsuario())
+                if(usuario!=null)
                 {
                     //Toast.makeText(this,"Usuario encontrado", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, MainActivity::class.java)

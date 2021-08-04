@@ -2,20 +2,23 @@ package com.example.acuclass.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.acuclass.model.Alumno
 import com.example.acuclass.model.ProveedorUsuarios
 import com.example.acuclass.model.Usuario
 
 class UsuarioViewModel: ViewModel()
 {
-    var usuario:Boolean = false
+    var usuario: Usuario? = null
+    var proveedorUsuarios: ProveedorUsuarios = ProveedorUsuarios()
 
-    fun obtenerUsuario(): Boolean
+    fun buscarUsuario(email:String, clave:String): Usuario?
     {
+        usuario = proveedorUsuarios.buscarUsuario(email, clave)
         return usuario
     }
 
-    fun buscarUsuario(email:String, clave:String)
-    {
-        usuario = ProveedorUsuarios.buscarUsuario(email, clave)
+    fun obtenerAlumnos(): ArrayList<Alumno>? {
+        usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
+        return usuario?.alumnos
     }
 }
