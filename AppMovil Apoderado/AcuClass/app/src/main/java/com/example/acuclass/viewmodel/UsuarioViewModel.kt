@@ -1,8 +1,8 @@
 package com.example.acuclass.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.acuclass.model.Alumno
+import com.example.acuclass.model.Curso
 import com.example.acuclass.model.ProveedorUsuarios
 import com.example.acuclass.model.Usuario
 
@@ -20,5 +20,10 @@ class UsuarioViewModel: ViewModel()
     fun obtenerAlumnos(): ArrayList<Alumno>? {
         usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
         return usuario?.alumnos
+    }
+
+    fun obtenerCursos(run: String?): ArrayList<Curso>? {
+        usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
+        return usuario?.alumnos?.find { alumno-> alumno.run.equals(run) }?.cursos
     }
 }

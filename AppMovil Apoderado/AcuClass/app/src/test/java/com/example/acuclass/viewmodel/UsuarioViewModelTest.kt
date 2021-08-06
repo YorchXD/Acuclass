@@ -7,8 +7,11 @@ import com.example.acuclass.model.Usuario
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.runner.RunWith
 import org.mockito.Mockito
+import org.mockito.junit.MockitoJUnitRunner
 
+@RunWith(MockitoJUnitRunner::class)
 class UsuarioViewModelTest
 {
     private lateinit var proveedorUsuarioMockito: ProveedorUsuarios
@@ -24,10 +27,10 @@ class UsuarioViewModelTest
         //Usuario esperado
         usuarioEsperado = Usuario(
             nombre = "Yorch Sepúlveda",
-            email = "yorch5.77@gmail.com",
+            email = "yorch5.78@gmail.com",
             clave = "12345",
             run = "17824523-6",
-            alumnos = listOf(
+            alumnos = arrayListOf(
                 Alumno(
                     nombre = "Gregory Sepúlveda",
                     run = "19043138-k"
@@ -40,7 +43,7 @@ class UsuarioViewModelTest
     @Test
     fun pruebasTestMokito()
     {
-        assertEquals(usuarioEsperado,usuarioViewModel.buscarUsuario("yorch5.77@gmail.com","12345"))
+        assertEquals(usuarioEsperado,usuarioViewModel.buscarUsuario("yorch5.77@gmail.com","1234"))
     }
 
     @Test
@@ -55,6 +58,5 @@ class UsuarioViewModelTest
 
         //verificamos
         assertEquals(usuarioEsperado.run, usuarioActual?.run)
-
     }
 }

@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity(),IcomunicaFragmentsMenu
     override fun salir()
     {
         //dialogo("Salir", "Salir desde el activity")
-        Toast.makeText(this, "Salir desde el activity", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "Salir desde el activity", Toast.LENGTH_LONG).show()
+        finish()
 
     }
 

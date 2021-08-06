@@ -14,6 +14,13 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/ic_wave_haikei" />
 
+    <View
+        android:id="@+id/layered_waves"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ic_layered_waves_haikei" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -83,7 +90,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress">
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/correo">
 
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,11 +124,4 @@
 
         </LinearLayout>
     </LinearLayout>
-
-    <View
-        android:id="@+id/layered_waves"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_layered_waves_haikei" />
 </RelativeLayout>
