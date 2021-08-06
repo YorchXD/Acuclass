@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acuclass.R
-import com.example.acuclass.adaptadores.CustomAdapter
+import com.example.acuclass.adaptadores.AlumnosAdapter
 import com.example.acuclass.interfaces.IcomunicaFragmentNotas
 import com.example.acuclass.model.Alumno
 
@@ -32,6 +34,7 @@ open class AlumnosNotasFragment : Fragment() {
     lateinit var recyclerAlumnos:RecyclerView
     lateinit var actividad: Activity
     lateinit var vista:View
+    lateinit var btnMenuPrincipal: Button
     lateinit var interfaceComunicaFragmentNotas: IcomunicaFragmentNotas
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +51,44 @@ open class AlumnosNotasFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         vista = inflater.inflate(R.layout.fragment_alumnos_notas, container, false)
-        recyclerAlumnos = vista.findViewById<RecyclerView>(R.id.recyclerAlumnosNota)
+        recyclerAlumnos = vista.findViewById(R.id.recyclerAlumnosNota)
+        btnMenuPrincipal = vista.findViewById(R.id.btnAtras)
+        inicializar()
+        return vista
+    }
+
+    private fun inicializar()
+    {
+        inicializarRecyclerView()
+        inicializarBtnMenuPrincipal()
+    }
+
+    private fun inicializarRecyclerView()
+    {
         val alumnos: ArrayList<Alumno>? = interfaceComunicaFragmentNotas.getAlumnos()
-        val adapter = CustomAdapter(alumnos!!)
+        val adapter = AlumnosAdapter(alumnos!!)
+
+        adapter.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                /*Toast.makeText(requireContext(),
+                    "Seleccionó: " + alumnos.get(recyclerAlumnos.getChildAdapterPosition(v!!)).nombre,
+                    Toast.LENGTH_SHORT).show()*/
+                var runAlumno:String = alumnos.get(recyclerAlumnos.getChildAdapterPosition(v!!)).run
+                interfaceComunicaFragmentNotas.setRunAlumno(runAlumno)
+                interfaceComunicaFragmentNotas.vistaCursos()
+            }
+        })
         recyclerAlumnos.layoutManager = LinearLayoutManager(getContext())
         recyclerAlumnos.adapter = adapter
-        return vista
+    }
+
+    private fun inicializarBtnMenuPrincipal()
+    {
+        btnMenuPrincipal.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                interfaceComunicaFragmentNotas.vistaMenuPrincipal()
+            }
+        })
     }
 
     override fun onAttach(context: Context) {

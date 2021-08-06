@@ -7,18 +7,23 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.acuclass.R
 import com.example.acuclass.interfaces.IcomunicaFragmentNotas
 import com.example.acuclass.model.Alumno
+import com.example.acuclass.model.Curso
 import com.example.acuclass.view.fragments.AlumnosNotasFragment
+import com.example.acuclass.view.fragments.AsignaturasNotasFragment
+import com.example.acuclass.view.fragments.CursosNotasFragment
 import com.example.acuclass.viewmodel.UsuarioViewModel
 
 class ContenedorNotasActivity : AppCompatActivity(), IcomunicaFragmentNotas
 {
     private lateinit var viewModel:UsuarioViewModel
+    private lateinit var runAlumno: String
+
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
         this.viewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
         setContentView(R.layout.activity_contenedor_notas)
-        replaceFragment(AlumnosNotasFragment())
+        vistaAlumnos()
     }
 
     private fun replaceFragment(fragment: Fragment)
@@ -29,7 +34,36 @@ class ContenedorNotasActivity : AppCompatActivity(), IcomunicaFragmentNotas
         fragmentTransaction.commit()
     }
 
-    override fun getAlumnos(): ArrayList<Alumno>? {
+    override fun getAlumnos(): ArrayList<Alumno>?
+    {
         return viewModel.obtenerAlumnos()
+    }
+
+    override fun getCursos(): ArrayList<Curso>? {
+        return viewModel.obtenerCursos(this.runAlumno)
+    }
+
+    override fun setRunAlumno(runAlumno: String) {
+        this.runAlumno = runAlumno
+    }
+
+    override fun vistaAlumnos()
+    {
+        replaceFragment(AlumnosNotasFragment())
+    }
+
+    override fun vistaCursos()
+    {
+        replaceFragment(CursosNotasFragment())
+    }
+
+    override fun vistaAsignaturas()
+    {
+        replaceFragment(AsignaturasNotasFragment())
+    }
+
+    override fun vistaMenuPrincipal()
+    {
+        finish()
     }
 }

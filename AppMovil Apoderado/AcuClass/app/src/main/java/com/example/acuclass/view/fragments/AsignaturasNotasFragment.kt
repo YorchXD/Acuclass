@@ -1,11 +1,16 @@
 package com.example.acuclass.view.fragments
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.recyclerview.widget.RecyclerView
 import com.example.acuclass.R
+import com.example.acuclass.interfaces.IcomunicaFragmentNotas
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +27,13 @@ class AsignaturasNotasFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    lateinit var recyclerAsignaturas: RecyclerView
+    lateinit var actividad: Activity
+    lateinit var vista:View
+    lateinit var btnMenuPrincipal: Button
+    lateinit var btnCursos: Button
+    lateinit var interfaceComunicaFragmentNotas: IcomunicaFragmentNotas
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -35,7 +47,43 @@ class AsignaturasNotasFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_asignaturas_notas, container, false)
+        vista = inflater.inflate(R.layout.fragment_asignaturas_notas, container, false)
+        recyclerAsignaturas = vista.findViewById(R.id.recyclerAsignaturasNotas)
+        btnCursos = vista.findViewById(R.id.btnVolerCurso)
+        btnMenuPrincipal = vista.findViewById(R.id.btnVolverMenu)
+        inicializar()
+        return vista
+    }
+
+    fun inicializar()
+    {
+        //inicializarRecyclerView()
+        inicializarBtnMenuPrincipal()
+        inicializarBtnCursos()
+    }
+
+    private fun inicializarBtnMenuPrincipal()
+    {
+        btnMenuPrincipal.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                interfaceComunicaFragmentNotas.vistaMenuPrincipal()
+            }
+        })
+    }
+
+    private fun inicializarBtnCursos()
+    {
+        btnCursos.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(v: View?) {
+                interfaceComunicaFragmentNotas.vistaCursos()
+            }
+        })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        actividad = context as Activity
+        interfaceComunicaFragmentNotas = actividad as IcomunicaFragmentNotas
     }
 
     companion object {
