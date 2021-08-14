@@ -1,4 +1,4 @@
-package com.example.acuclass
+package com.example.acuclass.view.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import com.example.acuclass.R
 import com.example.acuclass.databinding.ActivityMainBinding
-import com.example.acuclass.interfaces.IcomunicaFragmentsMenu
+import com.example.acuclass.view.interfaces.IcomunicaFragmentsMenu
 import com.example.acuclass.view.fragments.MenuFragment
-import com.example.acuclass.view.activities.ContenedorNotasActivity
 
 class MainActivity : AppCompatActivity(),IcomunicaFragmentsMenu
 {
@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(),IcomunicaFragmentsMenu
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         replaceFragment(MenuFragment())
@@ -34,8 +33,6 @@ class MainActivity : AppCompatActivity(),IcomunicaFragmentsMenu
 
     override fun verAlumnosNotas()
     {
-        //dialogo("Notas", "Ver notas desde el activity")
-        //Toast.makeText(this, "Ver notas desde el activity", Toast.LENGTH_LONG).show()
         val intent = Intent(this, ContenedorNotasActivity::class.java)
         startActivity(intent);
     }
@@ -60,10 +57,7 @@ class MainActivity : AppCompatActivity(),IcomunicaFragmentsMenu
 
     override fun salir()
     {
-        //dialogo("Salir", "Salir desde el activity")
-        //Toast.makeText(this, "Salir desde el activity", Toast.LENGTH_LONG).show()
         finish()
-
     }
 
     private fun dialogo(titulo:String, mensaje:String)

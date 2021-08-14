@@ -10,7 +10,8 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.cardview.widget.CardView
 import com.example.acuclass.R
-import com.example.acuclass.interfaces.IcomunicaFragmentsMenu
+import com.example.acuclass.databinding.FragmentMenuBinding
+import com.example.acuclass.view.interfaces.IcomunicaFragmentsMenu
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,13 +28,10 @@ class MenuFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private var _binding: FragmentMenuBinding?=null
+    private val binding get() = _binding!!
+
     lateinit var interfaceComunicaFragmentsMenu: IcomunicaFragmentsMenu
-    lateinit var cardNotas: CardView
-    lateinit var cardAsistencia: CardView
-    lateinit var cardEvaluaciones: CardView
-    lateinit var cardConfiguracion: CardView
-    lateinit var cardSalir: CardView
-    lateinit var vista: View
     lateinit var actividad: Activity
 
 
@@ -48,14 +46,9 @@ class MenuFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
         // Inflate the layout for this fragment
-        vista = inflater.inflate(R.layout.fragment_menu, container, false)
-        cardNotas = vista.findViewById(R.id.card_notas)
-        cardAsistencia = vista.findViewById(R.id.card_asistencia)
-        cardEvaluaciones = vista.findViewById(R.id.card_evaluaciones)
-        cardConfiguracion = vista.findViewById(R.id.card_configuracion)
-        cardSalir = vista.findViewById(R.id.card_salir)
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
         eventosMenu()
-        return vista
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -80,37 +73,35 @@ class MenuFragment : Fragment() {
 
     private fun eventosMenu()
     {
-        cardNotas.setOnClickListener(object: View.OnClickListener {
+        binding.cardNotas.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
-                //dialogo("Notas", "ver notas desde el fragment")
-                //Toast.makeText(requireActivity(),"Ver notas desde el fragment", Toast.LENGTH_SHORT).show()
                 interfaceComunicaFragmentsMenu.verAlumnosNotas()
             }
         })
 
-        cardAsistencia.setOnClickListener(object: View.OnClickListener {
+        binding.cardAsistencia.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
                 interfaceComunicaFragmentsMenu.verAlumnosAsistencia()
             }
         })
 
-        cardEvaluaciones.setOnClickListener(object: View.OnClickListener {
+        binding.cardEvaluaciones.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
                 interfaceComunicaFragmentsMenu.verAlumnosEvaluaciones()
             }
         })
 
-        cardConfiguracion.setOnClickListener(object: View.OnClickListener {
+        binding.cardConfiguracion.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
                 interfaceComunicaFragmentsMenu.configuracion()
             }
         })
 
-        cardSalir.setOnClickListener(object: View.OnClickListener {
+        binding.cardSalir.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View?)
             {
                 interfaceComunicaFragmentsMenu.salir()

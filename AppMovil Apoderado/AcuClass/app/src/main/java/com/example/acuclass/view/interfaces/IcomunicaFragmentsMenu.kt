@@ -1,4 +1,4 @@
-package com.example.acuclass.interfaces
+package com.example.acuclass.view.interfaces
 
 interface IcomunicaFragmentsMenu
 {

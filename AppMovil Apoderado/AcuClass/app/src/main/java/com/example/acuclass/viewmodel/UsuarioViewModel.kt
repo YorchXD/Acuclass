@@ -8,22 +8,27 @@ import com.example.acuclass.model.Usuario
 
 class UsuarioViewModel: ViewModel()
 {
-    var usuario: Usuario? = null
-    var proveedorUsuarios: ProveedorUsuarios = ProveedorUsuarios()
+    private var usuario: Usuario? = null
+    private var proveedorUsuarios: ProveedorUsuarios = ProveedorUsuarios()
 
     fun buscarUsuario(email:String, clave:String): Usuario?
     {
-        usuario = proveedorUsuarios.buscarUsuario(email, clave)
-        return usuario
+        this.usuario = proveedorUsuarios.buscarUsuario(email, clave)
+        return this.usuario
     }
 
     fun obtenerAlumnos(): ArrayList<Alumno>? {
-        usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
-        return usuario?.alumnos
+        this.usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
+        return this.usuario?.alumnos
     }
 
     fun obtenerCursos(run: String?): ArrayList<Curso>? {
-        usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
-        return usuario?.alumnos?.find { alumno-> alumno.run.equals(run) }?.cursos
+        this.usuario = proveedorUsuarios.buscarUsuario("yorch5.77@gmail.com", "12345")
+        return this.usuario?.alumnos?.find { alumno-> alumno.run.equals(run) }?.cursos
+    }
+
+    fun setProveedorUsuario(proveedorUsuario:ProveedorUsuarios)
+    {
+        this.proveedorUsuarios = proveedorUsuario
     }
 }

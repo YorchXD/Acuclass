@@ -1,4 +1,4 @@
-package com.example.acuclass.interfaces
+package com.example.acuclass.view.interfaces
 
 import com.example.acuclass.model.Alumno
 import com.example.acuclass.model.Curso

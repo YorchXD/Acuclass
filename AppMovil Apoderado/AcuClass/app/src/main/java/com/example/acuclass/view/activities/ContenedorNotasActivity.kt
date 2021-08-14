@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.acuclass.R
-import com.example.acuclass.interfaces.IcomunicaFragmentNotas
+import com.example.acuclass.view.interfaces.IcomunicaFragmentNotas
 import com.example.acuclass.model.Alumno
 import com.example.acuclass.model.Curso
 import com.example.acuclass.view.fragments.AlumnosNotasFragment

@@ -11,10 +11,9 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.acuclass.R
-import com.example.acuclass.adaptadores.AlumnosAdapter
-import com.example.acuclass.adaptadores.CursosAdapter
-import com.example.acuclass.interfaces.IcomunicaFragmentNotas
-import com.example.acuclass.model.Alumno
+import com.example.acuclass.databinding.FragmentCursosNotasBinding
+import com.example.acuclass.view.adaptadores.CursosAdapter
+import com.example.acuclass.view.interfaces.IcomunicaFragmentNotas
 import com.example.acuclass.model.Curso
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,14 +31,13 @@ class CursosNotasFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
-    lateinit var recyclerCursos: RecyclerView
+    private var _binding: FragmentCursosNotasBinding?=null
+    private val binding get() =_binding!!
     lateinit var actividad: Activity
-    lateinit var vista:View
-    lateinit var btnMenuPrincipal: Button
-    lateinit var btnAlumnos: Button
     lateinit var interfaceComunicaFragmentNotas: IcomunicaFragmentNotas
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -47,17 +45,12 @@ class CursosNotasFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
+    {
         // Inflate the layout for this fragment
-        vista = inflater.inflate(R.layout.fragment_cursos_notas, container, false)
-        recyclerCursos = vista.findViewById(R.id.recyclerCursosNotas)
-        btnAlumnos = vista.findViewById(R.id.btnVolerAlumnos)
-        btnMenuPrincipal = vista.findViewById(R.id.btnVolverMenu)
+        _binding = FragmentCursosNotasBinding.inflate(inflater, container, false)
         inicializar()
-        return vista
+        return binding.root
     }
 
     private fun inicializar()
@@ -69,7 +62,7 @@ class CursosNotasFragment : Fragment() {
 
     private fun inicializarBtnMenuPrincipal()
     {
-        btnMenuPrincipal.setOnClickListener(object: View.OnClickListener{
+        binding.btnVolverMenu.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 interfaceComunicaFragmentNotas.vistaMenuPrincipal()
             }
@@ -78,7 +71,7 @@ class CursosNotasFragment : Fragment() {
 
     private fun inicializarBtnAlumnos()
     {
-        btnAlumnos.setOnClickListener(object: View.OnClickListener{
+        binding.btnVolerAlumnos.setOnClickListener(object: View.OnClickListener{
             override fun onClick(v: View?) {
                 interfaceComunicaFragmentNotas.vistaAlumnos()
             }
@@ -95,11 +88,12 @@ class CursosNotasFragment : Fragment() {
                 interfaceComunicaFragmentNotas.vistaAsignaturas()
             }
         })
-        recyclerCursos.layoutManager = LinearLayoutManager(getContext())
-        recyclerCursos.adapter = adapter
+        binding.recyclerCursosNotas.layoutManager = LinearLayoutManager(getContext())
+        binding.recyclerCursosNotas.adapter = adapter
     }
 
-    override fun onAttach(context: Context) {
+    override fun onAttach(context: Context)
+    {
         super.onAttach(context)
         actividad = context as Activity
         interfaceComunicaFragmentNotas = actividad as IcomunicaFragmentNotas

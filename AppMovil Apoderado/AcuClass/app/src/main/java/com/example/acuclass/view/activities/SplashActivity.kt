@@ -1,4 +1,4 @@
-package com.example.acuclass.view
+package com.example.acuclass.view.activities
 
 import android.app.ActivityOptions
 import android.content.Intent

@@ -15,7 +15,8 @@
         android:text="@string/menu_principal"
         android:textColor="@color/primary_text"
         android:textSize="28sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:id="@+id/titleMenu"/>
 
     <GridLayout
         android:layout_width="match_parent"
