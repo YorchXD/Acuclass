@@ -8,7 +8,7 @@ import com.example.acuclass.R
 import com.example.acuclass.databinding.CardLayoutAlumnosBinding
 import com.example.acuclass.data.model.Alumno
 
-class AlumnosAdapter(private val listaAlumnos:ArrayList<Alumno>): RecyclerView.Adapter<AlumnosAdapter.ViewHolder>(), View.OnClickListener
+class AlumnosAdapter(private val listaAlumnos:List<Alumno>): RecyclerView.Adapter<AlumnosAdapter.ViewHolder>(), View.OnClickListener
 {
     private lateinit var listener: View.OnClickListener
 

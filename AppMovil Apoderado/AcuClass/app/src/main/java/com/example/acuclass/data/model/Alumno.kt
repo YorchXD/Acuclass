@@ -5,5 +5,6 @@ import com.google.gson.annotations.SerializedName
 data class Alumno (
     @SerializedName("nombre") var nombre: String,
     @SerializedName("run") var run: String,
+    @SerializedName("edad") var edad: Int,
     @SerializedName("cursos") var cursos: ArrayList<Curso> = arrayListOf<Curso>()
 )

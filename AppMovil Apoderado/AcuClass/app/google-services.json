@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "727747408659",
+    "project_id": "acuclass-1e974",
+    "storage_bucket": "acuclass-1e974.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727747408659:android:5be8888f63ec80a42e20e6",
+        "android_client_info": {
+          "package_name": "com.example.acuclass"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727747408659-rav8de8jjlt8c2vco4bprml9cdvvu3tb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeu66Q5SHksyKQY7SV_qFQmhVccs3ouVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727747408659-rav8de8jjlt8c2vco4bprml9cdvvu3tb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

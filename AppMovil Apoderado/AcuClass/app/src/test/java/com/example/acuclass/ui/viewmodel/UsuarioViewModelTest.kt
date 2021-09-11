@@ -29,7 +29,7 @@ class UsuarioViewModelTest
             email = "yorch5.77@gmail.com",
             clave = "12345",
             run = "17824523-6",
-            alumnos = arrayListOf(Alumno(nombre = "Gregory Sepúlveda", run = "19043138-k")
+            alumnos = arrayListOf(Alumno(nombre = "Gregory Sepúlveda", run = "19043138-k", edad = 10)
             )
         )
         /*Mockito.`when`(proveedorUsuarioMockito.buscarUsuario("yorch5.77@gmail.com", "12345")
@@ -61,7 +61,7 @@ class UsuarioViewModelTest
     @Test
     fun obtenerDatosJson()
     {
-        usuarioViewModel.onCreate()
+        //usuarioViewModel.onCreate()
         usuarioViewModel.buscarUsuario("yorch5.77@gmail.com", "12345")
         //println(usuarioViewModel.usuario.value)
 

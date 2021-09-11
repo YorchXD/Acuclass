@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.acuclass.databinding.FragmentCursosNotasBinding
 import com.example.acuclass.ui.view.adaptadores.CursosAdapter
 import com.example.acuclass.ui.view.interfaces.IcomunicaFragmentNotas
-import com.example.acuclass.data.model.Curso
-import com.example.acuclass.ui.viewmodel.CursoViewModel
+import com.example.acuclass.ui.viewmodel.CursosNotasViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +34,7 @@ class CursosNotasFragment : Fragment() {
     private val binding get() =_binding!!
     lateinit var actividad: Activity
     lateinit var interfaceComunicaFragmentNotas: IcomunicaFragmentNotas
-    private lateinit var cursoViewModel: CursoViewModel
+    private lateinit var cursosNotasViewModel: CursosNotasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -50,9 +49,9 @@ class CursosNotasFragment : Fragment() {
     {
         // Inflate the layout for this fragment
         _binding = FragmentCursosNotasBinding.inflate(inflater, container, false)
-        this.cursoViewModel = ViewModelProvider(this).get(CursoViewModel::class.java)
+        this.cursosNotasViewModel = ViewModelProvider(this).get(CursosNotasViewModel::class.java)
         inicializar()
-        this.cursoViewModel.obtenerAlumnos(interfaceComunicaFragmentNotas.getRunAlumno())
+        this.cursosNotasViewModel.obtenerAlumnos(interfaceComunicaFragmentNotas.getRunAlumno())
         return binding.root
     }
 
@@ -83,7 +82,7 @@ class CursosNotasFragment : Fragment() {
 
     private fun inicializarRecyclerView()
     {
-        this.cursoViewModel.cursos.observe(viewLifecycleOwner, Observer {
+        this.cursosNotasViewModel.cursos.observe(viewLifecycleOwner, Observer {
             //val cursos: ArrayList<Curso>? = interfaceComunicaFragmentNotas.getCursos()
             val adapter = CursosAdapter(it)
 

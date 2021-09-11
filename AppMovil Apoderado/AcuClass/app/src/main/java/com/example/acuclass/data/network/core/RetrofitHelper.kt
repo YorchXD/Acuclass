@@ -1,4 +1,4 @@
-package com.example.acuclass.core
+package com.example.acuclass.data.network.core
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

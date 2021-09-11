@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.acuclass.databinding.FragmentAlumnosNotasBinding
 import com.example.acuclass.ui.view.adaptadores.AlumnosAdapter
 import com.example.acuclass.ui.view.interfaces.IcomunicaFragmentNotas
-import com.example.acuclass.data.model.Alumno
-import com.example.acuclass.ui.viewmodel.AlumnoViewModel
+import com.example.acuclass.ui.viewmodel.AlumnosNotasViewModel
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +37,7 @@ open class AlumnosNotasFragment : Fragment() {
     lateinit var actividad: Activity
     lateinit var vista:View
     lateinit var interfaceComunicaFragmentNotas: IcomunicaFragmentNotas
-    private lateinit var alumnoViewModel: AlumnoViewModel
+    private lateinit var alumnosNotasViewModel: AlumnosNotasViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,9 +51,8 @@ open class AlumnosNotasFragment : Fragment() {
     {
         // Inflate the layout for this fragment
         _binding = FragmentAlumnosNotasBinding.inflate(inflater,container, false)
-        this.alumnoViewModel = ViewModelProvider(this).get(AlumnoViewModel::class.java)
+        this.alumnosNotasViewModel = ViewModelProvider(this).get(AlumnosNotasViewModel::class.java)
         inicializar()
-        this.alumnoViewModel.obtenerAlumnos()
         return binding.root
     }
 
@@ -66,8 +64,7 @@ open class AlumnosNotasFragment : Fragment() {
 
     private fun inicializarRecyclerView()
     {
-        this.alumnoViewModel.alumnos.observe(viewLifecycleOwner, Observer {
-            //val alumnos: ArrayList<Alumno>? = interfaceComunicaFragmentNotas.getAlumnos()
+        this.alumnosNotasViewModel.alumnos.observe(viewLifecycleOwner, Observer {
             val adapter = AlumnosAdapter(it)
 
             adapter.setOnClickListener(object: View.OnClickListener {
@@ -80,7 +77,6 @@ open class AlumnosNotasFragment : Fragment() {
             binding.recyclerAlumnosNota.layoutManager = LinearLayoutManager(context)
             binding.recyclerAlumnosNota.adapter = adapter
         })
-
     }
 
     private fun inicializarBtnMenuPrincipal()

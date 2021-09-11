@@ -3,6 +3,7 @@ package com.example.acuclass.ui.view.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -10,6 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.acuclass.R
 import com.example.acuclass.databinding.ActivityLoginBinding
 import com.example.acuclass.data.model.Usuario
 import com.example.acuclass.ui.viewmodel.UsuarioViewModel
@@ -22,19 +24,39 @@ class LoginActivity : AppCompatActivity(),LifecycleOwner {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /*Error forzoso para verificar la funcionalidad de crashalytics*/
+        //throw RuntimeException("Crashlytics test")
+
         this.viewModel = ViewModelProvider(this).get(UsuarioViewModel::class.java)
 
-        viewModel.onCreate()
-
         viewModel.isloading.observe(this, Observer {
-            binding.progress.isVisible = it
+            binding.progressBar.isVisible = it
+            binding.progressBarInterno.isVisible=it
+            binding.textCargando.isVisible=it
+        })
+
+        viewModel.usuario.observe(this, Observer {
+            if(it!=null)
+            {
+                //Toast.makeText(this,"Usuario encontrado", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+            else
+            {
+                //dialogo("Datos incorrectos", "Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.")
+                Toast.makeText(this,"Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.", Toast.LENGTH_LONG).show()
+            }
         })
 
         binding.btnIniciarSesion.setOnClickListener{
             if(binding.correo.text.toString().isNotEmpty() && binding.clave.text.toString().isNotEmpty())
             {
                 viewModel.buscarUsuario(binding.correo.text.toString(), binding.clave.text.toString())
-                val usuario: Usuario? = viewModel.usuario
+
+                //viewModel.buscarUsuario(binding.correo.text.toString(), binding.clave.text.toString())
+                /*val usuario: Usuario? = viewModel.usuario
                 if(usuario!=null)
                 {
                     //Toast.makeText(this,"Usuario encontrado", Toast.LENGTH_LONG).show()
@@ -45,7 +67,7 @@ class LoginActivity : AppCompatActivity(),LifecycleOwner {
                 {
                     //dialogo("Datos incorrectos", "Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.")
                     Toast.makeText(this,"Puede que el email o la clave sean incorrectas o el usuario no se encuentre registrado.", Toast.LENGTH_LONG).show()
-                }
+                }*/
             }
             else
             {

@@ -127,10 +127,32 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:rotation="180"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/progressBarInterno"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textCargando"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Cargando..."
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/progressBar"
         android:layout_centerInParent="true"
+        android:layout_marginTop="20dp"
         android:visibility="gone"/>
 
 </RelativeLayout>
